@@ -1,0 +1,300 @@
+---
+swagger: "2.0"
+info:
+  description: "APIs List for DecodeCollege Folder"
+  version: "1.0.0"
+  title: "Panchshastra"
+host: "localhost:3000"
+basePath: "/api/"
+tags:
+- name: "user"
+  description: "Everything about User"
+schemes:
+- "http"
+paths:
+  /users:
+    post:
+      tags:
+      - "user"
+      summary: "To signup"
+      description: ""
+      operationId: "signup"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "User object that needs to be added to the db"
+        required: true
+        schema:
+          $ref: "#/definitions/Users"
+      security:
+      - user_auth:
+        - "write:users"
+        - "read:users"
+      responses:
+        "200":
+          description: "Success"
+          contents: 
+            application/json:
+              schema:
+                $ref: "#/definitions/Users"
+        "422":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+      x-swagger-router-controller: "Users"
+  /users/login:
+    post:
+      tags:
+      - "user"
+      summary: "To login"
+      description: ""
+      operationId: "login"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "User objects need for login"
+        required: true
+        schema:
+          $ref: "#/definitions/Login"
+      security:
+      - user_auth:
+        - "read:users"
+      responses:
+        "200":
+          description: "Success"
+          contents: 
+            application/json:
+              schema:
+                $ref: "#/definitions/Login"
+        "422":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+      x-swagger-router-controller: "Login"
+  /users/activation:
+    get:
+      tags: 
+      - "user"
+      summary: "activate user"
+      parameters:
+      - in: path
+        name: token
+        schema:
+          type: string
+        description: activation token 
+      responses:
+        "200":
+          description: "Successly Account activated"
+        "422":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+  /forgot:
+    post:
+      tags:
+      - "forgot"
+      summary: "forgot password"
+      description: ""
+      operationId: "forgotpassword"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "email whose password needs to be forgot"
+        required: true
+        schema:
+          $ref: "#/definitions/ForgotPassword"
+      security:
+      - user_auth:
+        - "write:users"
+        - "read:users"
+      responses:
+        "200":
+          description: "Success"
+        "422":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+      x-swagger-router-controller: "ForgotPassword"
+  /reset/password:
+    post:
+      tags:
+      - "reset-password"
+      summary: "to reset password"
+      description: ""
+      operationId: "resetpassword"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "content helping in resetting the password"
+        required: true
+        schema:
+          $ref: "#/definitions/ResetPassword"
+      security:
+      - user_auth:
+        - "write:users"
+        - "read:users"
+      responses:
+        "200":
+          description: "Success"
+        "422":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+      x-swagger-router-controller: "ResetPassword"
+  /reset/verify:
+    post:
+      tags:
+      - "reset-verify"
+      summary: "to reset verify"
+      description: ""
+      operationId: "resetverify"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "content helping validating the reset url"
+        required: true
+        schema:
+          $ref: "#/definitions/ResetValidation"
+      security:
+      - user_auth:
+        - "write:users"
+        - "read:users"
+      responses:
+        "200":
+          description: "Success"
+        "422":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+      x-swagger-router-controller: "ResetValidation"
+  
+securityDefinitions:
+  user_auth:
+    type: "oauth2"
+    authorizationUrl: "http://decodecollegestore.swagger.io/oauth/dialog"
+    flow: "implicit"
+    scopes:
+      write:user: "create users in your account"
+      read:user: "get users"
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  Users:
+    type: "object"
+    required:
+    - "first"
+    - "last"
+    - "email"
+    - "password"
+    - "retypedpassword"
+    properties:
+      first:
+        type: string
+      last:
+        type: string
+      email:
+        type: string
+      phone:
+        type: string
+      password:
+        type: string
+      retypedpassword:
+        type: string
+    example:
+    ---
+      first: 'User'
+      last: 'Admin'
+      email: 'admin@mailinator.com'
+      phone: '9876543210'
+      password: 'admin'
+      retypedpassword: 'admin'
+  Login:
+    type: "object"
+    required:
+    - "email"
+    - "password"
+    properties:
+      email: 
+        type : string
+      password:
+        type : string
+    example:
+    ---
+      email: "admin@mailinator.com"
+      password: "admin"
+  ForgotPassword:
+    type: "object"
+    required: 
+    - "email"
+    properties:
+      email:
+        type: string
+    example:
+    ---
+      email: "admin@mailinator.com"
+  ResetPassword:
+    type: "object"
+    required: 
+    - "token"
+    - "email"
+    properties:
+      email:
+        type: string
+      token: 
+        type: string
+      oldpassword: 
+        type: string
+      newpassword: 
+        type: string
+    example:
+    ---
+      email: "admin@mailinator.com"
+      token: "FAY4r3t8hdcd65GH74@1"
+      oldpassword: "admin"
+      newpassword: "user"
+  ResetValidation:
+    type: "object"
+    required: 
+    - "token"
+    - "email"
+    properties:
+      email:
+        type: string
+      token: 
+        type: string
+    example:
+    ---
+      email: "admin@mailinator.com"
+      token: "FAY4r3t8hdcd65GH74@1"

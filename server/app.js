@@ -6,6 +6,9 @@ var logger = require('morgan');
 const mongoose = require('mongoose');
 const config = require("config");
 const passport = require('passport');
+const swaggerUI = require('swagger-ui-express');
+const YAML = require("yamljs")
+const swaggerJsDoc = YAML.load('./swagger/swagger.yaml');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -13,8 +16,9 @@ var usersRouter = require('./routes/users');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+//app.set('views', path.join(__dirname, 'views'));
+//app.set('view engine', 'jade');
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerJsDoc));
 
 app.use(logger('dev'));
 app.use(express.json());
