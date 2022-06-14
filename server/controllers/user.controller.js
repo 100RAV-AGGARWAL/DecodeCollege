@@ -14,20 +14,10 @@ const create = async function (req, res) {
 
 	[err, verification] = await to(verify(req));
 	if (err || !verification) {
-		logger.error("Question Controller - create : User not verified as human");
+		logger.error("User Controller - create : User not verified as human");
 		return ReE(res, "You are a robot!! Don't mess with our site");
 	}
-	let filteredFirst, filteredLast;
 	const body = req.body;
-	[err, filteredFirst] = await to(shudhikaran(body.first, body, null, "user"));
-	if (!err) {
-		body.first = filteredFirst.content;
-	}
-	[err, filteredLast] = await to(shudhikaran(body.last, body, null, "user"));
-	if (!err) {
-		body.last = filteredLast.content;
-	}
-	body.last = filteredLast.content;
 
 	if (!body.unique_key && !body.email && !body.phone) {
 		logger.error("User Controller - create : Email not provided ");
@@ -65,21 +55,9 @@ const update = async function (req, res) {
 	let err, user, data, response
 	user = req.user;
 	data = req.body;
-	[err, response] = await to(shudhikaran(data.first, user, req.user.id, "user"));
-	if (!err) {
-		user.first = response.content;
-	} else {
-		user.first = data.first;
-	}
-	[err, response] = await to(shudhikaran(data.last, user, req.user.id, "user"));
-	if (!err) {
-		user.last = response.content;
-	} else {
-		user.last = data.last;
-	}
+	user.first = data.first;
+	user.last = data.last;
 	user.emailnotification = data.emailnotification;
-	user.imageId = data.imageId;
-	user.imageUrl = data.imageUrl;
 	if (data.password) {
 		user.password = data.password;
 		if (data.password != data.retypedpassword) {
@@ -124,7 +102,6 @@ const getPublicInfo = async function (userId) {
 		first: user.first,
 		last: user.last,
 		email: user.email,
-		imageUrl: user.imageUrl,
 		createdAt: user.createdAt
 	}
 
@@ -210,8 +187,6 @@ const updateOtherUser = async function (req, res) {
 	user.blocked = data.blocked;
 	user.isActivated = data.isActivated;
 	user.role = data.role;
-	user.imageId = data.imageId;
-	user.imageUrl = data.imageUrl;
 
 	[err, user] = await to(user.save());
 	if (err) {
@@ -291,9 +266,8 @@ const userActivation = async function (req, res) {
 			logger.error("User Controller - getUser : Unable to save the user", err);
 			return ReS(res, 'Unable to activate the user. Please try later');
 		} else {
-			// req.session.message = 'Successfully activated. Please login.';
-			// req.session.login = { token: user.getJWT(), user: user.toObject(), totalTime: config.get("jwt").expiration };
-			res.redirect('/business/create');
+			req.session.message = 'Successfully activated. Please login.';
+			req.session.login = { token: user.getJWT(), user: user.toObject(), totalTime: config.get("jwt").expiration };
 		}
 	}
 }
