@@ -1,0 +1,37 @@
+{
+	"dbconfig": {
+		"url": "mongodb://localhost:27017/decodecollege"
+	},
+	"jwt": {
+		"expiration": 10000,
+		"secretKey": "aditinishantsourav"
+	},
+	"environment": "dev",
+	"email": {
+		"job_enabled": true,
+		"service": "gmail",
+		"username": "virtualbeingvb@gmail.com",
+		"password": "VB@being19",
+		"emailIds": {
+			"notification": {
+				"username": "virtualbeingvb@gmail.com",
+				"password": "VB@being19"
+			}
+		},
+		"contactus": "virtualbeingvb@gmail.com"
+	},
+	"logging": {
+		"level": "error",
+		"fileLocation": "./logs/"
+	},
+	"serverDomain": "http://localhost:3000",
+	"forgotPasswordTime": 3600000,
+	"s3": {
+		"images": {
+			"bucket": "decode-college",
+			"secretKey": "T4gtMWrlRpTr5N/gfTqSAGswH8268WkUXRFsWbUO",
+			"accessKey": "AKIAZX2V6RTRPUZVAQXK",
+			"region": "us-east-2"
+		}
+	}
+}
