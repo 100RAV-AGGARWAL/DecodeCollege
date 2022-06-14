@@ -6,11 +6,19 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "base64url": "^3.0.1",
+    "config": "^3.3.7",
     "cookie-parser": "~1.4.4",
+    "crypto": "^1.0.1",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
-    "morgan": "~1.9.1"
+    "mongoose": "^6.3.8",
+    "morgan": "~1.9.1",
+    "nodemailer": "^6.7.5",
+    "nodemon": "^2.0.16",
+    "passport": "^0.6.0",
+    "winston": "^3.7.2"
   }
 }
