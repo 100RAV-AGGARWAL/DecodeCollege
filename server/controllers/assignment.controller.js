@@ -1,8 +1,8 @@
 const { to, ReE, ReS } = require("../services/util.service");
 const { Assignment, User } = require("../models");
-const { findSubjectbyId } = require("./subject.controller");
+// const { findSubjectbyId } = require("./subject.controller");
 const { getPublicInfo } = require("./user.controller");
-const { getCategoryInfo } = require("./subject.controller");
+// const { getCategoryInfo } = require("./subject.controller");
 const logger = require("../lib/logging");
 
 const create = async function (req, res) {
@@ -215,40 +215,3 @@ const myAssignments = async function (req, res) {
 
 module.exports.myAssignments = myAssignments;
 
-const review = async function (req, res) {
-	let assignment_id, err, assignment, savedassignment;
-	assignment_id = req.body._id;
-
-	[err, assignment] = await to(findByPk(assignment_id));
-	if (err) return ReE(res, err.message);
-
-	assignment.set(req.body);
-	assignment.moderatedById = req.user.id;
-
-	[err, savedassignment] = await to(assignment.save());
-	if (err) {
-		if (err.message == "Validation error")
-			err = "The assignment is already in use";
-		return ReE(res, err, 422);
-	}
-
-	return ReS(res, { message: "Updated Assignment: " + assignment.name });
-};
-module.exports.review = review;
-
-const pendingAssignments = async function (req, res) {
-	let assignmentList;
-
-	var limit = req.query.limit ? (req.query.limit < 20 && req.query.limit > 0) ? parseInt(req.query.limit) : 20 : 20;
-	var offset = req.query.offset ? req.query.offset > 0 ? parseInt(req.query.offset) : 0 : 0;
-
-	[err, assignmentList] = await to(assignment.find({
-		status: "PENDING"
-	}).limit(limit).skip(offset));
-	if (err) return ReE(res, err.message);
-
-	res.setHeader('Content-Type', 'application/json');
-
-	return ReS(res, { assignment: JSON.stringify(assignmentList) });
-}
-module.exports.pendingAssignments = pendingAssignments;

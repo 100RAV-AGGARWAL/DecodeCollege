@@ -12,11 +12,6 @@ const create = async function (req, res) {
 	res.setHeader('Content-Type', 'application/json');
 	let err, verification;
 
-	[err, verification] = await to(verify(req));
-	if (err || !verification) {
-		logger.error("User Controller - create : User not verified as human");
-		return ReE(res, "You are a robot!! Don't mess with our site");
-	}
 	const body = req.body;
 
 	if (!body.unique_key && !body.email && !body.phone) {
@@ -55,9 +50,16 @@ const update = async function (req, res) {
 	let err, user, data, response
 	user = req.user;
 	data = req.body;
-	user.first = data.first;
-	user.last = data.last;
-	user.emailnotification = data.emailnotification;
+
+	if (data.first)
+		user.first = data.first;
+
+	if (data.last)
+		user.last = data.last;
+
+	if (data.emailnotification)
+		user.emailnotification = data.emailnotification;
+
 	if (data.password) {
 		user.password = data.password;
 		if (data.password != data.retypedpassword) {

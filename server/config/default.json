@@ -4,7 +4,7 @@
 	},
 	"jwt": {
 		"expiration": 10000,
-		"secretKey": "aditinishantsourav"
+		"secretKey": "souravnishantaditi"
 	},
 	"environment": "dev",
 	"email": {
