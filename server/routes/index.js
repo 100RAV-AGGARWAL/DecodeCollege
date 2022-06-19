@@ -7,6 +7,7 @@ const ForgotPasswordController = require('../controllers/forgotpassword.controll
 const passport = require('passport');
 const authService = require('../services/auth.service');
 const SubjectController = require('../controllers/subject.controller');
+const SemesterController = require('../controllers/semester.controller');
 require('./../middleware/passport')(passport)
 
 var requireAuth = passport.authenticate('jwt', { session: false });
@@ -33,10 +34,12 @@ router.get("/assignment/listSubmitted", requireAuth, authService.roleAuthorizati
 router.get("/assignment/listMissed", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.listMissed);
 router.get("/assignment/listAll", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.myAssignments);
 
-router.post("/subject", SubjectController.create);
+router.post("/subject", requireAuth, authService.roleAuthorization(["admin"]), SubjectController.create);
 router.get("/subject", SubjectController.get);
-router.put("/subject", SubjectController.update);
+router.put("/subject", requireAuth, authService.roleAuthorization(["admin"]), SubjectController.update);
 router.get("/subject/list", SubjectController.list);
 
+router.post("/semester", requireAuth, authService.roleAuthorization(["user"]), SemesterController.create);
+router.get("/semester", requireAuth, authService.roleAuthorization(["user"]), SemesterController.get);
 
 module.exports = router;
