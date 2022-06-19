@@ -6,6 +6,7 @@ var logger = require('morgan');
 const mongoose = require('mongoose');
 const config = require("config");
 const passport = require('passport');
+const multer = require("multer");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
