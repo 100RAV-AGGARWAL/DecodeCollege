@@ -4,7 +4,7 @@
 	},
 	"jwt": {
 		"expiration": 10000,
-		"secretKey": "aditinishantsourav"
+		"secretKey": "souravnishantaditi"
 	},
 	"environment": "dev",
 	"email": {
@@ -26,14 +26,6 @@
 	},
 	"serverDomain": "http://localhost:3000",
 	"forgotPasswordTime": 3600000,
-	"s3": {
-		"images": {
-			"bucket": "decode-college",
-			"secretKey": "T4gtMWrlRpTr5N/gfTqSAGswH8268WkUXRFsWbUO",
-			"accessKey": "AKIAZX2V6RTRPUZVAQXK",
-			"region": "us-east-2"
-		}
-	},
 	"swagger_options": {
 		"definition": {
 			"openapi": "3.0.3",
