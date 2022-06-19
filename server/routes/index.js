@@ -11,7 +11,7 @@ router.get("/subject/list", SubjectController.list);
 
 router.post('/users', UserController.create);
 router.get('/users/activation', UserController.userActivation);
-router.put('/users/updatepassword', UserController.updatePassword);
+router.put('/users/updatepassword', UserController.update);
 router.post('/users/login', UserController.login);
 
 module.exports = router;

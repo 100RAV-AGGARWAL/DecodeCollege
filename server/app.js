@@ -11,7 +11,7 @@ const YAML = require("yamljs")
 const swaggerJsDoc = YAML.load('./swagger/swagger.yaml');
 
 var indexRouter = require('./routes/index');
-//var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/users');
 
 var app = express();
 
