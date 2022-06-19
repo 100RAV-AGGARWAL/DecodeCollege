@@ -25,5 +25,23 @@
 		"fileLocation": "./logs/"
 	},
 	"serverDomain": "http://localhost:3000",
-	"forgotPasswordTime": 3600000
+	"forgotPasswordTime": 3600000,
+	"swagger_options": {
+		"definition": {
+			"openapi": "3.0.3",
+			"info": {
+				"title": "Decode College APIs",
+				"version": "1.0.0",
+				"description": "A simple Express APIs"
+			},
+			"servers": [
+				{
+					"url": "http://localhost:3000"
+				}
+			]
+		},
+		"apis": [
+			"./routes/*.js"
+		]
+	}
 }
