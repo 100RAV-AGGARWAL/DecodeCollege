@@ -58,7 +58,7 @@ const get = async function (req, res) {
 
 	semester_no = req.query.semester_no;
 
-	[err, semester] = await to(Semester.findOne({ sem_no: semester_no }));
+	[err, semester] = await to(findBySemNo(semester_no));
 	if (err) {
 		logger.error("Semester Controller - get : Semester not found", err);
 		return ReE(res, err, 422);
@@ -79,6 +79,16 @@ const get = async function (req, res) {
 		semester.sem_marks[i].subjectName = subject.name;
 	}
 
+	// semesterJson.sem_marks.forEach(async (mark) => {
+	// 	[err, subject] = await to(getSubjectInfo(mark.subjectId));
+	// 	if (err) {
+	// 		logger.error("Semester Controller - get : Semester subject not found", err);
+	// 		return ReE(res, err, 422);
+	// 	}
+
+	// 	mark.subjectName = subject.name;
+	// });
+
 	let semesterJson = semester.toObject()
 	semesterJson.user = user
 
@@ -86,167 +96,143 @@ const get = async function (req, res) {
 }
 module.exports.get = get;
 
-const findByPk = async function (id) {
-	let semester_id, err, semester;
-	semester_id = id;
+const findBySemNo = async function (sem_no) {
+	let err, semester;
 
-	[err, semester] = await to(Semester.findById(semester_id));
+	[err, semester] = await to(Semester.findOne({ sem_no: sem_no }));
 	if (err || !semester) {
-		logger.error("Semester Controller - findByPk : Semester not found", err);
+		logger.error("Semester Controller - findBySemNo : Semester not found", err);
 		throw new Error("Semester not found");
 	}
 	return semester;
 }
-module.exports.findSemesterById = findByPk;
+module.exports.findSemesterByNo = findBySemNo;
 
-// const update = async function (req, res) {
-// 	let semester_id, err, semester, savedarticle, subject;
-// 	if (!req.body._id) {
-// 		logger.error("Semester Controller - update : Semester Id is not provided");
-// 		return ReE(res, new Error("Semester Id is not provided"), 422);
-// 	}
-// 	if (!req.user.id) {
-// 		logger.error("Semester Controller - update : User not logged in");
-// 		return ReE(res, new Error("User is not logged in"), 401);
-// 	}
-// 	semester_id = req.body._id;
+const update = async function (req, res) {
+	let semester_no, err, semester, savedsemester, subject;
+	if (!req.body.sem_no) {
+		logger.error("Semester Controller - update : Semester Number is not provided");
+		return ReE(res, new Error("Semester Number is not provided"), 422);
+	}
+	if (req.body.sem_marks.length == 0) {
+		logger.error("Semester Controller - update : Marks are not provided");
+		return ReE(res, new Error("Marks are not provided"), 422);
+	}
+	if (!req.user.id) {
+		logger.error("Semester Controller - update : User not logged in");
+		return ReE(res, new Error("User is not logged in"), 401);
+	}
+	semester_no = req.body.sem_no;
 
-// 	[err, semester] = await to(findByPk(semester_id));
-// 	if (err) {
-// 		logger.error("Semester Controller - update : Semester not found", err);
-// 		return ReE(res, err, 422);
-// 	}
+	[err, semester] = await to(findBySemNo(semester_no));
+	if (err) {
+		logger.error("Semester Controller - update : Semester not found", err);
+		return ReE(res, err, 422);
+	}
 
-// 	if (!semester.userId || !semester.userId.equals(req.user.id)) {
-// 		logger.error("Semester Controller - update : User not authorized to edit this semester", err);
-// 		return ReE(res, "User not authorized to edit this semester", 422);
-// 	}
+	if (!semester.createdById || !semester.createdById.equals(req.user.id)) {
+		logger.error("Semester Controller - update : User not authorized to edit this semester", err);
+		return ReE(res, "User not authorized to edit this semester", 422);
+	}
 
-// 	if (!req.body.subjectId) {
-// 		logger.error("Semester Controller - update : Subject is not provided");
-// 		return ReE(res, new Error("Subject is not selected"), 422);
-// 	}
-// 	[err, subject] = await to(findSubjectById(req.body.subjectId));
-// 	if (err) {
-// 		logger.error("Semester Controller - update : Subject not found", err);
-// 		return ReE(res, err, 422);
-// 	}
-// 	let response;
-// 	[err, response] = await to(shudhikaran(req.body.content, semester, req.user.id, "semester"));
-// 	if (!err) {
-// 		semester.content = response.content;
-// 	} else {
-// 		semester.content = req.body.content;
-// 	}
-// 	[err, response] = await to(shudhikaran(req.body.title, semester, req.user.id, "semester"));
-// 	if (!err) {
-// 		semester.title = response.content;
-// 	} else {
-// 		semester.title = req.body.title;
-// 	}
-// 	[err, response] = await to(shudhikaran(req.body.description, semester, req.user.id, "semester"));
-// 	if (!err) {
-// 		semester.description = response.content;
-// 	} else {
-// 		semester.description = req.body.description;
-// 	}
-// 	[err, response] = await to(shudhikaran(req.body.tags, semester, req.user.id, "semester"));
-// 	if (!err) {
-// 		semester.tags = response.content;
-// 	} else {
-// 		semester.tags = req.body.tags;
-// 	}
-// 	semester.imageId = req.body.imageId;
-// 	semester.imageUrl = req.body.imageUrl;
-// 	semester.subjectId = req.body.subjectId;
-// 	semester.status = "pending";
-// 	if (!semester.imageId || !semester.imageUrl) {
-// 		semester.imageId = subject.imageId;
-// 		semester.imageUrl = subject.imageUrl;
-// 	}
-// 	[err, savedarticle] = await to(semester.save());
-// 	if (err) {
-// 		logger.error("Semester Controller - update : Semester count not be saved", err);
-// 		return ReE(res, err, 422);
-// 	}
-// 	return ReS(res, { message: 'Updated Subject: ' + semester.name });
-// }
-// module.exports.update = update;
+	for (let mark of req.body.sem_marks) {
+		if (!mark.subjectId) {
+			logger.error("Semester Controller - update : Subject is not provided");
+			return ReE(res, new Error("Subject is not selected"), 422);
+		}
 
-// const remove = async function (req, res) {
-// 	let semester_id, err, semester;
-// 	if (!req.query._id) {
-// 		logger.error("Semester Controller - remove : Semester Id is not provided");
-// 		return ReE(res, new Error("Semester Id is not provided"), 422);
-// 	}
-// 	semester_id = req.query._id;
+		[err, subject] = await to(getSubjectInfo(mark.subjectId));
+		if (err) {
+			logger.error(`Semester Controller - create : Subject with Id (${mark.subjectId}) not found`, err);
+			return ReE(res, err, 422);
+		}
+	}
 
-// 	[err, semester] = await to(findByPk(semester_id));
-// 	if (err) {
-// 		logger.error("Semester Controller - remove : Semester not found", err);
-// 		return ReE(res, err, 422);
-// 	}
-// 	if (!semester.userId || !semester.userId.equals(req.user.id)) {
-// 		logger.error("Semester Controller - remove : User not authorized to remove this semester", err);
-// 		return ReE(res, "User not authorized to remove this semester", 422);
-// 	}
-// 	[err, semester] = await to(semester.destroy());
-// 	if (err) {
-// 		logger.error("Semester Controller - remove : Semester could not be deleted", err);
-// 		return ReE(res, err, 422);
-// 	}
-// 	return ReS(res, { message: 'Deleted semester' }, 204);
-// }
-// module.exports.remove = remove;
+	semester.sem_marks = req.body.sem_marks;
 
-// const list = async function (req, res) {
+	[err, savedSem] = await to(semester.save());
+	if (err) {
+		logger.error("Semester Controller - update : Semester count not be saved", err);
+		return ReE(res, err, 422);
+	}
+	return ReS(res, { message: 'Updated Subject: ' + semester.sem_no });
+}
+module.exports.update = update;
 
-// 	let articleList, articleCount;
-// 	var limit = req.query.limit ? (req.query.limit < 20 && req.query.limit > 0) ? parseInt(req.query.limit) : 20 : 20;
-// 	var offset = req.query.offset ? req.query.offset > 0 ? parseInt(req.query.offset) : 0 : 0;
+const remove = async function (req, res) {
+	let sem_no, err, semester;
+	if (!req.query.semester_no) {
+		logger.error("Semester Controller - remove : Semester Number is not provided");
+		return ReE(res, new Error("Semester Number is not provided"), 422);
+	}
+	sem_no = req.query.semester_no;
 
-// 	[err, articleList] = await to(Semester.find({ "status": "live" }).sort({ createdAt: -1 }).limit(limit).skip(offset));
-// 	if (err) {
-// 		logger.error("Semester Controller - list : Semesters not found", err);
-// 		return ReE(res, err, 422);
-// 	}
-// 	[err, articleCount] = await to(Semester.find({ "status": "live" }).count());
-// 	if (err) {
-// 		logger.error("Semester Controller - list : Semester count not found", err);
-// 		return ReE(res, err, 422);
-// 	}
-// 	res.setHeader('Content-Type', 'application/json');
+	[err, semester] = await to(findBySemNo(sem_no));
+	if (err) {
+		logger.error("Semester Controller - remove : Semester not found", err);
+		return ReE(res, err, 422);
+	}
+	if (!semester.createdById || !semester.createdById.equals(req.user.id)) {
+		logger.error("Semester Controller - remove : User not authorized to remove this semester", err);
+		return ReE(res, "User not authorized to remove this semester", 422);
+	}
+	[err, semester] = await to(Semester.deleteOne({ sem_no: sem_no }));
+	if (err) {
+		logger.error("Semester Controller - remove : Semester could not be deleted", err);
+		return ReE(res, err, 422);
+	}
+	return ReS(res, { message: 'Deleted semester' + sem_no }, 204);
+}
+module.exports.remove = remove;
 
-// 	return ReS(res, { semester: JSON.stringify(articleList), total: articleCount });
-// }
+const list = async function (req, res) {
 
-// module.exports.list = list;
+	let semesterList, semesterCount;
+	var limit = req.query.limit ? (req.query.limit < 20 && req.query.limit > 0) ? parseInt(req.query.limit) : 20 : 20;
+	var offset = req.query.offset ? req.query.offset > 0 ? parseInt(req.query.offset) : 0 : 0;
 
-// const mysemesters = async function (req, res) {
-// 	let articleList, articleCount;
+	[err, semesterList] = await to(Semester.find().sort({ sem_no: -1 }).limit(limit).skip(offset));
+	if (err) {
+		logger.error("Semester Controller - list : Semesters not found", err);
+		return ReE(res, err, 422);
+	}
+	[err, semesterCount] = await to(Semester.find().count());
+	if (err) {
+		logger.error("Semester Controller - list : Semester count not found", err);
+		return ReE(res, err, 422);
+	}
+	res.setHeader('Content-Type', 'application/json');
 
-// 	if (!req.user.id) {
-// 		logger.error("Semester Controller - create : User not logged in", err);
-// 		return ReE(res, err, 401);
-// 	}
-// 	var limit = req.query.limit ? (req.query.limit < 20 && req.query.limit > 0) ? parseInt(req.query.limit) : 20 : 20;
-// 	var offset = req.query.offset ? req.query.offset > 0 ? parseInt(req.query.offset) : 0 : 0;
+	return ReS(res, { semester: JSON.stringify(semesterList), total: semesterCount });
+}
 
-// 	[err, articleList] = await to(Semester.find({ userId: req.user.id }).limit(limit).skip(offset));
-// 	if (err) {
-// 		logger.error("Semester Controller - mysemesters : Semesters not found", err);
-// 		return ReE(res, err, 422);
-// 	}
+module.exports.list = list;
 
-// 	[err, articleCount] = await to(Semester.find({ userId: req.user.id }).count());
-// 	if (err) {
-// 		logger.error("Semester Controller - mysemesters : Semesters count not found", err);
-// 		return ReE(res, err, 422);
-// 	}
+const mysemesters = async function (req, res) {
+	let semesterList, semesterCount;
 
-// 	res.setHeader('Content-Type', 'application/json');
+	if (!req.user.id) {
+		logger.error("Semester Controller - create : User not logged in", err);
+		return ReE(res, err, 401);
+	}
+	var limit = req.query.limit ? (req.query.limit < 20 && req.query.limit > 0) ? parseInt(req.query.limit) : 20 : 20;
+	var offset = req.query.offset ? req.query.offset > 0 ? parseInt(req.query.offset) : 0 : 0;
 
-// 	return ReS(res, { semester: JSON.stringify(articleList), total: articleCount });
-// }
+	[err, semesterList] = await to(Semester.find({ createdById: req.user.id }).limit(limit).skip(offset));
+	if (err) {
+		logger.error("Semester Controller - mysemesters : Semesters not found", err);
+		return ReE(res, err, 422);
+	}
 
-// module.exports.mySemesters = mysemesters;
+	[err, semesterCount] = await to(Semester.find({ creeatedById: req.user.id }).count());
+	if (err) {
+		logger.error("Semester Controller - mysemesters : Semesters count not found", err);
+		return ReE(res, err, 422);
+	}
+
+	res.setHeader('Content-Type', 'application/json');
+
+	return ReS(res, { semester: JSON.stringify(semesterList), total: semesterCount });
+}
+
+module.exports.mySemesters = mysemesters;

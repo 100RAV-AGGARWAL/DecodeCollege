@@ -41,5 +41,9 @@ router.get("/subject/list", SubjectController.list);
 
 router.post("/semester", requireAuth, authService.roleAuthorization(["user"]), SemesterController.create);
 router.get("/semester", requireAuth, authService.roleAuthorization(["user"]), SemesterController.get);
+router.put("/semester", requireAuth, authService.roleAuthorization(["user"]), SemesterController.update);
+router.delete("/semester", requireAuth, authService.roleAuthorization(["user"]), SemesterController.remove);
+router.get("/semester/list", requireAuth, authService.roleAuthorization(["admin"]), SemesterController.list);
+router.get("/semester/mySemesters", requireAuth, authService.roleAuthorization(["user"]), SemesterController.mySemesters);
 
 module.exports = router;
