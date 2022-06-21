@@ -1,28 +1,78 @@
 const { to, ReE, ReS } = require("../services/util.service");
 const { Assignment, User } = require("../models");
-// const { findSubjectbyId } = require("./subject.controller");
+const { findSubjectById } = require("./subject.controller");
 const { getPublicInfo } = require("./user.controller");
-// const { getCategoryInfo } = require("./subject.controller");
+const { getSubjectInfo } = require("./subject.controller");
 const logger = require("../lib/logging");
+
+const fs = require('fs')
+const { promisify } = require('util')
+
+const unlinkAsync = promisify(fs.unlink)
 
 const create = async function (req, res) {
 	res.setHeader("Content-Type", "application/json");
 	const body = req.body;
 
+	if (!req.file) {
+		logger.error("No file uploaded");
+		return ReE(res, "No file uploaded");
+	}
+	if (!req.user) {
+		logger.error("No user found");
+		unlinkAsync(req.file.path);
+		return ReE(res, "No user found");
+	}
+
 	let err, assignment, subject;
+	if (!body.name) {
+		logger.error("Assignment name is required");
+		unlinkAsync(req.file.path);
+		return ReE(res, "Assignment name is required");
+	}
+	if (!body.deadline) {
+		logger.error("Assignment deadline is required");
+		unlinkAsync(req.file.path);
+		return ReE(res, "Assignment deadline is required");
+	}
+	if (!body.subjectId) {
+		logger.error("Assignment subject is required");
+		unlinkAsync(req.file.path);
+		return ReE(res, "Assignment subject is required");
+	}
+
+	body.deadline = new Date(body.deadline);
+	body.fileName = req.file.filename;
+	body.filePath = req.file.path;
+	body.fileSize = req.file.size;
+
 
 	[err, assignment] = await to(Assignment.create(body));
-	if (err) return ReE(res, err, 422);
+	if (err) {
+		unlinkAsync(req.file.path);
+		return ReE(res, err, 422);
+	}
 
-	[err, subject] = await to(findSubjectbyId(req.body.subject._id));
-	if (err) return ReE(res, err.message);
+	[err, subject] = await to(findSubjectById(body.subjectId));
+	if (err) {
+		unlinkAsync(req.file.path);
+		return ReE(res, err.message);
+	}
 
-	assignment.status = "PENDING";
+	if (body.deadline >= new Date()) {
+		assignment.status = "PENDING";
+	} else {
+		assignment.status = "MISSED";
+	}
+
 	assignment.createById = req.user.id;
 	assignment.subjectId = subject._id;
 
 	[err, assignment] = await to(assignment.save());
-	if (err) return ReE(res, err, 422);
+	if (err) {
+		unlinkAsync(req.file.path);
+		return ReE(res, err, 422);
+	}
 
 	let assignmentJson = assignment.toObject();
 	assignmentJson.users = [{ user: req.user.id }];
@@ -44,7 +94,7 @@ const get = async function (req, res) {
 	if (err) return ReE(res, err.message);
 
 	[err, user] = await to(getPublicInfo(assignment.createdById));
-	[err, subject] = await to(getCategoryInfo(assignment.subjectId));
+	[err, subject] = await to(getSubjectInfo(assignment.subjectId));
 
 	let assignmentJson = assignment.toObject();
 
