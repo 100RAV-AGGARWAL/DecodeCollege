@@ -9,10 +9,10 @@ const create = async function (req, res) {
 	if (!body.name) {
 		logger.error("Subject Controller - create : Subject Name cannot be empty");
 		return ReE(res, new Error('Please enter a valid Subject Name.'), 422);
-	} else if(!body.subjectcode){
-        logger.error("Subject Controller - create : Subject Code cannot be empty");
+	} else if (!body.subjectcode) {
+		logger.error("Subject Controller - create : Subject Code cannot be empty");
 		return ReE(res, new Error('Please enter a valid Subject Code.'), 422);
-    } else {
+	} else {
 		let err, subject;
 
 
@@ -92,6 +92,7 @@ const findByPk = async function (id) {
 	}
 	return subject;
 }
+module.exports.findSubjectById = findByPk;
 
 const update = async function (req, res) {
 	let subject_id, err, subject, savedsubject;
@@ -129,9 +130,9 @@ const getSubjectInfo = async function (subjectId) {
 		id: subject._id,
 		_id: subject._id,
 		name: subject.name,
-        subjectcode: subject.subjectcode,
-        semester: subject.semester,
-        credits: subject.credits,
+		subjectcode: subject.subjectcode,
+		semester: subject.semester,
+		credits: subject.credits,
 	}
 
 }

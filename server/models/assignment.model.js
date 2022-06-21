@@ -12,8 +12,8 @@ const Assignment = mongoose.model('Assignment', new mongoose.Schema({
 		enum: ["PENDING", "SUBMITTED", "MISSED"],
 		defaultValue: "PENDING",
 	},
-	createdById: { type: mongoose.ObjectId, ref: 'User', allowNull: false },
-	subjectId: { type: mongoose.ObjectId, ref: 'Subject', allowNull: false },
+	createdById: { type: mongoose.ObjectId, ref: 'User', allowNull: true },
+	subjectId: { type: mongoose.ObjectId, ref: 'Subject', allowNull: true },
 }, { timestamps: true }));
 
 module.exports = Assignment;
