@@ -12,8 +12,6 @@ const YAML = require("yamljs")
 const swaggerJsDoc = YAML.load('./swagger/swagger.yaml');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-
 var app = express();
 
 // view engine setup
@@ -37,7 +35,10 @@ app.use(function (req, res, next) {
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', indexRouter);
-app.use('/users', usersRouter);
+
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname, 'public/index.html'));
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

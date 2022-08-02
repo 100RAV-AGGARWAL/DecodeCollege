@@ -43,5 +43,9 @@
 		"apis": [
 			"./routes/*.js"
 		]
+	},
+	"fileUploadConfig": {
+		"size": 10485760,
+		"extensionType": "pdf, docx"
 	}
 }

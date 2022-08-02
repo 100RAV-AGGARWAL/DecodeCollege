@@ -8,8 +8,10 @@ const passport = require('passport');
 const authService = require('../services/auth.service');
 const SubjectController = require('../controllers/subject.controller');
 const SemesterController = require('../controllers/semester.controller');
+const FileController = require('../controllers/file.controller');
+const UploadController = require('../controllers/upload.controller');
+
 require('./../middleware/passport')(passport)
-const multerUpload = require('../lib/multer');
 
 var requireAuth = passport.authenticate('jwt', { session: false });
 
@@ -26,7 +28,7 @@ router.post("/forgot", ForgotPasswordController.forgotPassword);
 router.post("/reset/verify", ForgotPasswordController.resetTokenVerify);
 router.post("/reset/password", ForgotPasswordController.resetPassword);
 
-router.post("/assignment", requireAuth, authService.roleAuthorization(["user"]), multerUpload.single('assignment'), AssignmentController.create);
+router.post("/assignment", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.create);
 router.get("/assignment", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.get);
 router.put('/assignment', requireAuth, authService.roleAuthorization(["user"]), AssignmentController.update); //update  
 router.delete('/assignment', requireAuth, authService.roleAuthorization(["user"]), AssignmentController.remove); //update  
@@ -47,4 +49,9 @@ router.delete("/semester", requireAuth, authService.roleAuthorization(["user"]),
 router.get("/semester/list", requireAuth, authService.roleAuthorization(["admin"]), SemesterController.list);
 router.get("/semester/mySemesters", requireAuth, authService.roleAuthorization(["user"]), SemesterController.mySemesters);
 
+router.post('/upload/assignment', requireAuth, UploadController.uploadAssignmentFile)
+router.post('/upload/notes', requireAuth, UploadController.uploadNotesFile)
+
+router.post('/file', requireAuth, authService.roleAuthorization(["user"]), FileController.upload); //create   
+router.get('/file', FileController.get); //create
 module.exports = router;

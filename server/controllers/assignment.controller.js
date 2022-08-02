@@ -5,11 +5,6 @@ const { getPublicInfo } = require("./user.controller");
 const { getSubjectInfo } = require("./subject.controller");
 const logger = require("../lib/logging");
 
-const fs = require('fs')
-const { promisify } = require('util')
-
-const unlinkAsync = promisify(fs.unlink)
-
 const create = async function (req, res) {
 	res.setHeader("Content-Type", "application/json");
 	const body = req.body;
@@ -20,42 +15,33 @@ const create = async function (req, res) {
 	}
 	if (!req.user) {
 		logger.error("No user found");
-		unlinkAsync(req.file.path);
 		return ReE(res, "No user found");
 	}
 
 	let err, assignment, subject;
 	if (!body.name) {
 		logger.error("Assignment name is required");
-		unlinkAsync(req.file.path);
 		return ReE(res, "Assignment name is required");
 	}
 	if (!body.deadline) {
 		logger.error("Assignment deadline is required");
-		unlinkAsync(req.file.path);
 		return ReE(res, "Assignment deadline is required");
 	}
 	if (!body.subjectId) {
 		logger.error("Assignment subject is required");
-		unlinkAsync(req.file.path);
 		return ReE(res, "Assignment subject is required");
 	}
 
 	body.deadline = new Date(body.deadline);
-	body.fileName = req.file.filename;
 	body.filePath = req.file.path;
-	body.fileSize = req.file.size;
-
 
 	[err, assignment] = await to(Assignment.create(body));
 	if (err) {
-		unlinkAsync(req.file.path);
 		return ReE(res, err, 422);
 	}
 
 	[err, subject] = await to(findSubjectById(body.subjectId));
 	if (err) {
-		unlinkAsync(req.file.path);
 		return ReE(res, err.message);
 	}
 
@@ -70,7 +56,6 @@ const create = async function (req, res) {
 
 	[err, assignment] = await to(assignment.save());
 	if (err) {
-		unlinkAsync(req.file.path);
 		return ReE(res, err, 422);
 	}
 
