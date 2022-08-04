@@ -35,7 +35,6 @@ import { AuthGuard } from './auth-guard.service';
 		MatPaginatorModule,
 		MatCardModule,
 		MatIconModule,
-		AuthGuard
 	],
 	declarations: [
 		UserLoginComponent,
