@@ -1,0 +1,32 @@
+<section class="section wb">
+	<div class="container">
+		<h1> Signup</h1>
+		<form class="form-signup" (ngSubmit)="signup()" #signupForm="ngForm">
+
+			<mat-form-field class="example-full-width">
+				<input matInput placeholder="First Name" name="first" [(ngModel)]="signupData.first">
+			</mat-form-field>
+			<mat-form-field class="example-full-width">
+				<input matInput placeholder="Last Name" name="last" [(ngModel)]="signupData.last">
+			</mat-form-field>
+			<mat-form-field class="example-full-width">
+				<input type="email" matInput placeholder="Email id" name="email" [(ngModel)]="signupData.email">
+			</mat-form-field>
+			<mat-form-field class="example-full-width">
+				<input matInput type="password" placeholder="Password" name="password"
+					[(ngModel)]="signupData.password">
+			</mat-form-field>
+			<mat-form-field class="example-full-width">
+				<input matInput type="password" placeholder="RetypePassword" name="retypepassword"
+					[(ngModel)]="signupData.retypedpassword">
+			</mat-form-field>
+			<small>By Clicking Signing up, you agree to our <a [routerLink]="['/terms']">Terms</a> and that you have
+				read our
+				<a [routerLink]="['/privacypolicy']">privacy policy</a> and <a
+					[routerLink]="['/disclaimer']">disclaimer</a>, including our <a
+					[routerLink]="['/cookie']">cookie</a>
+				use.<br /></small>
+			<button mat-raised-button color="primary">Signup</button>
+		</form>
+	</div>
+</section>
