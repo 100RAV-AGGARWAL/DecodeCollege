@@ -14,7 +14,7 @@ export class AssignmentService {
 
   saveAssignments(assignment: any) {
 		return new Observable((observer) => {
-			this.http.post(environment.apiUrl + 'api/assignent', assignment, {
+			this.http.post(environment.apiUrl + 'api/assignment', assignment, {
 				headers: {
 					"Authorization": this.userService.getJWTToken()!
 				}
@@ -32,18 +32,5 @@ export class AssignmentService {
 
   getSubject() {
 		return this.http.get(environment.apiUrl + 'api/subject/list');
-	}
-
-  public uploadFile(file: File, fileId: any): Observable<Object> {
-		let formData = new FormData();
-		const itemType = 'assignment';
-		formData.set('file', file, file.name);
-		formData.set('fileId', fileId);
-
-		return this.http.post(environment.apiUrl + 'api/upload/file?itemType=' + itemType, formData, {
-			headers: {
-				"Authorization": this.userService.getJWTToken()!,
-			}
-		});
 	}
 }

@@ -20,6 +20,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { AssignmentService } from './assignment.service';
 import { UserModule } from '../user/user.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatOptionModule,
     UtilityModule,
     MatSnackBarModule,
-    UserModule
+    UserModule,
+    FileUploadModule
   ],
   providers: [
     AssignmentService

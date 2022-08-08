@@ -4,14 +4,14 @@ var router = express.Router();
 const AssignmentController = require('../controllers/assignment.controller');
 const UserController = require('../controllers/user.controller');
 const ForgotPasswordController = require('../controllers/forgotpassword.controller');
-const passport = require('passport');
 const authService = require('../services/auth.service');
 const SubjectController = require('../controllers/subject.controller');
 const SemesterController = require('../controllers/semester.controller');
 const FileController = require('../controllers/file.controller');
 const UploadController = require('../controllers/upload.controller');
-require('./../middleware/passport')(passport)
 const multerUpload = require('../lib/multer');
+const passport = require('passport');
+require('./../middleware/passport')(passport)
 
 var requireAuth = passport.authenticate('jwt', { session: false });
 
@@ -51,6 +51,4 @@ router.get("/semester/mySemesters", requireAuth, authService.roleAuthorization([
 
 router.post('/upload/file', requireAuth, authService.roleAuthorization(["user"]), multerUpload.single('file'), UploadController.uploadFile)
 
-// router.post('/file', requireAuth, authService.roleAuthorization(["user"]), FileController.upload); //create   
-// router.get('/file', FileController.get); //create
 module.exports = router;

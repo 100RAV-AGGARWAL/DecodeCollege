@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { appRoutes } from './app.route';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -31,9 +32,10 @@ import { appRoutes } from './app.route';
 			appRoutes,
 			{ enableTracing: true, relativeLinkResolution: 'legacy' } 
 		),
+    ToastrModule.forRoot(),
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

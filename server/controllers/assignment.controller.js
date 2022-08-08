@@ -9,10 +9,6 @@ const create = async function (req, res) {
 	res.setHeader("Content-Type", "application/json");
 	const body = req.body;
 
-	if (!req.file) {
-		logger.error("No file uploaded");
-		return ReE(res, "No file uploaded");
-	}
 	if (!req.user) {
 		logger.error("No user found");
 		return ReE(res, "No user found");
@@ -27,20 +23,19 @@ const create = async function (req, res) {
 		logger.error("Assignment deadline is required");
 		return ReE(res, "Assignment deadline is required");
 	}
-	if (!body.subjectId) {
+	if (!body.subject._id) {
 		logger.error("Assignment subject is required");
 		return ReE(res, "Assignment subject is required");
 	}
 
 	body.deadline = new Date(body.deadline);
-	body.filePath = req.file.path;
 
 	[err, assignment] = await to(Assignment.create(body));
 	if (err) {
 		return ReE(res, err, 422);
 	}
 
-	[err, subject] = await to(findSubjectById(body.subjectId));
+	[err, subject] = await to(findSubjectById(body.subject._id));
 	if (err) {
 		return ReE(res, err.message);
 	}

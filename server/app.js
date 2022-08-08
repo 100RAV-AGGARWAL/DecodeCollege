@@ -16,11 +16,8 @@ var app = express();
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerJsDoc));
 
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }))
-
-// parse application/json
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(logger('dev'));
 app.use(express.json());

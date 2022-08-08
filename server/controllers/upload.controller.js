@@ -1,8 +1,6 @@
 const { to, ReE, ReS } = require('../services/util.service');
 const { File } = require('../models');
 const logger = require("../lib/logging");
-const multerUpload = require('../lib/multer');
-const config = require('config');
 
 const fs = require('fs')
 const { promisify } = require('util')
@@ -49,5 +47,5 @@ const uploadOnMulter = async function (req, res, itemType) {
 		return ReE(res, err, 422);
 	}
 
-	res.json({ status: 200, msg: "Successfully uploaded new" + itemType, file: file.toObject() });
+	return ReS(res, { message: "Successfully uploaded new" + itemType, file: file.toObject() }, 200);
 }

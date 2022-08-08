@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { FileUploader } from 'ng2-file-upload';
+import { ToastrService } from 'ngx-toastr';
+import { UserService } from 'src/app/user/user.service';
+import { environment } from 'src/environments/environment';
 import { SnackBarService } from '../../../utility/snackbar/snackbar.component';
 import { AssignmentService } from '../../assignment.service';
 
+const URL = environment.apiUrl + 'api/upload/file?itemType=assignment';
 @Component({
   selector: 'app-assignment-post',
   templateUrl: './assignment-post.component.html',
@@ -18,9 +23,18 @@ export class AssignmentPostComponent implements OnInit {
     filePath: ""
   }
   file;
-  subjectList : any[] = [];
-  constructor(private _snackBar: SnackBarService, private assignmentService: AssignmentService) {
-    this.assignmentService.getSubject().subscribe((resp:any) => {
+  subjectList: any[] = [];
+
+  public uploader: FileUploader = new FileUploader({
+    url: URL,
+    headers: [{
+      name: "Authorization", value: this.userService.getJWTToken()!,
+    }],
+    itemAlias: 'file',
+  });
+
+  constructor(private _snackBar: SnackBarService, private assignmentService: AssignmentService, private toastr: ToastrService, private userService: UserService) {
+    this.assignmentService.getSubject().subscribe((resp: any) => {
       try {
         this.subjectList = JSON.parse(resp["subject"]);
       }
@@ -30,15 +44,25 @@ export class AssignmentPostComponent implements OnInit {
     }, err => {
       this._snackBar.openSnackBar('Unable to load categories.', 'X')
     });
-    this.file = {
-      _id: "",
-      filePath: "",
-      key: "",
-    };
     this.updateEnabled = true;
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.uploader.onAfterAddingFile = (file) => {
+      file.withCredentials = false;
+      this.updateEnabled = false;
+      this.toastr.show('File uploading...');
+    };
+    this.uploader.onCompleteItem = (item: any, resp: string, status: any) => {
+      console.log('Uploaded File Details:', item);
+      this.toastr.success('File successfully uploaded!');
+
+      let rsp = JSON.parse(resp);
+      this.file = rsp["file"];
+      this.assignment.fileId = this.file._id;
+      this.assignment.filePath = this.file.filePath;
+      this.updateEnabled = true;
+    };
   }
 
   saveAssignment() {
@@ -51,22 +75,6 @@ export class AssignmentPostComponent implements OnInit {
       this._snackBar.openSnackBar('Assignment Created.', 'X')
     }, err => {
       this._snackBar.openSnackBar(err.error.error, 'X')
-    });
-
-  }
-  onFileChanged($event) {
-    const file = $event.target.files[0]
-    this.updateEnabled = false;
-
-    this.assignmentService.uploadFile(file, this.file._id).subscribe((resp:any) => {
-      this.file = resp["file"];
-      this.assignment.fileId = this.file._id;
-      this.assignment.filePath = this.file.filePath;
-      this._snackBar.openSnackBar("File uploaded", "X");
-      this.updateEnabled = true;
-    }, err => {
-      this._snackBar.openSnackBar("Could not upload File. " + err.msg, "X");
-      this.updateEnabled = true;
     });
   }
 

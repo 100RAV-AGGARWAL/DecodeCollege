@@ -16,7 +16,7 @@
 			<mat-form-field class="example-full-width">
 				<input matInput name="deadline" [(ngModel)]="assignment.deadline" placeholder="Due Date" type="date">
 			</mat-form-field>
-			<input type="file" (change)="onFileChanged($event)">
+			<input type="file" name="file" ng2FileSelect [uploader]="uploader" (change)="uploader.uploadAll()">
 
 			<button mat-raised-button color="primary" ng-disabled="!updateEnabled">Submit</button>
 		</form>
