@@ -1,0 +1,20 @@
+<section class="section wb">
+	<div class="container">
+		<h1> Login</h1>
+		<form class="form-signin" (ngSubmit)="login()" #loginForm="ngForm">
+			<mat-form-field class="example-full-width">
+				<input matInput placeholder="Email Id" [(ngModel)]="loginData.username" value="" name="username"
+					required>
+			</mat-form-field>
+			<mat-form-field class="example-full-width">
+				<input type="password" matInput placeholder="Password" [(ngModel)]="loginData.password" value=""
+					name="password" required>
+			</mat-form-field>
+			<button mat-raised-button color="primary" [disabled]="!loginForm.form.valid">Login</button>
+			<a [routerLink]="['/user/forgot']"> Forgot Password</a>
+			<p>
+				Not a member? <a [routerLink]="['/user/signup']">Signup here</a>
+			</p>
+		</form>
+	</div>
+</section>

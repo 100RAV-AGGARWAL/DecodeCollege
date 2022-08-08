@@ -20,6 +20,6 @@ import { LayoutService } from './layout.service';
     HeaderComponent,
     FooterComponent
   ],
-  providers: [LayoutService]
+  // providers: [LayoutService]
 })
 export class LayoutModule { }

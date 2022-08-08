@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserModule } from './user/user.module';
 import { LayoutModule } from './layout/layout.module';
@@ -13,23 +12,30 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
+import { appRoutes } from './app.route';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
-    AppRoutingModule,
     UserModule,
     LayoutModule,
     HomeModule,
     UtilityModule,
     AssignmentModule,
-    RouterModule,
+    RouterModule.forRoot(
+			appRoutes,
+			{ enableTracing: true, relativeLinkResolution: 'legacy' } 
+		),
+    ToastrModule.forRoot(),
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
