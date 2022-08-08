@@ -23,8 +23,10 @@ export class UserLoginComponent implements OnInit {
 	login() {
 		this.userService.login(this.loginData.username, this.loginData.password).subscribe(res => {
 			this._snackBar.openSnackBar("Logged in", "X");
+			this.router.navigate(['/dashboard']);
 		}, err => {
 			this._snackBar.openSnackBar(err.error.error, "X");
+			this.router.navigate(['/user/login']);
 		});
 	}
 }

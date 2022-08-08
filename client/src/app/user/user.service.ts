@@ -26,6 +26,12 @@ export class UserService {
 		}
 		return new Observable((observer) => {
 			this.http.post(environment.apiUrl + 'api/users/login', loginData).subscribe(resp => {
+				localStorage.setItem('jwtToken', resp["token"]);
+				localStorage.setItem('role', resp["user"]["role"]);
+				localStorage.setItem('userId', resp["user"]["_id"]);
+				localStorage.setItem('lastLoggedIn', Date.now().toString());
+				localStorage.setItem('totaltime', resp["totalTime"]);
+				this.router.navigate(['']);
 				observer.next(resp);
 			}, err => {
 				observer.error(err);
@@ -93,6 +99,26 @@ export class UserService {
 
 	resetpassword(user: any) {
 		return this.http.post(environment.apiUrl + "api/reset/password", user);
+	}
+
+	isAdmin() {
+		if (this.isLoggedIn()) {
+			return localStorage.getItem("role") === "admin" || localStorage.getItem("role") === "superuser";
+		}
+		return false
+	}
+	isOwner(userId:any) {
+		if (this.isLoggedIn()) {
+			return localStorage.getItem("userId") === userId;
+		}
+		return false
+	}
+
+	getUserId() {
+		if (this.isLoggedIn()) {
+			return localStorage.getItem("userId");
+		}
+		return false
 	}
 
 }

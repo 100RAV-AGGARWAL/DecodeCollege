@@ -67,7 +67,6 @@ export class AssignmentPostComponent implements OnInit {
     }, err => {
       this._snackBar.openSnackBar("Could not upload File. " + err.msg, "X");
       this.updateEnabled = true;
-
     });
   }
 

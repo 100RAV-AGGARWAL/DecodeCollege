@@ -10,8 +10,8 @@ const SubjectController = require('../controllers/subject.controller');
 const SemesterController = require('../controllers/semester.controller');
 const FileController = require('../controllers/file.controller');
 const UploadController = require('../controllers/upload.controller');
-
 require('./../middleware/passport')(passport)
+const multerUpload = require('../lib/multer');
 
 var requireAuth = passport.authenticate('jwt', { session: false });
 
@@ -49,9 +49,8 @@ router.delete("/semester", requireAuth, authService.roleAuthorization(["user"]),
 router.get("/semester/list", requireAuth, authService.roleAuthorization(["admin"]), SemesterController.list);
 router.get("/semester/mySemesters", requireAuth, authService.roleAuthorization(["user"]), SemesterController.mySemesters);
 
-router.post('/upload/assignment', requireAuth, UploadController.uploadAssignmentFile)
-router.post('/upload/notes', requireAuth, UploadController.uploadNotesFile)
+router.post('/upload/file', requireAuth, authService.roleAuthorization(["user"]), multerUpload.single('file'), UploadController.uploadFile)
 
-router.post('/file', requireAuth, authService.roleAuthorization(["user"]), FileController.upload); //create   
-router.get('/file', FileController.get); //create
+// router.post('/file', requireAuth, authService.roleAuthorization(["user"]), FileController.upload); //create   
+// router.get('/file', FileController.get); //create
 module.exports = router;

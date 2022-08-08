@@ -35,14 +35,14 @@ export class AssignmentService {
 	}
 
   public uploadFile(file: File, fileId: any): Observable<Object> {
-		const formData = new FormData();
+		let formData = new FormData();
+		const itemType = 'assignment';
+		formData.set('file', file, file.name);
+		formData.set('fileId', fileId);
 
-		formData.append('file', file);
-		formData.append('fileId', fileId);
-
-		return this.http.post(environment.apiUrl + 'api/upload/assignment', formData, {
+		return this.http.post(environment.apiUrl + 'api/upload/file?itemType=' + itemType, formData, {
 			headers: {
-				"Authorization": this.userService.getJWTToken()!
+				"Authorization": this.userService.getJWTToken()!,
 			}
 		});
 	}

@@ -9,12 +9,12 @@ const { promisify } = require('util')
 
 const unlinkAsync = promisify(fs.unlink)
 
-exports.uploadAssignmentFile = async function (req, res) {
-	uploadOnMulter(req, res, "assignment");
-}
-
-exports.uploadNotesFile = async function (req, res) {
-	uploadOnMulter(req, res, "notes");
+exports.uploadFile = async function (req, res) {
+	if (req.query.itemType == "assignment") {
+		uploadOnMulter(req, res, "assignment");
+	} else {
+		uploadOnMulter(req, res, "notes");
+	}
 }
 
 const removePrevious = async function (fileId) {
@@ -34,20 +34,20 @@ const removePrevious = async function (fileId) {
 }
 
 const uploadOnMulter = async function (req, res, itemType) {
-	let uploadContent = multerUpload.single(itemType);
-	let fileError = "File specifications allowed : Size - " + config.get('fileUploadConfig').size + "Kb, File Type - " + config.get('fileUploadConfig').extensionType;
-	uploadContent(req, res, async function (err) {
-		if (err) {
-			return ReE(res, fileError, 422);
-		} else {
-			let fileInstance = {};
-			let file;
-			fileInstance.filePath = req.file.location;
-			fileInstance.itemType = itemType;
-			[err, file] = await to(File.create(fileInstance));
+	if (!req.file) {
+		return ReE(res, "No file uploaded");
+	}
 
-			removePrevious(req.body.fileId);
-			res.json({ status: 200, msg: "Successfully uploaded new file.", file: file.toObject() });
-		}
-	});
+	let err, file;
+	[err, file] = await to(File.create({
+		name: req.file.filename,
+		filePath: req.file.path,
+		itemType: itemType
+	}));
+	if (err) {
+		logger.error("Upload Controller - upload : Could not create file ", err);
+		return ReE(res, err, 422);
+	}
+
+	res.json({ status: 200, msg: "Successfully uploaded new" + itemType, file: file.toObject() });
 }
