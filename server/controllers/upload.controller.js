@@ -23,7 +23,17 @@ const removePrevious = async function (fileId) {
 			logger.error("Upload Controller - upload : Could not find file for id ", fileId);
 		} else {
 			try {
-				unlinkAsync(req.file.path);
+				let path = file.filePath;
+				[err, fileTemp] = await to(File.deleteOne({ _id: fileId }))
+				if (err) {
+					logger.error("Upload Controller - upload : Could not delete file for id ", fileId);
+					return ReE(res, err);
+				}
+				[err, removeIns] = await to(unlinkAsync(path));
+				if (err) {
+					logger.error("Upload Controller - upload : Could not delete file for id ", fileId);
+					return ReE(res, err);
+				}
 			} catch (err) {
 				logger.error("Upload Controller - upload : Could not delete file for id ", fileId, err);
 			}
@@ -35,8 +45,15 @@ const uploadOnMulter = async function (req, res, itemType) {
 	if (!req.file) {
 		return ReE(res, "No file uploaded");
 	}
+	let err;
+	if (req.query.fileId && req.query.fileId != "") {
+		[err, fileIns] = await to(removePrevious(req.query.fileId));
+		if (err) {
+			return ReE(res, err);
+		}
+	}
 
-	let err, file;
+	let file;
 	[err, file] = await to(File.create({
 		name: req.file.filename,
 		filePath: req.file.path,

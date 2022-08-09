@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { SnackBarService } from '../../../utility/snackbar/snackbar.component';
 import { AssignmentService } from '../../assignment.service';
 
-const URL = environment.apiUrl + 'api/upload/file?itemType=assignment';
+const URL = environment.apiUrl + 'api/upload/file?itemType=assignment&fileId=';
 @Component({
   selector: 'app-assignment-post',
   templateUrl: './assignment-post.component.html',
@@ -26,7 +26,7 @@ export class AssignmentPostComponent implements OnInit {
   subjectList: any[] = [];
 
   public uploader: FileUploader = new FileUploader({
-    url: URL,
+    url: URL + this.assignment.fileId,
     headers: [{
       name: "Authorization", value: this.userService.getJWTToken()!,
     }],
@@ -52,6 +52,9 @@ export class AssignmentPostComponent implements OnInit {
       file.withCredentials = false;
       this.updateEnabled = false;
       this.toastr.show('File uploading...');
+      this.uploader.setOptions({
+        url: URL + this.assignment.fileId,
+      });
     };
     this.uploader.onCompleteItem = (item: any, resp: string, status: any) => {
       console.log('Uploaded File Details:', item);
