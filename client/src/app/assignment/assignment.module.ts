@@ -22,12 +22,16 @@ import { UserModule } from '../user/user.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FileUploadModule } from 'ng2-file-upload';
 import { AssignmentMyassignmentsComponent } from './user/assignment-myassignments/assignment-myassignments.component';
+import { AssignmentViewComponent } from './user/assignment-view/assignment-view.component';
+import { AssignmentEditComponent } from './user/assignment-edit/assignment-edit.component';
 
 @NgModule({
   declarations: [
     AssignmentPostComponent,
     AssignmentDeleteComponent,
-    AssignmentMyassignmentsComponent
+    AssignmentMyassignmentsComponent,
+    AssignmentViewComponent,
+    AssignmentEditComponent
   ],
   imports: [
     CommonModule,
@@ -47,7 +51,7 @@ import { AssignmentMyassignmentsComponent } from './user/assignment-myassignment
     UtilityModule,
     MatSnackBarModule,
     UserModule,
-    FileUploadModule
+    FileUploadModule,
   ],
   providers: [
     AssignmentService
