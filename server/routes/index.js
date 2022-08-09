@@ -7,7 +7,6 @@ const ForgotPasswordController = require('../controllers/forgotpassword.controll
 const authService = require('../services/auth.service');
 const SubjectController = require('../controllers/subject.controller');
 const SemesterController = require('../controllers/semester.controller');
-const FileController = require('../controllers/file.controller');
 const UploadController = require('../controllers/upload.controller');
 const multerUpload = require('../lib/multer');
 const passport = require('passport');
