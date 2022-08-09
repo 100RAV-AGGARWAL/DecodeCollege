@@ -21,11 +21,13 @@ import { AssignmentService } from './assignment.service';
 import { UserModule } from '../user/user.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FileUploadModule } from 'ng2-file-upload';
+import { AssignmentMyassignmentsComponent } from './user/assignment-myassignments/assignment-myassignments.component';
 
 @NgModule({
   declarations: [
     AssignmentPostComponent,
-    AssignmentDeleteComponent
+    AssignmentDeleteComponent,
+    AssignmentMyassignmentsComponent
   ],
   imports: [
     CommonModule,
