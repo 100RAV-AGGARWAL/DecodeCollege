@@ -6,13 +6,13 @@ import { environment } from 'src/environments/environment';
 import { UserService } from '../user/user.service';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class AssignmentService {
 
-  constructor(private http: HttpClient, private router: Router, private userService: UserService) { }
+	constructor(private http: HttpClient, private router: Router, private userService: UserService) { }
 
-  saveAssignments(assignment: any) {
+	saveAssignments(assignment: any) {
 		return new Observable((observer) => {
 			this.http.post(environment.apiUrl + 'api/assignment', assignment, {
 				headers: {
@@ -30,7 +30,19 @@ export class AssignmentService {
 		});
 	}
 
-  getSubject() {
+	getSubject() {
 		return this.http.get(environment.apiUrl + 'api/subject/list');
+	}
+
+	getMyAssignment(pagination) {
+		let limit = pagination.limit;
+		let offset = limit * pagination.pageIndex;
+
+		return this.http.get(environment.apiUrl + 'api/assignment/myAssignments?limit=' + limit + "&offset=" + offset, {
+			headers: {
+				"Authorization": this.userService.getJWTToken()!
+			}
+		});
+
 	}
 }

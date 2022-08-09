@@ -238,9 +238,32 @@ const myAssignments = async function (req, res) {
 	);
 	if (err) return ReE(res, err.message);
 
+	let assignmentJson = assignmentList.map(assignment => {
+		return assignment.toObject();
+	});
+
+	for (let index in assignmentJson) {
+		[err, subject] = await to(getSubjectInfo(assignmentJson[index].subjectId));
+		if (err) return ReE(res, err.message);
+
+		assignmentJson[index].subject = {
+			_id: subject._id,
+			name: subject.name,
+			subjectcode: subject.subjectcode,
+			credits: subject.credits,
+			semester: subject.semester,
+		};
+	}
+
+	[err, assignmentCount] = await to(Assignment.find({ userId: req.user.id }).count());
+	if (err) {
+		logger.error("Assignment Controller - myAssignments : Assignments count not found", err);
+		return ReE(res, err, 422);
+	}
+
 	res.setHeader("Content-Type", "application/json");
 
-	return ReS(res, { assignment: JSON.stringify(assignmentList) });
+	return ReS(res, { assignment: JSON.stringify(assignmentJson), total: assignmentCount });
 };
 
 module.exports.myAssignments = myAssignments;

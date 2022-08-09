@@ -34,7 +34,7 @@ router.delete('/assignment', requireAuth, authService.roleAuthorization(["user"]
 router.get("/assignment/listPending", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.listPending);
 router.get("/assignment/listSubmitted", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.listSubmitted);
 router.get("/assignment/listMissed", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.listMissed);
-router.get("/assignment/listAll", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.myAssignments);
+router.get("/assignment/myAssignments", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.myAssignments);
 
 router.post("/subject", requireAuth, authService.roleAuthorization(["admin"]), SubjectController.create);
 router.get("/subject", SubjectController.get);
