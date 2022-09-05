@@ -101,16 +101,45 @@ module.exports.findAssignmentById = findByPk;
 
 const update = async function (req, res) {
 	let assignment_id, err, assignment, savedassignment;
-	assignment_id = req.body._id;
+
+	if (!req.user) {
+		logger.error("No user found");
+		return ReE(res, "No user found");
+	}
+
+	let body = req.body;
+
+	assignment_id = body._id;
 
 	[err, assignment] = await to(findByPk(assignment_id));
 	if (err) return ReE(res, err.message);
 
-	if (!assignment.userId.equals(req.user.id)) {
+	if (!assignment._id == req.user.id) {
 		return ReE(res, "User not authorized to edit");
 	}
+
+	if (!body.name) {
+		logger.error("Assignment name is required");
+		return ReE(res, "Assignment name is required");
+	}
+	if (!body.deadline) {
+		logger.error("Assignment deadline is required");
+		return ReE(res, "Assignment deadline is required");
+	}
+	if (!body.subject._id) {
+		logger.error("Assignment subject is required");
+		return ReE(res, "Assignment subject is required");
+	}
+
+	body.deadline = new Date(body.deadline);
+
 	assignment.set(req.body);
-	assignment.status = "PENDING";
+
+	if (body.deadline >= new Date()) {
+		assignment.status = "PENDING";
+	} else {
+		assignment.status = "MISSED";
+	}
 
 	[err, savedassignment] = await to(assignment.save());
 	if (err) {

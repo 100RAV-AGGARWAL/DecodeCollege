@@ -19,7 +19,7 @@ export class AssignmentService {
 					"Authorization": this.userService.getJWTToken()!
 				}
 			}).subscribe(resp => {
-				this.router.navigate(['/assignments/myAssignments']);
+				this.router.navigate(['/assignment/myAssignments']);
 				observer.next(resp);
 			}, err => {
 				if (err.status == 401) {
@@ -44,5 +44,31 @@ export class AssignmentService {
 			}
 		});
 
+	}
+
+	getAssignment(id) {
+		return this.http.get(environment.apiUrl + 'api/assignment?_id=' + id, {
+			headers: {
+				"Authorization": this.userService.getJWTToken()!
+			}
+		});
+	}
+
+	updateAssignments(assignment: any) {
+		return new Observable((observer) => {
+			this.http.put(environment.apiUrl + 'api/assignment', assignment, {
+				headers: {
+					"Authorization": this.userService.getJWTToken()!
+				}
+			}).subscribe(resp => {
+				this.router.navigate(['/assignment/myAssignments']);
+				observer.next(resp);
+			}, err => {
+				if (err.status == 401) {
+					this.userService.logoutUser();
+				}
+				observer.error(err);
+			});
+		});
 	}
 }

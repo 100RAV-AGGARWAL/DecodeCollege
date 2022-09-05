@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { AssignmentRoutingModule } from './assignment-routing.module';
 import { AssignmentPostComponent } from './user/assignment-post/assignment-post.component';
@@ -54,7 +54,8 @@ import { AssignmentEditComponent } from './user/assignment-edit/assignment-edit.
     FileUploadModule,
   ],
   providers: [
-    AssignmentService
+    AssignmentService,
+    DatePipe
   ]
 })
 export class AssignmentModule { }
