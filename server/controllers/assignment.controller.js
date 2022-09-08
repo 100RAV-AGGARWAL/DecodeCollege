@@ -1,9 +1,10 @@
 const { to, ReE, ReS } = require("../services/util.service");
-const { Assignment, User } = require("../models");
+const { Assignment, User, File } = require("../models");
 const { findSubjectById } = require("./subject.controller");
 const { getPublicInfo } = require("./user.controller");
 const { getSubjectInfo } = require("./subject.controller");
 const logger = require("../lib/logging");
+const UploadController = require('./upload.controller');
 
 const create = async function (req, res) {
 	res.setHeader("Content-Type", "application/json");
@@ -152,14 +153,39 @@ const update = async function (req, res) {
 module.exports.update = update;
 
 const remove = async function (req, res) {
-	let assignment_id, err, assignment;
-	assignment_id = req.query._id;
+	let assignment_id, err, assignment, file_id;
+	assignment_id = req.query.assignmentId;
+	file_id = req.query.fileId;
 
-	[err, assignment] = await to(findByPk(assignment_id));
-	if (err) return ReE(res, err.message);
+	if (!file_id) {
+		logger.error("File id is required");
+		return ReE(res, "File Id is required");
+	}
 
-	[err, assignment] = await to(assignment.destroy());
-	if (err) return ReE(res, 'error occured trying to delete assignment');
+	let fileModel;
+	[err, fileModel] = await to(File.findById(file_id));
+	if (err) {
+		logger.error("File not found");
+		return ReE(res, "File not found");
+	}
+
+	let userId = fileModel.name.split("-")[0];
+	if (userId != req.user.id) {
+		logger.error("User not authorized to delete");
+		return ReE(res, "You are not authorized to delete this file");
+	}
+
+	let fileIns;
+	[err, fileIns] = await to(UploadController.removeFile(file_id));
+	if (err) {
+		logger.error("Error deleting file");
+	}
+
+	[err, assignment] = await to(Assignment.deleteOne({ _id: assignment_id }));
+	if (err) {
+		logger.error("Error deleting assignment");
+		return ReE(res, err);
+	}
 
 	return ReS(res, { message: 'Deleted assignment' }, 204);
 }

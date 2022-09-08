@@ -13,6 +13,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
 import { UtilityModule } from "../utility/utility.module";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -52,6 +53,7 @@ import { AssignmentEditComponent } from './user/assignment-edit/assignment-edit.
     MatSnackBarModule,
     UserModule,
     FileUploadModule,
+    MatDialogModule
   ],
   providers: [
     AssignmentService,

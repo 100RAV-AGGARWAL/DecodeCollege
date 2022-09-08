@@ -7,15 +7,35 @@ const { promisify } = require('util')
 
 const unlinkAsync = promisify(fs.unlink)
 
-exports.uploadFile = async function (req, res) {
+const uploadFile = async function (req, res) {
 	if (req.query.itemType == "assignment") {
 		uploadOnMulter(req, res, "assignment");
 	} else {
 		uploadOnMulter(req, res, "notes");
 	}
 }
+module.exports.uploadFile = uploadFile;
 
-const removePrevious = async function (fileId) {
+// exports.deleteFile = async function (fileId) {
+// 	let fileId = req.body.fileId;
+// 	if (!fileId) {
+// 		return ReE(res, "File Id is required");
+// 	}
+
+// 	let userId = fileId.split("-")[0];
+// 	if (userId != req.user._id) {
+// 		return ReE(res, "You are not authorized to delete this file");
+// 	}
+
+// 	let err, fileIns;
+// 	[err, fileIns] = await to(removePrevious(req.body.fileId));
+// 	if (err) {
+// 		return ReE(res, err);
+// 	}
+// 	return ReS(res, { message: "Successfully deleted file" }, 200);
+// }
+
+const removeFile = async function (fileId) {
 	let err, file;
 	if (fileId) {
 		[err, file] = await to(File.findById(fileId))
@@ -40,6 +60,7 @@ const removePrevious = async function (fileId) {
 		}
 	}
 }
+module.exports.removeFile = removeFile;
 
 const uploadOnMulter = async function (req, res, itemType) {
 	if (!req.file) {
@@ -48,7 +69,7 @@ const uploadOnMulter = async function (req, res, itemType) {
 
 	let err;
 	if (req.query.fileId && req.query.fileId != "") {
-		[err, fileIns] = await to(removePrevious(req.query.fileId));
+		[err, fileIns] = await to(removeFile(req.query.fileId));
 		if (err) {
 			return ReE(res, err);
 		}
