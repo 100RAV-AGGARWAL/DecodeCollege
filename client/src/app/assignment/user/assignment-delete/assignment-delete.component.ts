@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-assignment-delete',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AssignmentDeleteComponent implements OnInit {
 
-  constructor() { }
+  reason='';
+  constructor(public dialogRef: MatDialogRef<AssignmentDeleteComponent>) {}
 
   ngOnInit(): void {
+    
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

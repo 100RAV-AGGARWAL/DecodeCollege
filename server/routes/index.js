@@ -48,6 +48,6 @@ router.delete("/semester", requireAuth, authService.roleAuthorization(["user"]),
 router.get("/semester/list", requireAuth, authService.roleAuthorization(["admin"]), SemesterController.list);
 router.get("/semester/mySemesters", requireAuth, authService.roleAuthorization(["user"]), SemesterController.mySemesters);
 
-router.post('/upload/file', requireAuth, authService.roleAuthorization(["user"]), multerUpload.single('file'), UploadController.uploadFile)
+router.post('/upload/file', requireAuth, authService.roleAuthorization(["user"]), multerUpload.single('file'), UploadController.uploadFile);
 
 module.exports = router;

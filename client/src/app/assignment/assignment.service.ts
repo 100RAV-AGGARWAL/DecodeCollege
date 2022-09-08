@@ -71,4 +71,22 @@ export class AssignmentService {
 			});
 		});
 	}
+
+	deleteAssignment(body:any) {
+		return new Observable((observer) => {
+			this.http.delete(environment.apiUrl + 'api/assignment?assignmentId=' + body.assignmentId + '&fileId=' + body.fileId, {
+				headers: {
+					"Authorization": this.userService.getJWTToken()!
+				}
+			}).subscribe(resp => {
+				this.router.navigate(['/assignment/myAssignments']);
+				observer.next(resp);
+			}, err => {
+				if (err.status == 401) {
+					this.userService.logoutUser();
+				}
+				observer.error(err);
+			});
+		});
+	}
 }
