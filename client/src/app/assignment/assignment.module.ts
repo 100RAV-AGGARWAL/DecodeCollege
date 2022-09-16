@@ -25,6 +25,8 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { AssignmentMyassignmentsComponent } from './user/assignment-myassignments/assignment-myassignments.component';
 import { AssignmentViewComponent } from './user/assignment-view/assignment-view.component';
 import { AssignmentEditComponent } from './user/assignment-edit/assignment-edit.component';
+import  {  PdfViewerModule  }  from  'ng2-pdf-viewer';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import { AssignmentEditComponent } from './user/assignment-edit/assignment-edit.
     MatSnackBarModule,
     UserModule,
     FileUploadModule,
-    MatDialogModule
+    MatDialogModule,
+    PdfViewerModule,
+    NgxExtendedPdfViewerModule
   ],
   providers: [
     AssignmentService,
