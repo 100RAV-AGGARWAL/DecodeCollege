@@ -1,1 +1,14 @@
-<p>assignment-view works!</p>
+<section>
+  <div>
+    <h1> Assignment View </h1>
+    <div>
+      Name: {{assignment.name}} <br>
+      Deadline: {{assignment.deadline | date}} <br>
+      Subject: {{assignment.subject.name}} <br>
+    </div>
+    <br>
+    <div class="pdf-viewer">
+      <ngx-extended-pdf-viewer [src]="filePath"> </ngx-extended-pdf-viewer>
+    </div>
+  </div>
+</section>
