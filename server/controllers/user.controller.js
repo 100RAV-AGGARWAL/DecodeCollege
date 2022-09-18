@@ -1,8 +1,8 @@
 const { User } = require('../models');
 const authService = require('../services/auth.service');
 const { to, ReE, ReS } = require('../services/util.service');
-const { sendEmail } = require("../lib/sendemail");
-const { getTemplateHtml } = require("../lib/emailTemplate");
+const { sendEmail } = require("../lib/mails/sendemail");
+const { getTemplateHtml } = require("../lib/mails/emailTemplate");
 const logger = require("../lib/logging");
 const config = require('config');
 var crypto = require('crypto');

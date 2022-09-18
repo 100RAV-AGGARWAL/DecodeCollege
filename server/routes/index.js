@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const AssignmentController = require('../controllers/assignment.controller');
+const NoteController=require('../controllers/notes.controller');
 const UserController = require('../controllers/user.controller');
 const ForgotPasswordController = require('../controllers/forgotpassword.controller');
 const authService = require('../services/auth.service');
@@ -35,6 +36,8 @@ router.get("/assignment/listPending", requireAuth, authService.roleAuthorization
 router.get("/assignment/listSubmitted", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.listSubmitted);
 router.get("/assignment/listMissed", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.listMissed);
 router.get("/assignment/myAssignments", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.myAssignments);
+
+router.post("/note", requireAuth, authService.roleAuthorization(["user"]),NoteController.create);
 
 router.post("/subject", requireAuth, authService.roleAuthorization(["admin"]), SubjectController.create);
 router.get("/subject", SubjectController.get);

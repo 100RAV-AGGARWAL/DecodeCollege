@@ -1,7 +1,7 @@
 const { to, ReE, ReS } = require("../services/util.service");
 const { User } = require("../models");
-const { sendEmail } = require("../lib/sendemail");
-const { getTemplateHtml } = require("../lib/emailTemplate");
+const { sendEmail } = require("../lib/mails/sendemail");
+const { getTemplateHtml } = require("../lib/mails/emailTemplate");
 const logger = require("../lib/logging");
 var crypto = require('crypto');
 const config = require('config');
