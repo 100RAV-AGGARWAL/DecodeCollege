@@ -268,8 +268,7 @@ const userActivation = async function (req, res) {
 			logger.error("User Controller - getUser : Unable to save the user", err);
 			return ReS(res, 'Unable to activate the user. Please try later');
 		} else {
-			req.session.message = 'Successfully activated. Please login.';
-			req.session.login = { token: user.getJWT(), user: user.toObject(), totalTime: config.get("jwt").expiration };
+			res.redirect('/user/login');
 		}
 	}
 }

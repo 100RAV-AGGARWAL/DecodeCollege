@@ -68,7 +68,7 @@ const resetPassword = async function (req, res) {
 		return ReE(res, new Error("Password reset token has expired"), 422);
 	}
 
-	user.password = req.body.newpassword;
+	user.password = req.body.password;
 	if (user.password !== req.body.retypepassword) {
 		logger.error("ForgotPassword Controller : resetPassword - Password do not match", err)
 		return ReE(res, new Error("Password do not match"), 422);
