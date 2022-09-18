@@ -10,15 +10,15 @@
 	"email": {
 		"job_enabled": true,
 		"service": "gmail",
-		"username": "virtualbeingvb@gmail.com",
-		"password": "VB@being19",
+		"username": "sourav.developer.testing@gmail.com",
+		"password": "pehttyekoqhtovkj",
 		"emailIds": {
 			"notification": {
-				"username": "virtualbeingvb@gmail.com",
-				"password": "VB@being19"
+				"username": "sourav.developer.testing@gmail.com",
+				"password": "pehttyekoqhtovkj"
 			}
 		},
-		"contactus": "virtualbeingvb@gmail.com"
+		"contactus": "sourav.developer.testing@gmail.com"
 	},
 	"logging": {
 		"level": "error",
@@ -44,8 +44,7 @@
 			"./routes/*.js"
 		]
 	},
-	"fileUploadConfig": {
-		"size": 10485760,
-		"extensionType": "pdf, docx"
+	"fileConfig": {
+		"fileUploadPath": "./upload/files"
 	}
 }

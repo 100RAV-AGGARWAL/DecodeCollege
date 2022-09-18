@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 const config = require("config");
 let email_config = config.get("email");
-const logger = require("../../lib/logging");
+const logger = require("../../logging");
 
 const email = async function (toList, from, subject, html, text) {
 	//toList is an Array. from will be a name.

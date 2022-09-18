@@ -1,8 +1,8 @@
 const { User } = require('../models');
 const authService = require('../services/auth.service');
 const { to, ReE, ReS } = require('../services/util.service');
-const { sendEmail } = require("../lib/sendemail");
-const { getTemplateHtml } = require("../lib/emailTemplate");
+const { sendEmail } = require("../lib/mails/sendemail");
+const { getTemplateHtml } = require("../lib/mails/emailTemplate");
 const logger = require("../lib/logging");
 const config = require('config');
 var crypto = require('crypto');
@@ -268,8 +268,7 @@ const userActivation = async function (req, res) {
 			logger.error("User Controller - getUser : Unable to save the user", err);
 			return ReS(res, 'Unable to activate the user. Please try later');
 		} else {
-			req.session.message = 'Successfully activated. Please login.';
-			req.session.login = { token: user.getJWT(), user: user.toObject(), totalTime: config.get("jwt").expiration };
+			res.redirect('/user/login');
 		}
 	}
 }

@@ -26,7 +26,7 @@ export class UserResetPasswordComponent implements OnInit {
 	ngOnInit() { }
 
 	resetpassword() {
-		//this.user.token = this.token;
+		this.user.token = this.token;
 		this.userService.resetpassword(this.user).subscribe((res) => {
 			this._snackBar.openSnackBar("message", "X");
 			this.router.navigate(['/']);
