@@ -1,7 +1,7 @@
 const { to, ReE, ReS } = require("../services/util.service");
 const { User } = require("../models");
-const { sendEmail } = require("../lib/sendemail");
-const { getTemplateHtml } = require("../lib/emailTemplate");
+const { sendEmail } = require("../lib/mails/sendemail");
+const { getTemplateHtml } = require("../lib/mails/emailTemplate");
 const logger = require("../lib/logging");
 var crypto = require('crypto');
 const config = require('config');
@@ -68,7 +68,7 @@ const resetPassword = async function (req, res) {
 		return ReE(res, new Error("Password reset token has expired"), 422);
 	}
 
-	user.password = req.body.newpassword;
+	user.password = req.body.password;
 	if (user.password !== req.body.retypepassword) {
 		logger.error("ForgotPassword Controller : resetPassword - Password do not match", err)
 		return ReE(res, new Error("Password do not match"), 422);
