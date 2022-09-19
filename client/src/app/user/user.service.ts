@@ -39,14 +39,9 @@ export class UserService {
 		});
 	}
 
-	logout() {
-		localStorage.removeItem("role")
-		this.router.navigate(['']);
-	}
-
 	logoutUser() {
-		localStorage.removeItem("role")
-		this.router.navigate(['user/login']);
+		localStorage.clear();
+		this.router.navigate(['']);
 	}
 
 	isLoggedIn() {
