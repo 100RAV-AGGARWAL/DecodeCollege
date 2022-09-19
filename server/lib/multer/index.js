@@ -1,5 +1,7 @@
 const multer = require('multer');
 
+const allowedMimeTypes = ["application/pdf"];
+
 //Configuration for Multer
 const multerStorage = multer.diskStorage({
 	destination: (req, file, cb) => {
@@ -13,10 +15,10 @@ const multerStorage = multer.diskStorage({
 
 // Multer Filter
 const multerFilter = (req, file, cb) => {
-	if (file.mimetype.split("/")[1] === "pdf" || file.mimetype.split("/")[1] === "docx") {
+	if (allowedMimeTypes.includes(file.mimetype)) {
 		cb(null, true);
 	} else {
-		cb(new Error("Not a PDF or a DOCX File"), false);
+		cb(new Error("Not a PDF"), false);
 	}
 };
 
