@@ -37,11 +37,17 @@
               }
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css",
+              "template/lib/owlcarousel/assets/owl.carousel.min.css",
+              "template/css/style.css",
               "node_modules/ngx-toastr/toastr.css"
             ],
-            "scripts": []
+            "scripts": [
+              "template/js/main.js",
+              "template/lib/easing/easing.min.js",
+              "template/lib/owlcarousel/owl.carousel.min.js"
+            ]
           },
           "configurations": {
             "production": {
