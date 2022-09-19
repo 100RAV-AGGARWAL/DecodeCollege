@@ -16,7 +16,6 @@ export class NoteService {
       return this.http.get(environment.apiUrl + 'api/subject/list');
     }
     saveNotes(note: any) {
-    //  this.http.post(environment.apiUrl+'api/note',note)
       return new Observable((observer) => {
         this.http.post(environment.apiUrl + 'api/note', note, {
           headers: {

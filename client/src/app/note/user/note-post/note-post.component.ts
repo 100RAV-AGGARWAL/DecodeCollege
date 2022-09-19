@@ -14,13 +14,20 @@ const URL = environment.apiUrl + 'api/upload/file?itemType=note&fileId=';
 
 export class NotePostComponent implements OnInit {
   updateEnabled;
+  statusList = [
+    { name: "private" },
+    { name: "public" }
+  ]
   note = {
     name: "",
-    userId: "" ,
+    userId: "",
     fileId: "",
     filePath: "",
-    subjectId: "",
-    status: ""}
+    subject: {
+      _id: ""
+    },
+    status: ""
+  }
   file;
   subjectList: any[] = [];
   public uploader: FileUploader = new FileUploader({
@@ -32,7 +39,7 @@ export class NotePostComponent implements OnInit {
   });
 
 
-  constructor(private _snackBar: SnackBarService, private noteService: NoteService, private toastr: ToastrService, private userService: UserService) { 
+  constructor(private _snackBar: SnackBarService, private noteService: NoteService, private toastr: ToastrService, private userService: UserService) {
     this.noteService.getSubject().subscribe((resp: any) => {
       try {
         this.subjectList = JSON.parse(resp["subject"]);
@@ -46,7 +53,7 @@ export class NotePostComponent implements OnInit {
     this.updateEnabled = true;
   }
 
-  
+
 
 
   ngOnInit(): void {
@@ -81,7 +88,7 @@ export class NotePostComponent implements OnInit {
     }, err => {
       this._snackBar.openSnackBar(err.error.error, 'X')
     });
-  
+
   }
 
 }

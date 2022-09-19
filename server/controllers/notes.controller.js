@@ -6,53 +6,43 @@ const { getPublicInfo } = require('./user.controller');
 const create = async function (req, res) {
 	res.setHeader("Content-Type", "application/json");
 	const body = req.body;
-
 	if (!req.user) {
 		logger.error("No user found");
 		return ReE(res, "No user found");
 	}
-
 	let err, notes, subject;
+	notes = new Notes();
 	if (!body.name) {
 		logger.error("Note name is required");
 		return ReE(res, "Note name is required");
 	}
-
+	notes.name = body.name;
 	if (!body.subject._id) {
 		logger.error("Note subject is required");
 		return ReE(res, "Note subject is required");
 	}
-	if(!body.fileId){
+	notes.subjectId = body.subject._id;
+	if (!body.fileId) {
 		logger.error("Note File is required");
-		return ReE(res,"Note File is required");
+		return ReE(res, "Note File is required");
 	}
-	[err, notes] = await to(Notes.create(body));
-	if (err) {
-		return ReE(res, err, 422);
+	notes.fileId = body.fileId;
+	if (!body.status) {
+		logger.error("Note Status is required");
+		return ReE(res, "Note Status is required");
 	}
-
-	[err, subject] = await to(findSubjectById(body.subject._id));
-	if (err) {
-		return ReE(res, err.message);
+	notes.status = body.status;
+	if (!body.filePath) {
+		logger.error("Note FilePath is required");
+		return ReE(res, "Note FilePath is required");
 	}
-     if(body.status=='private'){
-		notes.status='private'
-	 }
-	 else{
-		notes.status='public'
-	 }
-
-	notes.userId = req.user.id;
-	notes.subjectId = subject._id;
-
+	notes.filePath = body.filePath;
+	notes.userId = req.user._id;
 	[err, notes] = await to(notes.save());
 	if (err) {
 		return ReE(res, err, 422);
 	}
-
 	let notesJson = notes.toObject();
-
-
 	return ReS(
 		res,
 		{ message: "Successfully created new notes.", notes: notesJson },
@@ -76,12 +66,12 @@ module.exports.findAssignmentById = findByPk;
 const get = async function (req, res) {
 	let note_id, err, note, user;
 	note_id = req.query._id;
-    [err, note] = await to(findByPk(note_id));
-	if(note_id)
-	if (err) return ReE(res, err.message);
-	if(note.status=='private'){
-		if(note.userId!=req.user.id){
-			return ReE(res, "Sorry,User is not authorized to view it."); 
+	[err, note] = await to(findByPk(note_id));
+	if (note_id)
+		if (err) return ReE(res, err.message);
+	if (note.status == 'private') {
+		if (note.userId != req.user.id) {
+			return ReE(res, "Sorry,User is not authorized to view it.");
 		}
 	}
 
@@ -104,7 +94,7 @@ const update = async function (req, res) {
 	[err, note] = await to(findByPk(note_id));
 	if (err) return ReE(res, err.message);
 
-	
+
 	note.set(req.body);
 
 	[err, savednote] = await to(note.save());
