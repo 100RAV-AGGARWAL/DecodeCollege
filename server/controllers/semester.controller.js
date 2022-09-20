@@ -1,7 +1,7 @@
 const { to, ReE, ReS } = require('../services/util.service');
 const { Semester, User } = require('../models');
 const { getPublicInfo, findUserById } = require("./user.controller");
-const { getSubjectInfo } = require("./subject.controller");
+const { getSubjectInfo, findSubjectById } = require("./subject.controller");
 const logger = require("../lib/logging");
 
 const create = async function (req, res) {
@@ -96,6 +96,44 @@ const get = async function (req, res) {
 }
 module.exports.get = get;
 
+const findgrade = async function (req, res) {
+	let semester_no, err, semester, user;
+	if (!req.query.semester_no) {
+		logger.error("Semester Controller - findgrade : Semester Number is not provided");
+		return ReE(res, new Error("Semester Number is not provided"), 422);
+	}
+
+	semester_no = req.query.semester_no;
+
+	[err, semester] = await to(findBySemNo(semester_no));
+	if (err) {
+		logger.error("Semester Controller - findgrade : Semester not found", err);
+		return ReE(res, err, 422);
+	}
+	[err, user] = await to(getPublicInfo(semester.createdById));
+	if (err) {
+		logger.error("Semester Controller - findgrade : Semester user not found", err);
+		return ReE(res, err, 422);
+	}
+	
+	let total = 0;
+	let totalSubjects = semester.sem_marks.length;
+	for (let i = 0; i < semester.sem_marks.length; i++) {
+		total += semester.sem_marks[i].marks;
+	}
+	const percentage = (total / totalSubjects) * 100;
+	let CGPA = percentage / 9.5;
+	semester.grade = CGPA;
+	if (semester.grade===CGPA) {
+		let semesterJson = semester.toObject()
+		semesterJson.user = user
+		return ReS(res, { message: 'Grade up to date.', semester: semesterJson, cgpa: semester.grade }, 201);
+	}
+	let semesterJson = semester.toObject()
+	semesterJson.user = user
+	return ReS(res, { message: 'Successfully saved new grade.', semester: semesterJson, cgpa: CGPA }, 201);
+}
+module.exports.findgrade = findgrade;
 const findBySemNo = async function (sem_no) {
 	let err, semester;
 

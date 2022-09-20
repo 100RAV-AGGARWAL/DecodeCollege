@@ -46,6 +46,7 @@ router.get("/semester", requireAuth, authService.roleAuthorization(["user"]), Se
 router.put("/semester", requireAuth, authService.roleAuthorization(["user"]), SemesterController.update);
 router.delete("/semester", requireAuth, authService.roleAuthorization(["user"]), SemesterController.remove);
 router.get("/semester/list", requireAuth, authService.roleAuthorization(["admin"]), SemesterController.list);
+router.get("/semester/grade", requireAuth, authService.roleAuthorization(["user"]), SemesterController.findgrade);
 router.get("/semester/mySemesters", requireAuth, authService.roleAuthorization(["user"]), SemesterController.mySemesters);
 
 router.post('/upload/file', requireAuth, authService.roleAuthorization(["user"]), multerUpload.single('file'), UploadController.uploadFile);
