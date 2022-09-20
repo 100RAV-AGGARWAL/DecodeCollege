@@ -1,0 +1,29 @@
+<section class="section wb">
+	<div class="container">
+		<br />
+		<h1> Upload Note</h1>
+		<form class="example-form" (ngSubmit)="saveNote()" #assignmentForm="ngForm">
+			<mat-form-field class="example-full-width">
+				<mat-select name="subject" placeholder="Subject" [(value)]="note.subject._id">
+					<mat-option *ngFor="let subject of subjectList" [value]="subject._id">
+						{{subject.name}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field class="example-full-width">
+				<input matInput name="name" [(ngModel)]="note.name" placeholder="Name" value="">
+			</mat-form-field>
+			<mat-form-field class="example-full-width">
+				<mat-select name="status" placeholder="Status" [(value)]="note.status">
+					<mat-option *ngFor="let status of statusList" [value]="status.name">
+						{{status.name}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+			
+			<input type="file" name="file" ng2FileSelect [uploader]="uploader" (change)="uploader.uploadAll()">
+
+			<button mat-raised-button color="warn" ng-disabled="!updateEnabled">Submit</button>
+		</form>
+	</div>
+</section>
