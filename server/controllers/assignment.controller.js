@@ -75,6 +75,12 @@ const get = async function (req, res) {
 	if (err) return ReE(res, err.message);
 
 	[err, user] = await to(getPublicInfo(assignment.createdById));
+
+	if (req.user.id != user._id) {
+		logger.error("User not authorized to view");
+		return ReE(res, "User not authorized to view");
+	}
+
 	[err, subject] = await to(getSubjectInfo(assignment.subjectId));
 
 	let assignmentJson = assignment.toObject();
