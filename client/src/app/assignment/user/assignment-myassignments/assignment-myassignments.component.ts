@@ -17,6 +17,7 @@ export class AssignmentMyassignmentsComponent implements OnInit {
 	pageEvent: PageEvent = new PageEvent;
 	pagination = { limit: 5, total: 0, pageIndex: 0 }
 	displayedCols = ['name', 'subject', 'deadline', 'status', 'edit', 'view', 'delete'];
+	isListEmpty : Boolean = true;
 
 	constructor(private assignmentService: AssignmentService, private userService: UserService, private _snackBar: SnackBarService, private dialog: MatDialog, private router: Router) {
 		this.pagination.total = 0;
@@ -38,13 +39,21 @@ export class AssignmentMyassignmentsComponent implements OnInit {
 			try {
 				this.assignmentList = JSON.parse(resp["assignment"]);
 				this.pagination.total = resp["total"];
+
+				if(this.assignmentList.length != 0) {
+					this.isListEmpty = false;
+				} else {
+					this.isListEmpty = true;
+				}
 			} catch (err) {
-				this._snackBar.openSnackBar('Assignments not found.', 'X')
+				this.isListEmpty = true;
+				this._snackBar.openSnackBar('Assignments not found.', 'X');
 			}
 		}, err => {
 			if (err.status == 401) {
 				this.userService.logoutUser();
 			}
+			this.isListEmpty = true;
 			this._snackBar.openSnackBar('Assignments not found.', 'X')
 		});
 	}

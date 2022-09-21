@@ -47,7 +47,7 @@ const create = async function (req, res) {
 		assignment.status = "MISSED";
 	}
 
-	assignment.createById = req.user.id;
+	assignment.createdById = req.user.id;
 	assignment.subjectId = subject._id;
 
 	[err, assignment] = await to(assignment.save());
@@ -74,7 +74,9 @@ const get = async function (req, res) {
 	[err, assignment] = await to(findByPk(assignment_id));
 	if (err) return ReE(res, err.message);
 
-	[err, user] = await to(getPublicInfo(assignment.createdById));
+	let assignmentJson = assignment.toObject();
+
+	[err, user] = await to(getPublicInfo(assignmentJson.createdById));
 
 	if (req.user.id != user._id) {
 		logger.error("User not authorized to view");
@@ -83,12 +85,9 @@ const get = async function (req, res) {
 
 	[err, subject] = await to(getSubjectInfo(assignment.subjectId));
 
-	let assignmentJson = assignment.toObject();
-
 	assignmentJson.user = user;
 	assignmentJson.subject = subject;
-	res.setHeader("Content-Type", "application/json");
-	[err, savedassignment] = await to(assignment.save());
+
 	return ReS(res, { assignment: assignmentJson });
 };
 module.exports.get = get;

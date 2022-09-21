@@ -50,11 +50,11 @@ export class AssignmentEditComponent implements OnInit {
         });
       }
       catch (err) {
-        this._snackBar.openSnackBar('Unable to load categories.', 'X')
+        this._snackBar.openSnackBar('Unable to load subjects.', 'X')
       }
 
     }, err => {
-      this._snackBar.openSnackBar('Unable to load categories.', 'X')
+      this._snackBar.openSnackBar('Unable to load subjects.', 'X')
     });
     this.updateEnabled = true;
   }

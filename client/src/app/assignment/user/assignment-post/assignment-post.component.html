@@ -1,7 +1,7 @@
 <div class="container-fluid py-5">
 	<div class="container py-5">
 		<div class="text-center">
-			<h1>Upload Assignment</h1>
+			<h2>Upload Assignment</h2>
 		</div>
 		<div class="row justify-content-center">
 			<div class="col-lg-8">
@@ -9,8 +9,8 @@
 					<div id="success"></div>
 					<form (ngSubmit)="saveAssignment()" #assignmentForm="ngForm">
 						<div class="control-group">
-							<mat-form-field class="form-control border-0 p-4" appearance="fill">
-								<mat-select class="select-css" name="subject" placeholder="Subject"
+							<mat-form-field class="form-control border-0 p-4">
+								<mat-select name="subject" placeholder="Subject"
 									[(value)]="assignment.subject._id">
 									<mat-option *ngFor="let subject of subjectList" [value]="subject._id">
 										{{subject.name}}
@@ -20,13 +20,13 @@
 							<p class="help-block text-danger"></p>
 						</div>
 						<div class="control-group">
-							<mat-form-field class="form-control border-0 p-4" appearance="fill">
+							<mat-form-field class="form-control border-0 p-4">
 								<input matInput name="name" [(ngModel)]="assignment.name" placeholder="Name" value="">
 							</mat-form-field>
 							<p class="help-block text-danger"></p>
 						</div>
 						<div class="control-group">
-							<mat-form-field class="form-control border-0 p-4" appearance="fill">
+							<mat-form-field class="form-control border-0 p-4">
 								<input matInput name="deadline" [(ngModel)]="assignment.deadline" placeholder="Due Date"
 									type="date">
 							</mat-form-field>

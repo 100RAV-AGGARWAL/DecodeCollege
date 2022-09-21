@@ -25,7 +25,7 @@ export class UserLoginComponent implements OnInit {
 			this._snackBar.openSnackBar("Logged in", "X");
 			this.router.navigate(['/dashboard']);
 		}, err => {
-			this._snackBar.openSnackBar(err.error.error, "X");
+			this._snackBar.openSnackBar("Error Logging in...", "X");
 			this.router.navigate(['/user/login']);
 		});
 	}
