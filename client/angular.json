@@ -46,6 +46,7 @@
               "src/styles.css",
               "template/lib/owlcarousel/assets/owl.carousel.min.css",
               "template/css/style.css",
+              "src/custom-theme.scss",
               "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [

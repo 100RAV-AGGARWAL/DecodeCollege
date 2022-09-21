@@ -2,6 +2,7 @@ const { to, ReE, ReS } = require("../services/util.service");
 const { Notes, User } = require("../models");
 const { findSubjectById } = require("./subject.controller");
 const { getPublicInfo } = require('./user.controller');
+const { getSubjectInfo } = require("./subject.controller");
 
 const create = async function (req, res) {
 	res.setHeader("Content-Type", "application/json");
@@ -50,6 +51,53 @@ const create = async function (req, res) {
 	);
 };
 module.exports.create = create;
+const list = async function (req, res) {
+
+	let notesList, noteCount, err;
+	var limit = req.query.limit ? (req.query.limit < 20 && req.query.limit > 0) ? parseInt(req.query.limit) : 20 : 20;
+	var offset = req.query.offset ? req.query.offset > 0 ? parseInt(req.query.offset) : 0 : 0;
+
+	var search = {};
+	var order = [];
+	if (req.query.search) {
+		search = req.query.search;
+		search = JSON.parse(search)
+	}
+	if (req.query.order) {
+		order = req.query.order;
+		order = JSON.parse(order);
+	}
+	[err, notesList] = await to(Notes.find({ userId: req.user.id }).sort(order).limit(limit).skip(offset));
+	if (err) {
+		logger.error("Notes Controller - list : Notes could not be fetched", err);
+		return ReE(res, err, 422);
+	}
+
+	let notesJson = notesList.map(notes => {
+		return notes.toObject();
+	});
+	for (let index in notesJson) {
+		[err, subject] = await to(getSubjectInfo(notesJson[index].subjectId));
+		if (err) return ReE(res, err.message);
+
+		notesJson[index].subject = {
+			_id: subject._id,
+			name: subject.name,
+			subjectcode: subject.subjectcode,
+			credits: subject.credits,
+			semester: subject.semester,
+		};
+	}
+	[err, noteCount] = await to(Notes.find().count());
+	if (err) {
+		logger.error("Notes Controller - list : Note count could not be fetched", err);
+		return ReE(res, err, 422);
+	}
+
+	res.setHeader('Content-Type', 'application/json');
+	return ReS(res, { notes: JSON.stringify(notesJson), count: noteCount });
+}
+module.exports.list = list;
 const findByPk = async function (id) {
 	let note_id, err, note;
 	note_id = id;
@@ -66,6 +114,7 @@ module.exports.findAssignmentById = findByPk;
 const get = async function (req, res) {
 	let note_id, err, note, user;
 	note_id = req.query._id;
+
 	[err, note] = await to(findByPk(note_id));
 	if (note_id)
 		if (err) return ReE(res, err.message);
@@ -84,6 +133,9 @@ const get = async function (req, res) {
 	noteJson.subject = subject;
 	res.setHeader("Content-Type", "application/json");
 	[err, savednote] = await to(note.save());
+	if (err) {
+		throw err;
+	}
 	return ReS(res, { note: noteJson });
 };
 module.exports.get = get;
