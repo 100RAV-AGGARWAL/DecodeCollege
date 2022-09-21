@@ -55,6 +55,13 @@
                                 <a [routerLink]="['/assignment/myAssignments']" class="dropdown-item">My Assignments</a>
                             </div>
                         </div>
+                        <div class="nav-item dropdown" *ngIf="isLoggedIn()">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Notes</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <a [routerLink]="['/notes/post']" class="dropdown-item">New Notes</a>
+                                <a [routerLink]="['/notes/mynotes']" class="dropdown-item">My Notes</a>
+                            </div>
+                        </div>
                         <a [routerLink]="['/dashboard']" class="nav-item nav-link">Contact</a>
                     </div>
                     <a *ngIf="!isLoggedIn()" [routerLink]="['/user/login']" class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block">Sign In</a>

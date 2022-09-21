@@ -1,0 +1,14 @@
+<section>
+    <div>
+      <h1> Note View </h1>
+      <div>
+        Name: {{note.name}} <br>
+        Status: {{note.status}} <br>
+        Subject: {{note.subject.name}} <br>
+      </div>
+      <br>
+      <div class="pdf-viewer">
+        <ngx-extended-pdf-viewer [src]="filePath"> </ngx-extended-pdf-viewer>
+      </div>
+    </div>
+  </section>

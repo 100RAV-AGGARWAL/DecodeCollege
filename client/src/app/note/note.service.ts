@@ -22,7 +22,7 @@ export class NoteService {
             "Authorization": this.userService.getJWTToken()!
           }
         }).subscribe(resp => {
-          this.router.navigate(['/assignments/myAssignments']);
+          this.router.navigate(['/notes/mynotes']);
          observer.next(resp);
        }, err => {
           if (err.status == 401) {
@@ -32,7 +32,29 @@ export class NoteService {
        });
       })
     }
-    
+    NotesList(pagination) {
+      let limit = pagination.limit;
+		let offset = limit * pagination.pageIndex;
+    return this.http.get(environment.apiUrl + 'api/note/mynotes?limit=' + limit + "&offset=" + offset, {
+      headers: {
+        "Authorization": this.userService.getJWTToken()!
+      }
+    });
+    }
+    getNotes(id) {
+      return this.http.get(environment.apiUrl + 'api/note?_id=' + id, {
+        headers: {
+          "Authorization": this.userService.getJWTToken()!
+        }
+      });
+    }
+    subject(id){
+         return this.http.get(environment.apiUrl+'api/subject?_id='+id,{
+          headers: {
+            "Authorization": this.userService.getJWTToken()!
+          }
+        });
+    }
         
   
   

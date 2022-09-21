@@ -20,13 +20,19 @@ import { MatOptionModule } from '@angular/material/core';
 import { UserModule } from '../user/user.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FileUploadModule } from 'ng2-file-upload';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { NoteMynotesComponent } from './user/note-mynotes/note-mynotes.component';
+import { NoteViewComponent } from './user/note-view/note-view.component';
 
 @NgModule({
   declarations: [
-    NotePostComponent
+    NotePostComponent,
+    NoteMynotesComponent,
+    NoteViewComponent
   ],
   imports: [
     CommonModule,
+    NgxExtendedPdfViewerModule,
     NoteRoutingModule,
     CommonModule,
 		FormsModule,

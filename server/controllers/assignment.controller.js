@@ -296,7 +296,6 @@ const myAssignments = async function (req, res) {
 	let assignmentJson = assignmentList.map(assignment => {
 		return assignment.toObject();
 	});
-
 	for (let index in assignmentJson) {
 		[err, subject] = await to(getSubjectInfo(assignmentJson[index].subjectId));
 		if (err) return ReE(res, err.message);
@@ -309,6 +308,7 @@ const myAssignments = async function (req, res) {
 			semester: subject.semester,
 		};
 	}
+
 
 	[err, assignmentCount] = await to(Assignment.find({ userId: req.user.id }).count());
 	if (err) {
