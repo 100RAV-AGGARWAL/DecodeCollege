@@ -40,6 +40,8 @@ router.get("/assignment/myAssignments", requireAuth, authService.roleAuthorizati
 router.post("/note", requireAuth, authService.roleAuthorization(["user"]), NoteController.create);
 router.get("/note/mynotes", requireAuth, authService.roleAuthorization(["user"]), NoteController.list);
 router.get("/note", requireAuth, authService.roleAuthorization(["user"]), NoteController.get);
+router.put("/note", requireAuth, authService.roleAuthorization(["user"]), NoteController.update);
+router.delete("/note", requireAuth, authService.roleAuthorization(["user"]), NoteController.remove);
 
 router.post("/subject", requireAuth, authService.roleAuthorization(["admin"]), SubjectController.create);
 router.get("/subject", SubjectController.get);

@@ -1,19 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FileUploader } from 'ng2-file-upload';
-import { ToastrService } from 'ngx-toastr';
+import {  ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/user/user.service';
-import { environment } from 'src/environments/environment';
-import { SnackBarService } from '../../../utility/snackbar/snackbar.component';
+import { SnackBarService } from 'src/app/utility/snackbar/snackbar.component';
 import { NoteService } from '../../note.service';
+import { environment } from 'src/environments/environment';
 const URL = environment.apiUrl + 'api/upload/file?itemType=note&fileId=';
-@Component({
-  selector: 'app-note-post',
-  templateUrl: './note-post.component.html',
-  styleUrls: ['./note-post.component.css']
-})
 
-export class NotePostComponent implements OnInit {
-  updateEnabled:boolean
+@Component({
+  selector: 'app-note-edit',
+  templateUrl: './note-edit.component.html',
+  styleUrls: ['./note-edit.component.css']
+})
+export class NoteEditComponent implements OnInit {
+  updateEnabled;
   statusList = [
     { name: "private" },
     { name: "public" }
@@ -23,6 +24,7 @@ export class NotePostComponent implements OnInit {
     userId: "",
     fileId: "",
     filePath: "",
+    
     subject: {
       _id: ""
     },
@@ -39,10 +41,15 @@ export class NotePostComponent implements OnInit {
   });
 
 
-  constructor(private _snackBar: SnackBarService, private noteService: NoteService, private toastr: ToastrService, private userService: UserService) {
+  constructor(private userService: UserService, private noteService: NoteService,private router: Router,private route: ActivatedRoute,private toastr: ToastrService, private _snackBar: SnackBarService) {
     this.noteService.getSubject().subscribe((resp: any) => {
       try {
         this.subjectList = JSON.parse(resp["subject"]);
+        this.route.params.subscribe(params => {
+          this.noteService.getNotes(params['id']).subscribe(resp => {
+            this.note = resp["note"];
+           });
+        });
       }
       catch (err) {
         this._snackBar.openSnackBar('Unable to load categories.', 'X')
@@ -50,11 +57,8 @@ export class NotePostComponent implements OnInit {
     }, err => {
       this._snackBar.openSnackBar('Unable to load categories.', 'X')
     });
-    this.updateEnabled = false;
-  }
-
-
-
+    this.updateEnabled = true;
+   }
 
   ngOnInit(): void {
     this.uploader.onAfterAddingFile = (file) => {
@@ -76,19 +80,25 @@ export class NotePostComponent implements OnInit {
       this.updateEnabled = true;
     };
   }
-
-  saveNote() {
+  updateNote(){
+    if(!this.note.name){
+      this._snackBar.openSnackBar("File Name is Required","X");
+      return;
+    }
     if (!this.updateEnabled) {
       this._snackBar.openSnackBar("File upload in progress. Please wait.", "X");
       return;
     }
 
-    this.noteService.saveNotes(this.note).subscribe(resp => {
-      this._snackBar.openSnackBar('Note Created.', 'X')
+    this.noteService.updateNotes(this.note).subscribe(resp => {
+      this._snackBar.openSnackBar('Notes Updated.', 'X');
+		//	this.router.navigate(['/notes/myNotes']);
+
     }, err => {
       this._snackBar.openSnackBar(err.error.error, 'X')
     });
 
   }
+
 
 }

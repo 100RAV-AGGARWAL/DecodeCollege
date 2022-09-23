@@ -140,6 +140,7 @@ const update = async function (req, res) {
 	body.deadline = new Date(body.deadline);
 
 	assignment.set(req.body);
+	assignment.subjectId = req.body.subject._id;
 
 	if (body.deadline >= new Date()) {
 		assignment.status = "PENDING";

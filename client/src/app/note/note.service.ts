@@ -56,6 +56,39 @@ export class NoteService {
         });
     }
         
+    updateNotes(assignment: any) {
+      return new Observable((observer) => {
+        this.http.put(environment.apiUrl + 'api/note', assignment, {
+          headers: {
+            "Authorization": this.userService.getJWTToken()!
+          }
+        }).subscribe(resp => {
+          this.router.navigate(['/notes/mynotes']);
+          observer.next(resp);
+        }, err => {
+          if (err.status == 401) {
+            this.userService.logoutUser();
+          }
+          observer.error(err);
+        });
+      });
+    }
   
-  
+    deleteNote(body:any) {
+      return new Observable((observer) => {
+        this.http.delete(environment.apiUrl + 'api/note?noteId=' + body._id + '&fileId=' + body.fileId, {
+          headers: {
+            "Authorization": this.userService.getJWTToken()!
+          }
+        }).subscribe(resp => {
+          this.router.navigate(['/notes/mynotes']);
+          observer.next(resp);
+        }, err => {
+          if (err.status == 401) {
+            this.userService.logoutUser();
+          }
+          observer.error(err);
+        });
+      });
+    }
 }

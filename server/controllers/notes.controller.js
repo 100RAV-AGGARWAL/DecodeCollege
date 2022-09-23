@@ -1,8 +1,10 @@
 const { to, ReE, ReS } = require("../services/util.service");
-const { Notes, User } = require("../models");
+const { Notes, User, File } = require("../models");
 const { findSubjectById } = require("./subject.controller");
 const { getPublicInfo } = require('./user.controller');
 const { getSubjectInfo } = require("./subject.controller");
+const UploadController = require('../controllers/upload.controller');
+const logger = require("../lib/logging");
 
 const create = async function (req, res) {
 	res.setHeader("Content-Type", "application/json");
@@ -145,9 +147,29 @@ const update = async function (req, res) {
 
 	[err, note] = await to(findByPk(note_id));
 	if (err) return ReE(res, err.message);
+	if (!req.body.name) {
+		logger.error("Notes name is required");
+		return ReE(res, "Notes name is required");
+	}
+	if (!req.body.status) {
+		logger.error("Notes status is required");
+		return ReE(res, "Notes status is required");
+
+	}
+	if (!req.body.fileId) {
+		logger.error("Notes fileId is required");
+		return ReE(res, "Notes fileId is required");
+
+	}
+	if (!req.body.filePath) {
+		logger.error("Notes filePath is required");
+		return ReE(res, "Notes filePath is required");
+
+	}
 
 
 	note.set(req.body);
+	note.subjectId = req.body.subject._id;
 
 	[err, savednote] = await to(note.save());
 	if (err) {
@@ -160,13 +182,38 @@ const update = async function (req, res) {
 module.exports.update = update;
 
 const remove = async function (req, res) {
-	let note_id, err, note;
-	note_id = req.query._id;
+	let note_id, err, note, file_id;
+	note_id = req.query.noteId;
+	file_id = req.query.fileId;
+	if (!file_id) {
+		logger.error("File id is required");
+		return ReE(res, "File Id is required");
+	}
 
-	[err, note] = await to(findByPk(note_id));
-	if (err) return ReE(res, err.message);
+	let fileModel;
+	[err, fileModel] = await to(File.findById(file_id));
+	if (err) {
+		logger.error("File not found");
+		return ReE(res, "File not found");
+	}
 
-	[err, note] = await to(note.destroy());
+	let userId = fileModel.name.split("-")[0];
+	if (userId != req.user.id) {
+		logger.error("User not authorized to delete");
+		return ReE(res, "You are not authorized to delete this file");
+	}
+
+	let fileIns;
+	[err, fileIns] = await to(UploadController.removeFile(file_id));
+	if (err) {
+		logger.error("Error deleting file");
+	}
+
+	[err, note] = await to(Notes.deleteOne({ _id: note_id }));
+	if (err) {
+		logger.error("Error deleting notes");
+		return ReE(res, err);
+	}
 	if (err) return ReE(res, 'error occured trying to delete note');
 
 	return ReS(res, { message: 'Deleted note' }, 204);
