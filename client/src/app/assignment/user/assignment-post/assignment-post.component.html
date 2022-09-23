@@ -1,24 +1,48 @@
-<section class="section wb">
-	<div class="container">
-		<br />
-		<h1> Upload Assignment</h1>
-		<form class="example-form" (ngSubmit)="saveAssignment()" #assignmentForm="ngForm">
-			<mat-form-field class="example-full-width">
-				<mat-select name="subject" placeholder="Subject" [(value)]="assignment.subject._id">
-					<mat-option *ngFor="let subject of subjectList" [value]="subject._id">
-						{{subject.name}}
-					</mat-option>
-				</mat-select>
-			</mat-form-field>
-			<mat-form-field class="example-full-width">
-				<input matInput name="name" [(ngModel)]="assignment.name" placeholder="Name" value="">
-			</mat-form-field>
-			<mat-form-field class="example-full-width">
-				<input matInput name="deadline" [(ngModel)]="assignment.deadline" placeholder="Due Date" type="date">
-			</mat-form-field>
-			<input type="file" name="file" ng2FileSelect [uploader]="uploader" (change)="uploader.uploadAll()">
-
-			<button mat-raised-button color="primary" ng-disabled="!updateEnabled">Submit</button>
-		</form>
+<div class="container-fluid py-5">
+	<div class="container py-5">
+		<div class="text-center">
+			<h2>Upload Assignment</h2>
+		</div>
+		<div class="row justify-content-center">
+			<div class="col-lg-8">
+				<div class="contact-form rounded p-5">
+					<div id="success"></div>
+					<form (ngSubmit)="saveAssignment()" #assignmentForm="ngForm">
+						<div class="control-group">
+							<mat-form-field class="form-control border-0 p-4">
+								<mat-select name="subject" placeholder="Subject"
+									[(value)]="assignment.subject._id">
+									<mat-option *ngFor="let subject of subjectList" [value]="subject._id">
+										{{subject.name}}
+									</mat-option>
+								</mat-select>
+							</mat-form-field>
+							<p class="help-block text-danger"></p>
+						</div>
+						<div class="control-group">
+							<mat-form-field class="form-control border-0 p-4">
+								<input matInput name="name" [(ngModel)]="assignment.name" placeholder="Name" value="">
+							</mat-form-field>
+							<p class="help-block text-danger"></p>
+						</div>
+						<div class="control-group">
+							<mat-form-field class="form-control border-0 p-4">
+								<input matInput name="deadline" [(ngModel)]="assignment.deadline" placeholder="Due Date"
+									type="date">
+							</mat-form-field>
+							<p class="help-block text-danger"></p>
+						</div>
+						<div class="control-group pt-5 pl-4">
+							<input class="form-control border-0" type="file" name="file" ng2FileSelect
+								[uploader]="uploader" (change)="uploader.uploadAll()">
+							<p class="help-block text-danger"></p>
+						</div>
+						<div class="text-center pt-3">
+							<button class="btn btn-primary rounded-pill py-2 px-5 " color="primary" ng-disabled="!updateEnabled">Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 	</div>
-</section>
+</div>

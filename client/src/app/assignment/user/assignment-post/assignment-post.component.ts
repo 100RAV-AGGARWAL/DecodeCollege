@@ -10,7 +10,7 @@ const URL = environment.apiUrl + 'api/upload/file?itemType=assignment&fileId=';
 @Component({
   selector: 'app-assignment-post',
   templateUrl: './assignment-post.component.html',
-  styleUrls: ['./assignment-post.component.css']
+  styleUrls: ['./assignment-post.component.css'],
 })
 export class AssignmentPostComponent implements OnInit {
   updateEnabled;
