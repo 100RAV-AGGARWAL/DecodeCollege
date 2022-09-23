@@ -12,6 +12,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { HttpClientModule } from '@angular/common/http';
 import { UtilityModule } from "../utility/utility.module";
@@ -23,12 +24,17 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { NoteMynotesComponent } from './user/note-mynotes/note-mynotes.component';
 import { NoteViewComponent } from './user/note-view/note-view.component';
+import { NoteEditComponent } from './user/note-edit/note-edit.component';
+import { NoteDeleteComponent } from './user/note-delete/note-delete.component';
+
 
 @NgModule({
   declarations: [
     NotePostComponent,
     NoteMynotesComponent,
-    NoteViewComponent
+    NoteViewComponent,
+    NoteEditComponent,
+    NoteDeleteComponent
   ],
   imports: [
     CommonModule,
@@ -44,6 +50,7 @@ import { NoteViewComponent } from './user/note-view/note-view.component';
     MatCardModule,
     MatButtonModule,
     MatTableModule,
+    MatDialogModule,
     MatDividerModule,
     HttpClientModule,
     MatOptionModule,

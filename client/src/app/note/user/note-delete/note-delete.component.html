@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Delete</h2>
+<div mat-dialog-content>
+  <p>Type <i>delete</i> to confirm assignment deletion</p>
+  <mat-form-field appearance="fill">
+    <input matInput [(ngModel)]="reason" placeholder="delete">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="reason" cdkFocusInitial>Confirm</button>
+</div>
