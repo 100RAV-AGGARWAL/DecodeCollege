@@ -1,29 +1,51 @@
-<section class="section wb">
-	<div class="container">
-		<br />
-		<h1> Update Note</h1>
-		<form class="example-form" (ngSubmit)="updateNote()" #assignmentForm="ngForm">
-			<mat-form-field class="example-full-width">
-				<mat-select name="subject" placeholder="Subject" [(value)]="note.subject._id">
-					<mat-option *ngFor="let subject of subjectList" [value]="subject._id">
-						{{subject.name}}
-					</mat-option>
-				</mat-select>
-			</mat-form-field>
-			<mat-form-field class="example-full-width">
-				<input matInput name="name" [(ngModel)]="note.name" placeholder="Name" value="">
-			</mat-form-field>
-			<mat-form-field class="example-full-width">
-				<mat-select name="status" placeholder="Status" [(value)]="note.status">
-					<mat-option *ngFor="let status of statusList" [value]="status.name">
-						{{status.name}}
-					</mat-option>
-				</mat-select>
-			</mat-form-field>
-			
-			<input type="file" name="file" ng2FileSelect [uploader]="uploader" (change)="uploader.uploadAll()">
-
-			<button mat-raised-button color="warn" ng-disabled="!updateEnabled">Update</button>
-		</form>
+<div class="container-fluid py-5">
+	<div class="container py-5">
+		<div class="text-center">
+			<h2>Upload Note</h2>
+		</div>
+		<div class="row justify-content-center">
+			<div class="col-lg-8">
+				<div class="contact-form rounded p-5">
+					<div id="success"></div>
+					<form class="example-form" (ngSubmit)="updateNote()" #noteForm="ngForm">
+						<div class="control-group">
+							<mat-form-field class="form-control border-0 p-4">
+								<mat-select name="subject" placeholder="Subject" [(value)]="note.subject._id">
+									<mat-option *ngFor="let subject of subjectList" [value]="subject._id">
+										{{subject.name}}
+									</mat-option>
+								</mat-select>
+							</mat-form-field>
+							<p class="help-block text-danger"></p>
+						</div>
+						<div class="control-group">
+							<mat-form-field class="form-control border-0 p-4">
+								<input matInput name="name" [(ngModel)]="note.name" placeholder="Name" value="">
+							</mat-form-field>
+							<p class="help-block text-danger"></p>
+						</div>
+						<div class="control-group">
+							<mat-form-field class="form-control border-0 p-4">
+								<mat-select name="status" placeholder="Status" [(value)]="note.status">
+									<mat-option *ngFor="let status of statusList" [value]="status.name">
+										{{status.name}}
+									</mat-option>
+								</mat-select>
+							</mat-form-field>
+							<p class="help-block text-danger"></p>
+						</div>
+						<div class="control-group pt-5 pl-4">
+							<input class="form-control border-0" type="file" name="file" ng2FileSelect
+								[uploader]="uploader" (change)="uploader.uploadAll()">
+							<p class="help-block text-danger"></p>
+						</div>
+						<div class="text-center pt-3">
+							<button class="btn btn-primary rounded-pill py-2 px-5 " color="primary"
+								ng-disabled="!updateEnabled">Update</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 	</div>
-</section>
+</div>

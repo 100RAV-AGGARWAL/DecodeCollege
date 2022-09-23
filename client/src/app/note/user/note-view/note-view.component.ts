@@ -11,6 +11,7 @@ import { NoteService } from '../../note.service';
 export class NoteViewComponent implements OnInit {
   note : any;
   filePath = '';
+  public height = '100vh';
   fileNameInFolder = '';
   constructor(private _snackBar: SnackBarService, private noteService: NoteService, private router: Router, private route: ActivatedRoute) { 
     this.route.params.subscribe(params => {

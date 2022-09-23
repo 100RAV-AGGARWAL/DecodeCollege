@@ -12,14 +12,12 @@ import { NoteDeleteComponent } from '../note-delete/note-delete.component';
   styleUrls: ['./note-mynotes.component.css']
 })
 export class NoteMynotesComponent implements OnInit {
-  notesList = [/*{
-    subName: "",
-    subjectId: ""
-  }*/];
+  notesList = [];
   note={
     subName:"",
     subjectId:""
   }
+  isListEmpty : Boolean = true;
   pageEvent: PageEvent = new PageEvent;
   pagination = { limit: 5, total: 0, pageIndex: 0 }
   displayedCols = ['name', 'subject', 'status', 'edit', 'view','delete'];
@@ -42,13 +40,22 @@ export class NoteMynotesComponent implements OnInit {
       try {
         this.notesList = JSON.parse(resp["notes"]);
         this.pagination.total = resp["total"];
+
+        if(this.notesList.length != 0) {
+					this.isListEmpty = false;
+				} else {
+					this.isListEmpty = true;
+				}
+
       } catch (err) {
+        this.isListEmpty = true;
         this._snackBar.openSnackBar('Notes not found.', 'X')
       }
     }, err => {
       if (err.status == 401) {
         this.userService.logoutUser();
       }
+      this.isListEmpty = true;
       this._snackBar.openSnackBar('Notes not found.', 'X')
     });
 
