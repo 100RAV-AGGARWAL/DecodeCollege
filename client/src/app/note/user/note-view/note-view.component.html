@@ -1,14 +1,20 @@
-<section>
-    <div>
-      <h1> Note View </h1>
-      <div>
-        Name: {{note.name}} <br>
-        Status: {{note.status}} <br>
-        Subject: {{note.subject.name}} <br>
-      </div>
-      <br>
-      <div class="pdf-viewer">
-        <ngx-extended-pdf-viewer [src]="filePath"> </ngx-extended-pdf-viewer>
+<div class="container-fluid py-5">
+  <div class="container py-5">
+    <div class="text-center">
+      <h2>Note View</h2>
+    </div>
+    <div class="row align-items-center">
+      <div class="text-left mb-4">
+        <h5 class="text-primary text-uppercase pt-4" style="letter-spacing: 4px;">Note Name</h5>
+        <p class="h5 ">{{note.name}}</p>
+        <h5 class="text-primary text-uppercase pt-4" style="letter-spacing: 4px;">Status</h5>
+        <p class="h5">{{note.status}}</p>
+        <h5 class="text-primary text-uppercase pt-4" style="letter-spacing: 4px;">Subject Name</h5>
+        <p class="h5">{{note.subject.name}}</p>
       </div>
     </div>
-  </section>
+    <div class="mat-elevation-z4">
+      <ngx-extended-pdf-viewer class="pdf-viewer" [height]="height" [src]="filePath"> </ngx-extended-pdf-viewer>
+    </div>
+  </div>
+</div>
