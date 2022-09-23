@@ -11,11 +11,13 @@
         <p class="h5">{{assignment.deadline | date}}</p>
         <h5 class="text-primary text-uppercase pt-4" style="letter-spacing: 4px;">Subject Name</h5>
         <p class="h5">{{assignment.subject.name}}</p>
+        <h5 class="text-primary text-uppercase pt-4" style="letter-spacing: 4px;">Status</h5>
+        <p class="h5 font-weight-bold" [ngClass]="{'text-success': assignment.status === 'SUBMITTED', 'text-warning' : assignment.status === 'PENDING', 'text-danger' : assignment.status === 'MISSED' }">{{assignment.status}}</p>
         <p class="help-block text-danger"></p>
       </div>
     </div>
-    <div class="pdf-viewer mat-elevation-z4 mh-100">
-      <ngx-extended-pdf-viewer class="pdf-viewer" [src]="filePath"> </ngx-extended-pdf-viewer>
+    <div class="mat-elevation-z4">
+      <ngx-extended-pdf-viewer class="pdf-viewer" [height]="height" [src]="filePath" (pagesLoaded)="onPagesLoaded($event)"> </ngx-extended-pdf-viewer>
     </div>
   </div>
 </div>

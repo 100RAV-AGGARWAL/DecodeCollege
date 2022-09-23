@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PagesLoadedEvent } from 'ngx-extended-pdf-viewer';
 import { SnackBarService } from 'src/app/utility/snackbar/snackbar.component';
 import { AssignmentService } from '../../assignment.service';
 
@@ -13,6 +14,7 @@ export class AssignmentViewComponent implements OnInit{
   filePath = '';
   fileNameInFolder = '';
   private sub: any;
+  public height = '100vh';
 
   constructor(private _snackBar: SnackBarService, private assignmentService: AssignmentService, private router: Router, private route: ActivatedRoute) { 
     this.sub = this.route.params.subscribe(params => {
@@ -27,4 +29,8 @@ export class AssignmentViewComponent implements OnInit{
   ngOnInit(): void {
   }
 
+  public onPagesLoaded(event: PagesLoadedEvent): void {
+    const h = window.innerHeight - 64;
+    this.height = `${h}px`;
+  }
 }
