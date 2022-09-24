@@ -10,6 +10,7 @@
 					GitHub's API rate limit has been reached. It will be reset in one minute.
 				</div>
 			</div>
+			<p class="text-center">Subject Filter: <input type="text" (keyup)="applyFilter($event)"></p>
 			<table class="table-responsive-custom" mat-table [dataSource]="assignmentList" matSort
 				matSortActive="deadline" matSortDisableClear matSortDirection="asc">
 				<ng-container matColumnDef="name">

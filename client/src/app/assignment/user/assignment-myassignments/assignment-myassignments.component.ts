@@ -24,6 +24,8 @@ interface Assignment {
 })
 export class AssignmentMyassignmentsComponent implements AfterViewInit {
 	assignmentList: Assignment[] = [];
+	allAssignmentList: Assignment[] = [];
+
 	pageEvent: PageEvent = new PageEvent;
 	pagination = { limit: 5, total: 0, pageIndex: 0 }
 	displayedCols = ['name', 'subject', 'deadline', 'status', 'edit', 'view', 'delete'];
@@ -79,6 +81,7 @@ export class AssignmentMyassignmentsComponent implements AfterViewInit {
 		this.assignmentService.getMyAssignment(this.pagination, this.sort.active, this.sort.direction).subscribe(resp => {
 			try {
 				this.assignmentList = JSON.parse(resp["assignment"]);
+				this.allAssignmentList = JSON.parse(resp["assignment"]);
 				this.pagination.total = resp["total"];
 
 				if (this.assignmentList.length != 0) {
@@ -126,5 +129,14 @@ export class AssignmentMyassignmentsComponent implements AfterViewInit {
 		});
 	}
 
-
+	applyFilter(event: Event) {
+		const filterValue = (event.target as HTMLInputElement).value;
+		if(filterValue === '' ) {
+			this.assignmentList=this.allAssignmentList;
+		} 
+		else {
+		  this.assignmentList = this.allAssignmentList.filter((assignment) => assignment.subject.name.includes(filterValue));
+		}
+	 }
+   
 }
