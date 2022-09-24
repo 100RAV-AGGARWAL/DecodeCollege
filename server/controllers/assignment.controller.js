@@ -197,86 +197,86 @@ const remove = async function (req, res) {
 }
 module.exports.remove = remove;
 
-const listPending = async function (req, res) {
-	let assignmentList;
-	var limit = req.query.limit
-		? req.query.limit < 20 && req.query.limit > 0
-			? parseInt(req.query.limit)
-			: 20
-		: 20;
-	var offset = req.query.offset
-		? req.query.offset > 0
-			? parseInt(req.query.offset)
-			: 0
-		: 0;
+// const listPending = async function (req, res) {
+// 	let assignmentList;
+// 	var limit = req.query.limit
+// 		? req.query.limit < 20 && req.query.limit > 0
+// 			? parseInt(req.query.limit)
+// 			: 20
+// 		: 20;
+// 	var offset = req.query.offset
+// 		? req.query.offset > 0
+// 			? parseInt(req.query.offset)
+// 			: 0
+// 		: 0;
 
-	[err, assignmentList] = await to(
-		Assignment.find({
-			status: "PENDING"
-		}).limit(limit).skip(offset)
-	);
-	if (err) return ReE(res, err.message);
+// 	[err, assignmentList] = await to(
+// 		Assignment.find({
+// 			status: "PENDING"
+// 		}).limit(limit).skip(offset)
+// 	);
+// 	if (err) return ReE(res, err.message);
 
-	res.setHeader("Content-Type", "application/json");
+// 	res.setHeader("Content-Type", "application/json");
 
-	return ReS(res, { assignment: JSON.stringify(assignmentList) });
-};
+// 	return ReS(res, { assignment: JSON.stringify(assignmentList) });
+// };
 
-module.exports.listPending = listPending;
+// module.exports.listPending = listPending;
 
-const listSubmitted = async function (req, res) {
-	let assignmentList;
-	var limit = req.query.limit
-		? req.query.limit < 20 && req.query.limit > 0
-			? parseInt(req.query.limit)
-			: 20
-		: 20;
-	var offset = req.query.offset
-		? req.query.offset > 0
-			? parseInt(req.query.offset)
-			: 0
-		: 0;
+// const listSubmitted = async function (req, res) {
+// 	let assignmentList;
+// 	var limit = req.query.limit
+// 		? req.query.limit < 20 && req.query.limit > 0
+// 			? parseInt(req.query.limit)
+// 			: 20
+// 		: 20;
+// 	var offset = req.query.offset
+// 		? req.query.offset > 0
+// 			? parseInt(req.query.offset)
+// 			: 0
+// 		: 0;
 
-	[err, assignmentList] = await to(
-		Assignment.find({
-			status: "SUBMITTED"
-		}).limit(limit).skip(offset)
-	);
-	if (err) return ReE(res, err.message);
+// 	[err, assignmentList] = await to(
+// 		Assignment.find({
+// 			status: "SUBMITTED"
+// 		}).limit(limit).skip(offset)
+// 	);
+// 	if (err) return ReE(res, err.message);
 
-	res.setHeader("Content-Type", "application/json");
+// 	res.setHeader("Content-Type", "application/json");
 
-	return ReS(res, { assignment: JSON.stringify(assignmentList) });
-};
+// 	return ReS(res, { assignment: JSON.stringify(assignmentList) });
+// };
 
-module.exports.listSubmitted = listSubmitted;
+// module.exports.listSubmitted = listSubmitted;
 
-const listMissed = async function (req, res) {
-	let assignmentList;
-	var limit = req.query.limit
-		? req.query.limit < 20 && req.query.limit > 0
-			? parseInt(req.query.limit)
-			: 20
-		: 20;
-	var offset = req.query.offset
-		? req.query.offset > 0
-			? parseInt(req.query.offset)
-			: 0
-		: 0;
+// const listMissed = async function (req, res) {
+// 	let assignmentList;
+// 	var limit = req.query.limit
+// 		? req.query.limit < 20 && req.query.limit > 0
+// 			? parseInt(req.query.limit)
+// 			: 20
+// 		: 20;
+// 	var offset = req.query.offset
+// 		? req.query.offset > 0
+// 			? parseInt(req.query.offset)
+// 			: 0
+// 		: 0;
 
-	[err, assignmentList] = await to(
-		Assignment.find({
-			status: "MISSED"
-		}).limit(limit).skip(offset)
-	);
-	if (err) return ReE(res, err.message);
+// 	[err, assignmentList] = await to(
+// 		Assignment.find({
+// 			status: "MISSED"
+// 		}).limit(limit).skip(offset)
+// 	);
+// 	if (err) return ReE(res, err.message);
 
-	res.setHeader("Content-Type", "application/json");
+// 	res.setHeader("Content-Type", "application/json");
 
-	return ReS(res, { assignment: JSON.stringify(assignmentList) });
-};
+// 	return ReS(res, { assignment: JSON.stringify(assignmentList) });
+// };
 
-module.exports.listMissed = listMissed;
+// module.exports.listMissed = listMissed;
 
 const myAssignments = async function (req, res) {
 	let assignmentList;
@@ -292,10 +292,13 @@ const myAssignments = async function (req, res) {
 			: 0
 		: 0;
 
+	var sortOrder = req.query.order ? req.query.order : "asc";
+	var sortCriteria = req.query.sort && req.query.sort != 'undefined' ? req.query.sort : "deadline";
+
 	[err, assignmentList] = await to(
 		Assignment.find({
 			userId: req.user.id,
-		}).limit(limit).skip(offset)
+		}).limit(limit).skip(offset).sort({ [sortCriteria]: sortOrder })
 	);
 	if (err) return ReE(res, err.message);
 

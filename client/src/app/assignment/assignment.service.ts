@@ -5,6 +5,18 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UserService } from '../user/user.service';
 
+interface Assignment {
+	name: any;
+	subject: any;
+	deadline: any;
+	status: any;
+}
+
+interface AssignmentList {
+	assignments: Assignment[];
+	total: number;
+}
+
 @Injectable({
 	providedIn: 'root'
 })
@@ -34,11 +46,11 @@ export class AssignmentService {
 		return this.http.get(environment.apiUrl + 'api/subject/list');
 	}
 
-	getMyAssignment(pagination) {
+	getMyAssignment(pagination, sort, order): Observable<AssignmentList>{
 		let limit = pagination.limit;
 		let offset = limit * pagination.pageIndex;
 
-		return this.http.get(environment.apiUrl + 'api/assignment/myAssignments?limit=' + limit + "&offset=" + offset, {
+		return this.http.get<AssignmentList>(environment.apiUrl + 'api/assignment/myAssignments?limit=' + limit + "&offset=" + offset + "&sort=" + sort + "&order=" + order, {
 			headers: {
 				"Authorization": this.userService.getJWTToken()!
 			}
