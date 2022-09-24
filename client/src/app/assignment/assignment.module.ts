@@ -11,7 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
@@ -27,7 +27,8 @@ import { AssignmentViewComponent } from './user/assignment-view/assignment-view.
 import { AssignmentEditComponent } from './user/assignment-edit/assignment-edit.component';
 import  {  PdfViewerModule  }  from  'ng2-pdf-viewer';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
-
+import { MatSortModule } from '@angular/material/sort';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @NgModule({
   declarations: [
     AssignmentPostComponent,
@@ -57,7 +58,9 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     FileUploadModule,
     MatDialogModule,
     PdfViewerModule,
-    NgxExtendedPdfViewerModule
+    NgxExtendedPdfViewerModule,
+    MatSortModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     AssignmentService,

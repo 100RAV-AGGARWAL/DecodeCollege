@@ -1,31 +1,72 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { PageEvent } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort, SortDirection } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { catchError, map, merge, observable, startWith, switchMap, of as observableOf } from 'rxjs';
 import { UserService } from 'src/app/user/user.service';
 import { SnackBarService } from 'src/app/utility/snackbar/snackbar.component';
 import { AssignmentService } from '../../assignment.service';
 import { AssignmentDeleteComponent } from '../assignment-delete/assignment-delete.component';
+
+interface Assignment {
+	name: any;
+	subject: any;
+	deadline: any;
+	status: any;
+}
 
 @Component({
 	selector: 'app-assignment-myassignments',
 	templateUrl: './assignment-myassignments.component.html',
 	styleUrls: ['./assignment-myassignments.component.css']
 })
-export class AssignmentMyassignmentsComponent implements OnInit {
-	assignmentList = []
+export class AssignmentMyassignmentsComponent implements AfterViewInit {
+	assignmentList: Assignment[] = [];
 	pageEvent: PageEvent = new PageEvent;
 	pagination = { limit: 5, total: 0, pageIndex: 0 }
 	displayedCols = ['name', 'subject', 'deadline', 'status', 'edit', 'view', 'delete'];
-	isListEmpty : Boolean = true;
+	isListEmpty: Boolean = false;
+
+	resultsLength = 0;
+	isLoadingResults = true;
+	isRateLimitReached = false;
+
+	@ViewChild(MatPaginator) paginator!: MatPaginator;
+	@ViewChild(MatSort) sort!: MatSort;
 
 	constructor(private assignmentService: AssignmentService, private userService: UserService, private _snackBar: SnackBarService, private dialog: MatDialog, private router: Router) {
 		this.pagination.total = 0;
 		this.pagination.pageIndex = 0;
-		this.fetchAssignments();
 	}
 	ngOnInit() {
 
+	}
+
+	ngAfterViewInit(): void {
+		this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+
+		merge(this.sort.sortChange, this.paginator.page)
+			.pipe(
+				startWith({}),
+				switchMap(() => {
+					this.isLoadingResults = true;
+					return this.fetchAssignments();
+				}),
+				map((data: any) => {
+					this.isLoadingResults = false;
+					this.isRateLimitReached = data === null;
+
+					if (data === null) {
+						return [];
+					}
+
+					this.resultsLength = data.total;
+					return data.assignments;
+				}),
+			)
+			.subscribe(data => (this.assignmentList = data));
 	}
 
 	loadNextPage($event): void {
@@ -35,19 +76,22 @@ export class AssignmentMyassignmentsComponent implements OnInit {
 	}
 
 	fetchAssignments() {
-		this.assignmentService.getMyAssignment(this.pagination).subscribe(resp => {
+		this.assignmentService.getMyAssignment(this.pagination, this.sort.active, this.sort.direction).subscribe(resp => {
 			try {
 				this.assignmentList = JSON.parse(resp["assignment"]);
 				this.pagination.total = resp["total"];
 
-				if(this.assignmentList.length != 0) {
+				if (this.assignmentList.length != 0) {
 					this.isListEmpty = false;
 				} else {
 					this.isListEmpty = true;
 				}
+
+				return observableOf(this.assignmentList);
 			} catch (err) {
 				this.isListEmpty = true;
 				this._snackBar.openSnackBar('Assignments not found.', 'X');
+				return observableOf([]);
 			}
 		}, err => {
 			if (err.status == 401) {
@@ -55,7 +99,10 @@ export class AssignmentMyassignmentsComponent implements OnInit {
 			}
 			this.isListEmpty = true;
 			this._snackBar.openSnackBar('Assignments not found.', 'X')
+			return observableOf([]);
 		});
+
+		return observableOf([]);
 	}
 
 	openDialog(assignmentId: any, fileId: any): void {
@@ -63,7 +110,7 @@ export class AssignmentMyassignmentsComponent implements OnInit {
 		const dialogRef = this.dialog.open(AssignmentDeleteComponent, {});
 
 		dialogRef.afterClosed().subscribe(result => {
-			if(!result || result != 'delete') {
+			if (!result || result != 'delete') {
 				this._snackBar.openSnackBar('Keyword not matched. Assignment Deletion Failed', 'X')
 				return;
 			}

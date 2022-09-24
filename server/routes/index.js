@@ -32,9 +32,9 @@ router.post("/assignment", requireAuth, authService.roleAuthorization(["user"]),
 router.get("/assignment", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.get);
 router.put('/assignment', requireAuth, authService.roleAuthorization(["user"]), AssignmentController.update); //update  
 router.delete('/assignment', requireAuth, authService.roleAuthorization(["user"]), AssignmentController.remove); //update  
-router.get("/assignment/listPending", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.listPending);
-router.get("/assignment/listSubmitted", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.listSubmitted);
-router.get("/assignment/listMissed", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.listMissed);
+// router.get("/assignment/listPending", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.listPending);
+// router.get("/assignment/listSubmitted", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.listSubmitted);
+// router.get("/assignment/listMissed", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.listMissed);
 router.get("/assignment/myAssignments", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.myAssignments);
 
 router.post("/note", requireAuth, authService.roleAuthorization(["user"]), NoteController.create);
