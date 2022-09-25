@@ -8,7 +8,7 @@
         <h5 class="text-primary text-uppercase pt-4" style="letter-spacing: 4px;">Assignment Name</h5>
         <p class="h5 ">{{assignment.name}}</p>
         <h5 class="text-primary text-uppercase pt-4" style="letter-spacing: 4px;">Assignment Deadline</h5>
-        <p class="h5">{{assignment.deadline | date}}</p>
+        <p class="h5">{{assignment.deadline | date: 'MMMM d, y'}}</p>
         <h5 class="text-primary text-uppercase pt-4" style="letter-spacing: 4px;">Subject Name</h5>
         <p class="h5">{{assignment.subject.name}}</p>
         <h5 class="text-primary text-uppercase pt-4" style="letter-spacing: 4px;">Status</h5>

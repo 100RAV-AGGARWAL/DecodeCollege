@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FileUploader } from 'ng2-file-upload';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/user/user.service';
@@ -13,7 +14,7 @@ const URL = environment.apiUrl + 'api/upload/file?itemType=note&fileId=';
 })
 
 export class NotePostComponent implements OnInit {
-  updateEnabled:boolean
+  updateEnabled: boolean
   statusList = [
     { name: "private" },
     { name: "public" }
@@ -39,7 +40,7 @@ export class NotePostComponent implements OnInit {
   });
 
 
-  constructor(private _snackBar: SnackBarService, private noteService: NoteService, private toastr: ToastrService, private userService: UserService) {
+  constructor(private _snackBar: SnackBarService, private noteService: NoteService, private toastr: ToastrService, private userService: UserService, private router: Router) {
     this.noteService.getSubject().subscribe((resp: any) => {
       try {
         this.subjectList = JSON.parse(resp["subject"]);
@@ -84,7 +85,8 @@ export class NotePostComponent implements OnInit {
     }
 
     this.noteService.saveNotes(this.note).subscribe(resp => {
-      this._snackBar.openSnackBar('Note Created.', 'X')
+      this._snackBar.openSnackBar('Note Created.', 'X');
+      this.router.navigate(['/notes/mynotes']);
     }, err => {
       this._snackBar.openSnackBar(err.error.error, 'X')
     });
