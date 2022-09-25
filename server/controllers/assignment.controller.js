@@ -4,6 +4,8 @@ const { findSubjectById } = require("./subject.controller");
 const { getPublicInfo } = require("./user.controller");
 const { getSubjectInfo } = require("./subject.controller");
 const logger = require("../lib/logging");
+const { sendEmail } = require("../lib/mails/sendemail");
+const { getTemplateHtml } = require("../lib/mails/emailTemplate");
 const UploadController = require('./upload.controller');
 
 const create = async function (req, res) {
@@ -328,4 +330,66 @@ const myAssignments = async function (req, res) {
 };
 
 module.exports.myAssignments = myAssignments;
+
+const mailList = async () => {
+	let assignmentList;
+	let someDate = new Date();
+	let numberOfDaysToAdd = 3;
+	let result = someDate.setDate(someDate.getDate() + numberOfDaysToAdd);
+
+	let newDate = new Date(result);
+	newDate.setSeconds(0);
+	newDate.setHours(0);
+	newDate.setMinutes(0);
+
+	let todayDate = new Date();
+	todayDate.setSeconds(0);
+	todayDate.setHours(0);
+	todayDate.setMinutes(0);
+
+
+	[err, assignmentList] = await to(Assignment.find());
+	if (err) {
+		console.log(err);
+		return;
+	}
+
+	for (let assignment of assignmentList) {
+		let user, firstname, emailId;
+		let info;
+
+		if (assignment.deadline.getTime() >= todayDate.getTime() && assignment.deadline.getTime() <= newDate.getTime()) {
+			console.log('Due Assignment Deadline:', assignment.deadline);
+
+			[err, user] = await to(User.findById(assignment.createdById));
+			if (err) {
+				console.log(err);
+				return err;
+			}
+
+			info = assignment;
+			emailId = user.email;
+			firstname = user.first;
+
+			dueAssignmentHTMLcontent(emailId, firstname, info);
+		}
+	}
+
+}
+module.exports.mailList = mailList;
+
+const dueAssignmentHTMLcontent = function (emailId, firstname, assignment) {
+	let htmlContent;
+
+	let emailList = [];
+	emailList.push(emailId);
+	let ejObj = {
+		emailId: emailId,
+		firstname: firstname,
+		assignment: assignment
+
+	};
+	htmlContent = getTemplateHtml(ejObj, "assignmentDeadline");
+	sendEmail(emailList, "assignmentDeadline", "Assignment Due", htmlContent);
+}
 
