@@ -43,7 +43,10 @@ const create = async function (req, res) {
 		return ReE(res, err.message);
 	}
 
-	if (body.deadline >= new Date()) {
+	let yesterday = new Date(Date.now());
+	yesterday.setDate(yesterday.getDate() - 1);
+
+	if (body.deadline >= yesterday) {
 		assignment.status = "PENDING";
 	} else {
 		assignment.status = "MISSED";
@@ -144,7 +147,10 @@ const update = async function (req, res) {
 	assignment.set(req.body);
 	assignment.subjectId = req.body.subject._id;
 
-	if (body.deadline >= new Date()) {
+	let yesterday = new Date(Date.now());
+	yesterday.setDate(yesterday.getDate() - 1);
+
+	if (body.deadline >= yesterday) {
 		assignment.status = "PENDING";
 	} else {
 		assignment.status = "MISSED";
@@ -254,46 +260,59 @@ const myAssignments = async function (req, res) {
 module.exports.myAssignments = myAssignments;
 
 const assignmentListByDateRange = async () => {
-	let assignmentList;
+	let assignmentPendingList, err, assignmentMissedList;
 	let someDate = new Date();
 	let numberOfDaysToAdd = 3;
 	let result = someDate.setDate(someDate.getDate() + numberOfDaysToAdd);
 
 	let newDate = new Date(result);
 	newDate.setSeconds(0);
-	newDate.setHours(0);
-	newDate.setMinutes(0);
+	newDate.setHours(5);
+	newDate.setMinutes(30);
 
 	let todayDate = new Date();
 	todayDate.setSeconds(0);
-	todayDate.setHours(0);
-	todayDate.setMinutes(0);
+	todayDate.setHours(5);
+	todayDate.setMinutes(30);
 
-
-	[err, assignmentList] = await to(Assignment.find());
-	if (err) {
-		console.log(err);
-		return;
+	[err, assignmentMissedList] = await to(Assignment.find({ deadline: { $lt: todayDate }, status: "PENDING" }));
+	if (err || assignmentMissedList.length == 0) {
+		logger.error("Assignment Controller - assignmentListByDateRange : Assignment missed list not found", err);
 	}
 
-	for (let assignment of assignmentList) {
+	[err, assignmentPendingList] = await to(Assignment.find({ deadline: { $gte: todayDate, $lte: newDate }, status: "PENDING" }));
+	if (err) {
+		logger.error("Assignment Controller - assignmentListByDateRange : Assignment pending list not found", err);
+		return ReE(res, err, 422);
+	}
+
+	for (let assignment of assignmentPendingList) {
 		let user, firstname, emailId;
 		let info;
 
-		if (assignment.deadline.getTime() >= todayDate.getTime() && assignment.deadline.getTime() <= newDate.getTime()) {
-			console.log('Due Assignment Deadline:', assignment.deadline);
+		console.log('Due Assignment Deadline:', assignment.deadline);
 
-			[err, user] = await to(User.findById(assignment.createdById));
-			if (err) {
-				console.log(err);
-				return err;
-			}
+		[err, user] = await to(User.findById(assignment.createdById));
+		if (err) {
+			console.log(err);
+			return err;
+		}
 
-			info = assignment;
-			emailId = user.email;
-			firstname = user.first;
+		info = assignment;
+		emailId = user.email;
+		firstname = user.first;
 
-			dueAssignmentHTMLcontent(emailId, firstname, info);
+		dueAssignmentHTMLcontent(emailId, firstname, info);
+	}
+
+	for (let assignment of assignmentMissedList) {
+		assignment.status = "MISSED";
+
+		let savedassignment, err;
+
+		[err, savedassignment] = await to(assignment.save());
+		if (err) {
+			logger.error("Assignment Controller - assignmentListByDateRange : Assignment update failed", err);
 		}
 	}
 
