@@ -334,7 +334,7 @@ const myAssignments = async function (req, res) {
 
 module.exports.myAssignments = myAssignments;
 
-const mailList = async () => {
+const assignmentListByDateRange = async () => {
 	let assignmentList;
 	let someDate = new Date();
 	let numberOfDaysToAdd = 3;
@@ -379,7 +379,7 @@ const mailList = async () => {
 	}
 
 }
-module.exports.mailList = mailList;
+module.exports.assignmentListByDateRange = assignmentListByDateRange;
 
 const dueAssignmentHTMLcontent = function (emailId, firstname, assignment) {
 	let htmlContent;
