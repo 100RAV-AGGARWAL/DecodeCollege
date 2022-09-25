@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PagesLoadedEvent } from 'ngx-extended-pdf-viewer';
 import { SnackBarService } from 'src/app/utility/snackbar/snackbar.component';
 import { NoteService } from '../../note.service';
 
@@ -24,6 +25,11 @@ export class NoteViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  public onPagesLoaded(event: PagesLoadedEvent): void {
+    const h = window.innerHeight - 64;
+    this.height = `${h}px`;
   }
  
 }

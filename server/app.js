@@ -38,7 +38,7 @@ app.use(function (req, res, next) {
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Cron Job to send Mail for Due Assignment
-cron.schedule(testCronJob, assignmentController.mailList); //Fire After Every Minute
+cron.schedule(testCronJob, assignmentController.assignmentListByDateRange); //Fire After Every Minute
 
 app.use('/api', indexRouter);
 
