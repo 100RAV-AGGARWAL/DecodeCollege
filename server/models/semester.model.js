@@ -7,7 +7,7 @@ const Semester = mongoose.model('Semester', new mongoose.Schema({
 		{
 			subjectId: { type: mongoose.ObjectId, ref: 'Subject', required: [true, 'Subject is required'] },
 			marks: { type: Number, required: [true, 'Marks is required'] },
-			credit: { type: Number, required: [true, 'Credit is required'] }
+			credit: { type: Number, }
 		}
 	],
 	createdById: { type: mongoose.ObjectId, ref: 'User', allowNull: false },

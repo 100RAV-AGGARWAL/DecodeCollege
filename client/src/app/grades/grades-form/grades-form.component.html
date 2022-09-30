@@ -8,10 +8,26 @@
 			<div class="col-lg-8">
 				<div class="contact-form rounded p-5">
 					<div id="success"></div>
-					<form class="example-form" (ngSubmit)="handleSubmit()" #noteForm="ngForm">
+					<form *ngIf="isSemester==false" class="example-form" (ngSubmit)="handleSemester()" #noteForm="ngForm">
+						<div class="control-group">
+							<mat-form-field class="form-control border-0 p-4">
+								<mat-select name="Semester" placeholder="Semester" [(value)]="sem.sem">
+									<mat-option *ngFor="let semester of semeseterList" [value]="semester.sem_no">
+										{{semester.sem_no}}
+									</mat-option>
+								</mat-select>
+							</mat-form-field>
+							<p class="help-block text-danger"></p>
+							<!-- <div class="text-center pt-3"> -->
+								<button class="btn btn-primary rounded-pill py-2 px-5" color="btn-primary"
+									type="submit">Get Subjects</button>
+							<!-- </div> -->
+						</div>
+					</form>
+					<form *ngIf="isSemester==true" class="example-form" (ngSubmit)="handleSubmit()" #noteForm="ngForm">
 						<div class="control-group  text-center" *ngFor="let subject of subjectList;let i=index">
 							<label class="">{{subject.name}}</label>
-							<input matInput name="marks" [(ngModel)]="gradesarr[i].marks" placeholder="Marks"
+							<input  name="marks" [(ngModel)]="gradesarr[i].marks" placeholder="Marks"
 								type="Number" value="subject._id">
 							<!-- <mat-form-field class="form-control border-0 p-4"> -->
 							<!-- <mat-select name="subject" placeholder="Subject" [(value)]="note.subject._id"> -->
@@ -56,6 +72,9 @@
 
 						<div class="text-center justify-content-center">
 							<h4>Your CGPA : {{CGPA | number:'1.2-2'}}</h4>
+						</div>
+						<div class="text-center justify-content-center">
+							<h4>Your percentage : {{Percentage | number:'1.2-2'}}%</h4>
 						</div>
 						<div class="text-center pt-3">
 							<button class="btn btn-primary rounded-pill py-2 px-5" color="btn-primary"
