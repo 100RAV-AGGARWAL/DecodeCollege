@@ -44,6 +44,7 @@ router.post("/subject", requireAuth, authService.roleAuthorization(["admin"]), S
 router.get("/subject", SubjectController.get);
 router.put("/subject", requireAuth, authService.roleAuthorization(["admin"]), SubjectController.update);
 router.get("/subject/list", SubjectController.list);
+router.post("/subject/listbysem",requireAuth, authService.roleAuthorization(["user"]), SubjectController.getBySem);
 
 router.post("/semester", requireAuth, authService.roleAuthorization(["user"]), SemesterController.create);
 router.get("/semester", requireAuth, authService.roleAuthorization(["user"]), SemesterController.get);

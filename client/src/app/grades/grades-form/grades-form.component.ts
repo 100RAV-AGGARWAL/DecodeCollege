@@ -12,22 +12,22 @@ import { GradesService } from '../grades.service';
 })
 export class GradesFormComponent implements OnInit {
   CGPA = 0;
+  Percentage = 0;
   gradesarr: any[] = [];
   subjectList: any[] = [];
+  semeseterList: any[] = [];
   isGradeVisible = false;
-  constructor(private _snackBar: SnackBarService, private gradeservice: GradesService, private toastr: ToastrService, private userService: UserService, private router: Router) {
-    this.gradeservice.getSubject().subscribe((resp: any) => {
+  isSemester = false;
+  
+  sem={
+    sem:1
+  }
+  constructor(private _snackBar: SnackBarService, private gradeservice: GradesService, private toastr: ToastrService, private userService: UserService, private router: Router) {   
+    this.gradeservice.getSemester().subscribe((resp: any) => {
       try {
-        this.subjectList = JSON.parse(resp["subject"]);
-
-        for (let idx = 0; idx < this.subjectList.length; idx++) {
-          let grades = {
-            subject: this.subjectList[idx],
-            marks: 0,
-          }
-          this.gradesarr.push(grades);
-
-        }
+        this.semeseterList = JSON.parse(resp["semester"]);
+        console.log(this.semeseterList)
+        
       }
       catch (err) {
         this._snackBar.openSnackBar('Unable to load categories.', 'X')
@@ -35,7 +35,6 @@ export class GradesFormComponent implements OnInit {
     }, err => {
       this._snackBar.openSnackBar('Unable to load categories.', 'X')
     });
-
 
   }
 
@@ -55,20 +54,22 @@ export class GradesFormComponent implements OnInit {
     }
     const percentage = (total / (totalSubjects * 100)) * 100;
     this.CGPA = percentage / 9.5;
-    // console.log(this.CGPA);
+    this.Percentage = percentage;
+    
   }
   handleSubmitSave() {
     console.log("Saved")
     let data = {
       CGPA: this.CGPA,
-      subjects: [{}]
+      subjects: [{}],
+      semester_no: 3
     }
     data.subjects.pop();
     for (let idx = 0; idx < this.gradesarr.length; idx++) {
       let subjectId = this.gradesarr[idx].subject._id;
       let marks = this.gradesarr[idx].marks;
-      let credit=this.gradesarr[idx].subject.credit;
-      const curr = { subjectId: subjectId, marks: marks,credit:credit };
+      
+      const curr = { subjectId: subjectId, marks: marks };
       data.subjects.push(curr);
     }
     this.gradeservice.saveGrades(data).subscribe(resp => {
@@ -85,6 +86,34 @@ export class GradesFormComponent implements OnInit {
       this.gradesarr[idx].marks = 0;
     }
   }
+  getSubjects() {
+    
+    this.gradeservice.getSubject(this.sem).subscribe((resp: any) => {
 
+      try {
+        this.subjectList = JSON.parse(resp["subject"]);
+
+        for (let idx = 0; idx < this.subjectList.length; idx++) {
+          let grades = {
+            subject: this.subjectList[idx],
+            marks: 0,
+          }
+          this.gradesarr.push(grades);
+
+        }
+      }
+      catch (err) {
+        this._snackBar.openSnackBar('Unable to load categories.', 'X')
+      }
+    }, err => {
+      this._snackBar.openSnackBar('Unable to load categories.', 'X')
+    });
+  }
+  handleSemester() {
+    
+
+    this.getSubjects();
+    this.isSemester = true;
+  }
 
 }
