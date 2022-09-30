@@ -8,6 +8,7 @@ import { HomeModule } from './home/home.module';
 import { UtilityModule } from './utility/utility.module';
 import { AssignmentModule } from './assignment/assignment.module';
 import { NoteModule } from './note/note.module';
+import { TimeoutModule } from './timeout/timeout.module';
 import { GradesModule } from './grades/grades.module';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -20,6 +21,9 @@ import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
+
+    AppComponent
+
     AppComponent,
     // GradesComponent,
   ],
@@ -32,6 +36,7 @@ import { ToastrModule } from 'ngx-toastr';
     LayoutModule,
     HomeModule,
     UtilityModule,
+    TimeoutModule,
     AssignmentModule,
     RouterModule.forRoot(
 			appRoutes,
