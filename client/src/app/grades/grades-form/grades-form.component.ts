@@ -62,7 +62,7 @@ export class GradesFormComponent implements OnInit {
     let data = {
       CGPA: this.CGPA,
       subjects: [{}],
-      semester_no: 3
+      semester_no: this.sem.sem
     }
     data.subjects.pop();
     for (let idx = 0; idx < this.gradesarr.length; idx++) {
