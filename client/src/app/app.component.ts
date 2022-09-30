@@ -14,10 +14,10 @@ export class AppComponent implements OnDestroy {
   count: number = 0
   count2: number = 0
   limit: number = 300000;
-  upperLimit: number = 330000; 
+  upperLimit: number = 330000;
   timeLeft: number = this.limit
   timeLeft2: number = this.upperLimit - this.limit;
-  
+
   ngOnDestroy() {
     localStorage.removeItem('time');
   }
@@ -26,7 +26,6 @@ export class AppComponent implements OnDestroy {
     this.num = this.num + this.count + this.count2;
     this.timepassed = (this.num).toString();
     localStorage.setItem('time', this.timepassed);
-    console.log(this.timepassed);
   }
 
   constructor() {
@@ -49,14 +48,11 @@ export class AppComponent implements OnDestroy {
     else if (this.num >= this.upperLimit) {
       localStorage.setItem('time', '0');
       this.num = 0;
-
     }
 
     let IntervalId = setInterval(() => {
       if (this.count != this.timeLeft) {
         this.count += 1000;
-        console.log(this.count);
-        console.log(this.timeLeft);
       }
       else {
         this.isTimeOut = true;

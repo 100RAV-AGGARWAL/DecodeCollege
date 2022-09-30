@@ -24,7 +24,6 @@ import { ToastrModule } from 'ngx-toastr';
 
     AppComponent
 
-    AppComponent,
     // GradesComponent,
   ],
   imports: [
