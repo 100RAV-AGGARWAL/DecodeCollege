@@ -80,6 +80,42 @@ const get = async function (req, res) {
 	return ReS(res, { feature: subject.toObject() });
 }
 module.exports.get = get;
+const getBySem=async function(req,res){
+	let subjectList, subjectCount,sem_no, err;
+	// var limit = req.query.limit ? (req.query.limit < 20 && req.query.limit > 0) ? parseInt(req.query.limit) : 20 : 20;
+	// var offset = req.query.offset ? req.query.offset > 0 ? parseInt(req.query.offset) : 0 : 0;
+
+	var search = {};
+	var order = [];
+	if (req.query.search) {
+		search = req.query.search;
+		search = JSON.parse(search)
+	}
+	console.log(req.body.sem);
+	if (req.query.order) {
+		order = req.query.order;
+		order = JSON.parse(order);
+	}
+	if (!req.body.sem) {
+		logger.error("Subject Controller - getBySem : Semester number is empty");
+		return ReE(res, new Error('Semester number is empty.'), 422);
+	}
+	sem_no= req.body.sem;
+	[err, subjectList] = await to(Subject.find({semester:sem_no}).sort(order));
+	if (err) {
+		logger.error("Subject Controller - getBySem : Subjects not found", err);
+		return ReE(res, err, 422);
+	}
+	[err, subjectCount] = await to(Subject.find({semester:sem_no}).count());
+	if (err) {
+		logger.error("Subject Controller - getBySem : Subject count could not be fetched", err);
+		return ReE(res, err, 422);
+	}
+
+	res.setHeader('Content-Type', 'application/json');
+	return ReS(res, { subject: JSON.stringify(subjectList), count: subjectCount });
+}
+module.exports.getBySem = getBySem;
 
 const findByPk = async function (id) {
 	let subject_id, err, subject;

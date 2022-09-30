@@ -1,20 +1,43 @@
-<section class="section wb">
-	<div class="container">
-		<h1> Login</h1>
-		<form class="form-signin" (ngSubmit)="login()" #loginForm="ngForm">
-			<mat-form-field class="example-full-width">
-				<input matInput placeholder="Email Id" [(ngModel)]="loginData.username" value="" name="username"
-					required>
-			</mat-form-field>
-			<mat-form-field class="example-full-width">
-				<input type="password" matInput placeholder="Password" [(ngModel)]="loginData.password" value=""
-					name="password" required>
-			</mat-form-field>
-			<button mat-raised-button color="primary" [disabled]="!loginForm.form.valid">Login</button>
-			<a [routerLink]="['/user/forgot']"> Forgot Password</a>
-			<p>
-				Not a member? <a [routerLink]="['/user/signup']">Signup here</a>
-			</p>
-		</form>
+<div class="limiter">
+	<div class="container-login100">
+		<div class="wrap-login100">
+			<form class="login100-form validate-form" (ngSubmit)="login()" #loginForm="ngForm">
+				<span class="login100-form-title">
+					Member Login
+				</span>
+
+				<!-- <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz"> -->
+					<mat-form-field class="wrap-input100 validate-input">
+						<input matInput placeholder="Email Id" [(ngModel)]="loginData.username" value="" name="username" required>
+					</mat-form-field>
+				<!-- </div> -->
+
+				<!-- <div class="wrap-input100 validate-input" data-validate = "Password is required"> -->
+					<mat-form-field class="wrap-input100 validate-input">
+						<input type="password" matInput placeholder="Password" [(ngModel)]="loginData. password" value="" name="password" required>
+					</mat-form-field>
+				<!-- </div> -->
+				
+				<div class="container-login100-form-btn">
+					<button mat-raised-button color="primary" [disabled]="!loginForm.form.valid">Login</button>
+				</div>
+
+				<div class="text-center p-t-12">
+					<span class="txt1">
+						Forgot
+					</span>
+					<a [routerLink]="['/user/forgot']"> 
+						Username / Password?
+					</a>
+				</div>
+
+				<div class="text-center p-t-136">
+					<a [routerLink]="['/user/signup']">
+						Create your Account
+						<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+					</a>
+				</div>
+			</form>
+		</div>
 	</div>
-</section>
+</div>

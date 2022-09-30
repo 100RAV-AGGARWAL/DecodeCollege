@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { NoteRoutingModule } from './note-routing.module';
-import { NotePostComponent } from './user/note-post/note-post.component';
-import { NoteService } from './note.service';
+import { GradesRoutingModule } from './grades-routing.module';
+import { GradesFormComponent } from './grades-form/grades-form.component';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -20,33 +19,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
 import { UserModule } from '../user/user.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { FileUploadModule } from 'ng2-file-upload';
-import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
-import { NoteMynotesComponent } from './user/note-mynotes/note-mynotes.component';
-import { NoteViewComponent } from './user/note-view/note-view.component';
-import { NoteEditComponent } from './user/note-edit/note-edit.component';
-import { NoteDeleteComponent } from './user/note-delete/note-delete.component';
-import { NotePublicComponent } from './user/note-public/note-public.component';
-import { NotePublicViewComponent } from './user/note-public-view/note-public-view.component';
-
 
 @NgModule({
   declarations: [
-    NotePostComponent,
-    NoteMynotesComponent,
-    NoteViewComponent,
-    NoteEditComponent,
-    NoteDeleteComponent,
-    NotePublicComponent,
-    NotePublicViewComponent
+    GradesFormComponent
   ],
   imports: [
     CommonModule,
-    NgxExtendedPdfViewerModule,
-    NoteRoutingModule,
-    CommonModule,
-		FormsModule,
-		ReactiveFormsModule,
+    GradesRoutingModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
@@ -61,10 +41,7 @@ import { NotePublicViewComponent } from './user/note-public-view/note-public-vie
     UtilityModule,
     MatSnackBarModule,
     UserModule,
-    FileUploadModule,
-  ],
-  providers:[
-    NoteService,
+    FormsModule
   ]
 })
-export class NoteModule { }
+export class GradesModule { }
