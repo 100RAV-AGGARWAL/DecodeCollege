@@ -9,7 +9,7 @@ import { UtilityModule } from './utility/utility.module';
 import { AssignmentModule } from './assignment/assignment.module';
 import { NoteModule } from './note/note.module';
 import { TimeoutModule } from './timeout/timeout.module';
-
+import { GradesModule } from './grades/grades.module';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -17,15 +17,21 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { appRoutes } from './app.route';
 import { ToastrModule } from 'ngx-toastr';
+// import { GradesComponent } from './grades/grades.component';
 
 @NgModule({
   declarations: [
+
     AppComponent
+
+    AppComponent,
+    // GradesComponent,
   ],
   imports: [
     CommonModule,
     BrowserModule,
     NoteModule,
+    GradesModule,
     UserModule,
     LayoutModule,
     HomeModule,

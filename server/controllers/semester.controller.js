@@ -115,22 +115,26 @@ const findgrade = async function (req, res) {
 		logger.error("Semester Controller - findgrade : Semester user not found", err);
 		return ReE(res, err, 422);
 	}
-	
-	let total = 0;
-	let totalSubjects = semester.sem_marks.length;
-	for (let i = 0; i < semester.sem_marks.length; i++) {
-		total += semester.sem_marks[i].marks;
-	}
-	const percentage = (total / totalSubjects) * 100;
-	let CGPA = percentage / 9.5;
+	let gradearr, CGPA;
+	gradearr = req.body.arr;
+	CGPA = gradearr.CGPA;
+	console.log(CGPA);
+	// let total = 0;
+	// let totalSubjects = semester.sem_marks.length;
+	// for (let i = 0; i < semester.sem_marks.length; i++) {
+	// 	total += semester.sem_marks[i].marks;
+	// }
+	// const percentage = (total / totalSubjects) * 100;
+	// let CGPA = percentage / 9.5;
 	semester.grade = CGPA;
 	if (semester.grade===CGPA) {
 		let semesterJson = semester.toObject()
 		semesterJson.user = user
 		return ReS(res, { message: 'Grade up to date.', semester: semesterJson, cgpa: semester.grade }, 201);
 	}
+	semester.sem_marks=arr.subjects;
 	let semesterJson = semester.toObject()
-	semesterJson.user = user
+	// semesterJson.user = user
 	return ReS(res, { message: 'Successfully saved new grade.', semester: semesterJson, cgpa: CGPA }, 201);
 }
 module.exports.findgrade = findgrade;
