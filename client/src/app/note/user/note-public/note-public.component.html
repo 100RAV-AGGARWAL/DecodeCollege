@@ -1,0 +1,47 @@
+<section class="container-fluid py-5">
+	<div class="container py-5">
+		<div class="text-center">
+			<h2>My Notes</h2>
+		</div>
+		<div *ngIf="!isListEmpty" class="mat-elevation-z2">
+           <table class="table-responsive-custom" mat-table [dataSource]="notesList" >
+				<ng-container matColumnDef="name">
+					<th mat-header-cell *matHeaderCellDef> Name </th>
+					<td mat-cell *matCellDef="let element" > {{element.name}} </td>
+				</ng-container>
+				<ng-container matColumnDef="subject">
+					<th mat-header-cell *matHeaderCellDef> Subject </th>
+					<td mat-cell *matCellDef="let element"> {{element.subject.name}} </td>
+				</ng-container>
+				
+				<ng-container matColumnDef="status">
+					<th mat-header-cell *matHeaderCellDef> Status </th>
+					<td mat-cell *matCellDef="let element"> {{element.status}} </td>
+				</ng-container>
+				
+				<ng-container matColumnDef="view">
+					<th mat-header-cell *matHeaderCellDef> View </th>
+					<td mat-cell *matCellDef="let element"> <a mat-raised-button color="warn"
+							[routerLink]="['/notes/public/view/' + element._id]">View</a></td>
+				</ng-container>
+				<tr mat-header-row
+					*matHeaderRowDef="displayedCols"></tr>
+				<tr mat-row
+					*matRowDef="let row; columns: displayedCols;">
+				</tr>
+
+			</table>
+			<mat-paginator [length]="pagination.total"
+				[pageSize]="pagination.limit" [pageSizeOptions]="[5, 10, 25, 100]"
+				[pageIndex]="pagination.pageIndex" (page)="loadNextPage($event)" showFirstLastButtons aria-label="Select page">
+			</mat-paginator>
+		</div>
+		<div *ngIf="isListEmpty" class="text-center pt-3">
+			<h5 class="text-danger m-0">No Notes found</h5>
+			<div class="pt-3">
+				<button class="btn btn-primary rounded-pill py-2 px-4" [routerLink]="['/notes/post']" color="primary">Add Note</button>
+			</div>
+		</div>
+	</div>
+</section>
+

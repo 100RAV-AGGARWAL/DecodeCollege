@@ -91,4 +91,13 @@ export class NoteService {
         });
       });
     }
+    PublicNotesList(pagination) {
+      let limit = pagination.limit;
+		let offset = limit * pagination.pageIndex;
+    return this.http.get(environment.apiUrl + 'api/note/public?limit=' + limit + "&offset=" + offset);
+    }
+
+    getPublicNote(id) {
+      return this.http.get(environment.apiUrl + 'api/note/view?_id=' + id);
+    }
 }
