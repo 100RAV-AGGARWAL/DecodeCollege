@@ -16,6 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { appRoutes } from './app.route';
 import { ToastrModule } from 'ngx-toastr';
+import { CoursesModule } from './courses/courses.module';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ToastrModule } from 'ngx-toastr';
     UserModule,
     LayoutModule,
     HomeModule,
+    CoursesModule,
     UtilityModule,
     AssignmentModule,
     RouterModule.forRoot(
