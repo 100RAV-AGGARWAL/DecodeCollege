@@ -5,14 +5,17 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
 const config = require("config");
+const cron = require('node-cron');
 const passport = require('passport');
 const swaggerUI = require('swagger-ui-express');
 const YAML = require("yamljs")
 const swaggerJsDoc = YAML.load('./swagger/swagger.yaml');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const assignmentController = require('./controllers/assignment.controller');
 
 var indexRouter = require('./routes/index');
 var app = express();
+var testCronJob = config.get('cronjob').testing;
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerJsDoc));
 
@@ -33,6 +36,9 @@ app.use(function (req, res, next) {
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+//Cron Job to send Mail for Due Assignment
+cron.schedule(testCronJob, assignmentController.assignmentListByDateRange); //Fire After Every Minute
 
 app.use('/api', indexRouter);
 

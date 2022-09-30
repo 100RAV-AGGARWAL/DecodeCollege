@@ -3,12 +3,14 @@ const { Notes, User, File } = require("../models");
 const { findSubjectById } = require("./subject.controller");
 const { getPublicInfo } = require('./user.controller');
 const { getSubjectInfo } = require("./subject.controller");
+
 const UploadController = require('../controllers/upload.controller');
 const logger = require("../lib/logging");
 
 const create = async function (req, res) {
 	res.setHeader("Content-Type", "application/json");
 	const body = req.body;
+
 	if (!req.user) {
 		logger.error("No user found");
 		return ReE(res, "No user found");

@@ -14,25 +14,28 @@ const create = async function (req, res) {
 		logger.error("Semester Controller - create : Semester Number is not provided");
 		return ReE(res, new Error("Semester Number is not provided"), 422);
 	}
-	if (body.sem_marks.length == 0) {
-		logger.error("Semester Controller - create : Marks are not provided");
-		return ReE(res, new Error("Marks are not provided"), 422);
-	}
+	// if (body.sem_marks.length == 0) {
+	// 	logger.error("Semester Controller - create : Marks are not provided");
+	// 	return ReE(res, new Error("Marks are not provided"), 422);
+	// }
 	if (!req.user.id) {
 		logger.error("Semester Controller - create : User not logged in");
 		return ReE(res, new Error("User is not logged in"), 401);
 	}
 
-	for (let mark of body.sem_marks) {
-		[err, subject] = await to(getSubjectInfo(mark.subjectId));
-		if (err) {
-			logger.error(`Semester Controller - create : Subject with Id (${mark.subjectId}) not found`, err);
-			return ReE(res, err, 422);
+	if(body.sem_marks){ 
+		for (let mark of body.sem_marks) {
+			[err, subject] = await to(getSubjectInfo(mark.subjectId));
+			if (err) {
+				logger.error(`Semester Controller - create : Subject with Id (${mark.subjectId}) not found`, err);
+				return ReE(res, err, 422);
+			}
 		}
 	}
 
 	body.createdById = req.user.id;
-
+	body.grade=0;
+	body.sem_marks=[];
 	[err, semester] = await to(Semester.create(body));
 	if (err) {
 		logger.error("Semester Controller - create : Unable to save semester", err);
@@ -98,12 +101,12 @@ module.exports.get = get;
 
 const findgrade = async function (req, res) {
 	let semester_no, err, semester, user;
-	if (!req.query.semester_no) {
+	if (!req.body.semester_no) {
 		logger.error("Semester Controller - findgrade : Semester Number is not provided");
 		return ReE(res, new Error("Semester Number is not provided"), 422);
 	}
 
-	semester_no = req.query.semester_no;
+	semester_no = req.body.semester_no;
 
 	[err, semester] = await to(findBySemNo(semester_no));
 	if (err) {
@@ -115,22 +118,34 @@ const findgrade = async function (req, res) {
 		logger.error("Semester Controller - findgrade : Semester user not found", err);
 		return ReE(res, err, 422);
 	}
-	
-	let total = 0;
-	let totalSubjects = semester.sem_marks.length;
-	for (let i = 0; i < semester.sem_marks.length; i++) {
-		total += semester.sem_marks[i].marks;
-	}
-	const percentage = (total / totalSubjects) * 100;
-	let CGPA = percentage / 9.5;
+	let CGPA;
+	// gradearr = req.body.arr;
+	CGPA = req.body.CGPA;
+	console.log(CGPA);
+	// let total = 0;
+	// let totalSubjects = semester.sem_marks.length;
+	// for (let i = 0; i < semester.sem_marks.length; i++) {
+	// 	total += semester.sem_marks[i].marks;
+	// }
+	// const percentage = (total / totalSubjects) * 100;
+	// let CGPA = percentage / 9.5;
+	// if (semester.grade===CGPA) {
+	// 	let semesterJson = semester.toObject()
+	// 	semesterJson.user = user
+	// 	return ReS(res, { message: 'Grade up to date.', semester: semesterJson, cgpa: semester.grade }, 201);
+	// }
 	semester.grade = CGPA;
-	if (semester.grade===CGPA) {
-		let semesterJson = semester.toObject()
-		semesterJson.user = user
-		return ReS(res, { message: 'Grade up to date.', semester: semesterJson, cgpa: semester.grade }, 201);
+	// for(let i=0;i<req.body.subjecta.length;i++){
+	// 	semester.sem_marks.push(req.body.subjects[i]);
+	// }
+	semester.sem_marks=req.body.subjects;
+	[err, savedSem] = await to(semester.save());
+	if (err) {
+		logger.error("Semester Controller - findGrade : Semester could not be saved", err);
+		return ReE(res, err, 422);
 	}
-	let semesterJson = semester.toObject()
-	semesterJson.user = user
+	let semesterJson = savedSem.toObject()
+	// semesterJson.user = user
 	return ReS(res, { message: 'Successfully saved new grade.', semester: semesterJson, cgpa: CGPA }, 201);
 }
 module.exports.findgrade = findgrade;

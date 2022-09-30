@@ -32,9 +32,6 @@ router.post("/assignment", requireAuth, authService.roleAuthorization(["user"]),
 router.get("/assignment", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.get);
 router.put('/assignment', requireAuth, authService.roleAuthorization(["user"]), AssignmentController.update); //update  
 router.delete('/assignment', requireAuth, authService.roleAuthorization(["user"]), AssignmentController.remove); //update  
-// router.get("/assignment/listPending", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.listPending);
-// router.get("/assignment/listSubmitted", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.listSubmitted);
-// router.get("/assignment/listMissed", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.listMissed);
 router.get("/assignment/myAssignments", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.myAssignments);
 
 router.post("/note", requireAuth, authService.roleAuthorization(["user"]), NoteController.create);
@@ -47,13 +44,15 @@ router.post("/subject", requireAuth, authService.roleAuthorization(["admin"]), S
 router.get("/subject", SubjectController.get);
 router.put("/subject", requireAuth, authService.roleAuthorization(["admin"]), SubjectController.update);
 router.get("/subject/list", SubjectController.list);
+router.post("/subject/listbysem",requireAuth, authService.roleAuthorization(["user"]), SubjectController.getBySem);
 
 router.post("/semester", requireAuth, authService.roleAuthorization(["user"]), SemesterController.create);
 router.get("/semester", requireAuth, authService.roleAuthorization(["user"]), SemesterController.get);
 router.put("/semester", requireAuth, authService.roleAuthorization(["user"]), SemesterController.update);
 router.delete("/semester", requireAuth, authService.roleAuthorization(["user"]), SemesterController.remove);
 router.get("/semester/list", requireAuth, authService.roleAuthorization(["admin"]), SemesterController.list);
-router.get("/semester/grade", requireAuth, authService.roleAuthorization(["user"]), SemesterController.findgrade);
+// router.get("/semester/grade", requireAuth, authService.roleAuthorization(["user"]), SemesterController.findgrade);
+router.post("/semester/grade", requireAuth, authService.roleAuthorization(["user"]), SemesterController.findgrade);
 router.get("/semester/mySemesters", requireAuth, authService.roleAuthorization(["user"]), SemesterController.mySemesters);
 
 router.post('/upload/file', requireAuth, authService.roleAuthorization(["user"]), multerUpload.single('file'), UploadController.uploadFile);
