@@ -1,5 +1,27 @@
 <!-- <p>grade-view works!</p> -->
-<ul class="card">
+<section class="container-fluid py-5">
+	<div class="container py-5">
+		<div class="text-center">
+			<h2>My Grades</h2>
+		</div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4" *ngFor="let sem of semeseterList">
+                <div class="rounded overflow-hidden mb-2">
+                <div class="bg-secondary p-4">
+						<h2>Semester: {{sem.sem_no}}</h2><br>
+                        <h5 *ngFor="let sub of sem.sem_marks">
+                            {{sub.subjectName}}  -  {{sub.marks}}
+                        </h5>
+                        <div class="d-flex justify-content-between mb-3">
+							<h4>Grade: {{sem.grade | number:'1.2-2'}}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </section>
+<!-- <ul class="card">
     <li *ngFor="let sem of semeseterList;let i=index">
         <h3>Semester: {{sem.sem_no}}</h3>
         <h5 *ngFor="let sub of sem.sem_marks">
@@ -7,4 +29,4 @@
         </h5>
         <h4>Grade: {{sem.grade | number:'1.2-2'}}</h4>
     </li>
-</ul>
+</ul> -->
