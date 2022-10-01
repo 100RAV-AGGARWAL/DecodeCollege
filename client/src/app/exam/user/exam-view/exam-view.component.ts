@@ -9,14 +9,19 @@ import { ExamService } from '../../exam.service';
   styleUrls: ['./exam-view.component.css']
 })
 export class ExamViewComponent implements OnInit{
-  exam : any;
+  exam ={
+    name:"",
+    date:"",
+    status:"",
+  };
   private sub: any;
   public height = '100vh';
 
   constructor(private _snackBar: SnackBarService, private examService: ExamService, private router: Router, private route: ActivatedRoute) { 
     this.sub = this.route.params.subscribe(params => {
       this.examService.getExams(params['id']).subscribe(resp => {
-        this.exam = resp["exam"];
+        this.exam = resp["exams"];
+        console.log(this.exam);
       });
     });
   }
