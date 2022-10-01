@@ -3,3 +3,13 @@
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
+  .flex-container{
+    /* display: flex;
+    flex-direction: row-reverse; */
+    background-color: aqua;
+  }
+  .div2{
+    /* width:30%; */
+    background-color: aqua;
+    /* padding:1%; */
+  }
