@@ -97,7 +97,7 @@ module.exports.authUser = authUser;
 
 module.exports.roleAuthorization = function (roles) {
 	return function (req, res, next) {
-		if (roles.indexOf(req.user.role) > -1 || req.user.role === "superuser" || (req.user.role !== "superuser" && req.user.role === "admin")) {
+		if (roles.indexOf(req.user.role) > -1 ||req.user.role==="teacher"|| (req.user.role !== "superuser" && req.user.role === "admin")) {
 			return next();
 		}
 
@@ -106,6 +106,7 @@ module.exports.roleAuthorization = function (roles) {
 	}
 
 }
+
 
 const findByPk = async function (id) {
 	let err, user;
