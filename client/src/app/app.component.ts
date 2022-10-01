@@ -13,8 +13,8 @@ export class AppComponent implements OnDestroy {
   num: number = 0
   count: number = 0
   count2: number = 0
-  limit: number = 300000;
-  upperLimit: number = 330000;
+  limit: number = 300000; //3600000 1hour
+  upperLimit: number = 330000;//4200000 1hour 10min
   timeLeft: number = this.limit
   timeLeft2: number = this.upperLimit - this.limit;
 
@@ -23,12 +23,25 @@ export class AppComponent implements OnDestroy {
   }
 
   @HostListener("window:beforeunload", ["$event"]) unloadHandler(event: Event) {
+    const D = new Date();
+    let MIN = Math.round(D.getTime() / 1000);
+    localStorage.setItem('reload', MIN.toString());
     this.num = this.num + this.count + this.count2;
     this.timepassed = (this.num).toString();
     localStorage.setItem('time', this.timepassed);
   }
 
   constructor() {
+    if (localStorage.getItem('reload')) {
+      const d = new Date();
+      let min = Math.round(d.getTime() / 1000);
+      let LastreloadMin = Number(localStorage.getItem('reload'));
+      let difference = min - LastreloadMin;
+      if (difference >= 150) {
+        localStorage.setItem('time', '0');
+      }
+
+    }
     //Set Time
     if (!localStorage.getItem('time')) {
       localStorage.setItem('time', '0');
