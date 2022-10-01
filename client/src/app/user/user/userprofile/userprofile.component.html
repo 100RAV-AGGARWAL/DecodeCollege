@@ -3,15 +3,14 @@
 		<div>
 			<div class="row mt-5">
 				<div class="col-lg-9 border border-light m-2">
-					<div class="row bg-primary text-white p-2">{{user?.name}}'s Profile</div>
+					<div class="row bg-primary text-white p-2">{{user.first}}'s Profile</div>
 					<div class="row border-bottom p-2">
 						<div class="col-lg-6">
 							<b>Member Since:</b>
-							{{user?.createdAt |
-							date:'medium'}}
+							{{user.createdAt}}
 						</div>
 					</div>
-					<div class="mat-elevation-z8" *ngIf="user?.name">
+					<div class="mat-elevation-z8" *ngIf="user.first">
 						<div class="container p-5">
 							<div class="row m-3">
 								<div class="col-12 text-center">
@@ -20,19 +19,19 @@
 							</div>
 							<div class="row m-3">
 								<div class="col-12">
-									<span class="font-weight-bold">{{user?.name }}</span>
+									<span class="font-weight-bold">{{user.first}}</span>
 								</div>
 							</div>
 							<div class="row m-3">
 								<div class="col-5">
 									<mat-icon aria-hidden="false" class="custom-icon" aria-label="Email">email
 									</mat-icon>
-									{{user?.email}}
+									{{user.email}}
 								</div>
-								<div class="col-4" *ngIf="user?.phone">
+								<div class="col-4" *ngIf="user.phone">
 									<mat-icon aria-hidden="false" class="custom-icon" aria-label="Phone">phone
 									</mat-icon>
-									{{user?.phone}}
+									{{user.phone}}
 								</div>
 								<div class="col-3">&nbsp;</div>
 							</div>

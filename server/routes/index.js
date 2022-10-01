@@ -26,6 +26,7 @@ router.post('/users/login', UserController.login);
 router.get('/users/activation', UserController.userActivation);
 router.get('/users/profile', requireAuth, authService.roleAuthorization(["user"]), UserController.profile);
 
+
 router.post("/forgot", ForgotPasswordController.forgotPassword);
 router.post("/reset/verify", ForgotPasswordController.resetTokenVerify);
 router.post("/reset/password", ForgotPasswordController.resetPassword);
