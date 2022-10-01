@@ -10,8 +10,7 @@
 					<form (ngSubmit)="saveAssignment()" #assignmentForm="ngForm">
 						<div class="control-group">
 							<mat-form-field class="form-control border-0 p-4">
-								<mat-select name="subject" placeholder="Subject"
-									[(value)]="assignment.subject._id">
+								<mat-select name="subject" placeholder="Subject" [(value)]="assignment.subject._id">
 									<mat-option *ngFor="let subject of subjectList" [value]="subject._id">
 										{{subject.name}}
 									</mat-option>
@@ -38,7 +37,8 @@
 							<p class="help-block text-danger"></p>
 						</div>
 						<div class="text-center pt-3">
-							<button class="btn btn-primary rounded-pill py-2 px-5 " color="primary" ng-disabled="!updateEnabled">Submit</button>
+							<button class="btn btn-primary rounded-pill py-2 px-5 " color="primary"
+								ng-disabled="!updateEnabled">Submit</button>
 						</div>
 					</form>
 				</div>
