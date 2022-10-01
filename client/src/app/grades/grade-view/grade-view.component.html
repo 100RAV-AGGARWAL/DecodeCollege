@@ -10,7 +10,7 @@
                <div class="bg-secondary p-3">
 						<h2>Semester: {{sem.sem_no}}</h2><br>
                         <h5 *ngFor="let sub of sem.sem_marks">
-                            {{sub.subjectName}}  -  {{sub.marks}}
+                            {{sub.subjectName}}  - {{sub.marks}}/100
                         </h5>
                         <div class="d-flex justify-content-between mb-3">
 							<h4>Grade: {{sem.grade | number:'1.2-2'}}</h4>

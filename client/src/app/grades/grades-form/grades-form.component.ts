@@ -47,7 +47,7 @@ export class GradesFormComponent implements OnInit {
     if (this.CGPA > 0) {
       this.isGradeVisible = true;
       window.scroll({
-        top: 1000,
+        top: 500,
         left: 0,
         behavior: 'smooth'
       });
