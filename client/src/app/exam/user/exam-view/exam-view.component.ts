@@ -6,7 +6,7 @@ import { ExamService } from '../../exam.service';
 @Component({
   selector: 'app-exam-view',
   templateUrl: './exam-view.component.html',
-  styleUrls: ['./assignment-view.component.css']
+  styleUrls: ['./exam-view.component.css']
 })
 export class ExamViewComponent implements OnInit{
   exam : any;

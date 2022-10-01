@@ -11,7 +11,7 @@
 				</div>
 			</div>
 			<p class="text-center">Subject Filter: <input type="text" (keyup)="applyFilter($event)"></p>
-			<table class="table-responsive-custom" mat-table [dataSource]="assignmentList" matSort
+			<table class="table-responsive-custom" mat-table [dataSource]="examList" matSort
 				matSortActive="deadline" matSortDisableClear matSortDirection="asc">
 				<ng-container matColumnDef="name">
 					<th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Name </th>
@@ -38,11 +38,6 @@
 					<th mat-header-cell *matHeaderCellDef></th>
 					<td mat-cell *matCellDef="let element"> <a
 							[routerLink]="['/assignment/view/' + element._id]">View</a></td>
-				</ng-container>
-				<ng-container matColumnDef="delete">
-					<th mat-header-cell *matHeaderCellDef></th>
-					<td mat-cell *matCellDef="let element"> <a [routerLink]=""
-							(click)="openDialog(element._id, element.fileId)" class="text-primary">Delete</a></td>
 				</ng-container>
 				<tr mat-header-row *matHeaderRowDef="displayedCols"></tr>
 				<tr mat-row *matRowDef="let row; columns: displayedCols;">

@@ -46,6 +46,13 @@ export class ExamService {
 	getSubject() {
 		return this.http.get(environment.apiUrl + 'api/subject/list');
 	}
+	getSemester() {
+		return this.http.get(environment.apiUrl + 'api/semester/mySemesters', {
+		  headers: {
+			"Authorization": this.userService.getJWTToken()!
+		  },
+		});
+	}
 
 	getMyExams(pagination, sort, order): Observable<ExamList>{
 		let limit = pagination.limit;

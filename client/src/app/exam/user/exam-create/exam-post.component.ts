@@ -18,12 +18,25 @@ export class ExamPostComponent implements OnInit {
     semester: { _id: "" },
   }
   subjectList: any[] = [];
-
+  semesterList: any[]=[];
 
   constructor(private _snackBar: SnackBarService, private examService: ExamService, private userService: UserService) {
     this.examService.getSubject().subscribe((resp: any) => {
       try {
         this.subjectList = JSON.parse(resp["subject"]);
+        
+      }
+      catch (err) {
+        this._snackBar.openSnackBar('Unable to load categories.', 'X')
+      }
+    }, err => {
+      this._snackBar.openSnackBar('Unable to load categories.', 'X')
+    });
+    this.examService.getSemester().subscribe((resp: any) => {
+      try {
+        this.semesterList = JSON.parse(resp["semester"]);
+        console.log(this.semesterList)
+        
       }
       catch (err) {
         this._snackBar.openSnackBar('Unable to load categories.', 'X')
@@ -33,11 +46,12 @@ export class ExamPostComponent implements OnInit {
     });
 
   }
+  
 
   ngOnInit() {
   }
 
-  saveAssignment() {
+  saveExam() {
 
     this.examService.saveExam(this.exam).subscribe(resp => {
       this._snackBar.openSnackBar('Exam Created.', 'X')

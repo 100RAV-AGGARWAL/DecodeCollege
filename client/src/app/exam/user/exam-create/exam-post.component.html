@@ -24,7 +24,7 @@
 								<mat-select name="semester" placeholder="Semester"
 									[(value)]="exam.semester._id">
 									<mat-option *ngFor="let semester of semesterList" [value]="semester._id">
-										{{semester.name}}
+										{{semester.sem_no}}
 									</mat-option>
 								</mat-select>
 							</mat-form-field>
