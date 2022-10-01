@@ -9,10 +9,10 @@
         <p class="h5 ">{{exam.name}}</p>
         <h5 class="text-primary text-uppercase pt-4" style="letter-spacing: 4px;">Exam Date</h5>
         <p class="h5">{{exam.date | date: 'MMMM d, y'}}</p>
-        <h5 class="text-primary text-uppercase pt-4" style="letter-spacing: 4px;">Subject Name</h5>
+        <!-- <h5 class="text-primary text-uppercase pt-4" style="letter-spacing: 4px;">Subject Name</h5>
         <p class="h5">{{exam.subject.name}}</p>
         <h5 class="text-primary text-uppercase pt-4" style="letter-spacing: 4px;">Subject Name</h5>
-        <p class="h5">{{exam.semester.sem_no}}</p>
+        <p class="h5">{{exam.semester.sem_no}}</p> -->
         <h5 class="text-primary text-uppercase pt-4" style="letter-spacing: 4px;">Status</h5>
         <p class="h5 font-weight-bold" [ngClass]="{'text-success': exam.status === 'SUBMITTED', 'text-warning' : exam.status === 'PENDING', 'text-danger' : exam.status === 'MISSED' }">{{exam.status}}</p>
         <p class="help-block text-danger"></p>
