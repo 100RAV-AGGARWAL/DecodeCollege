@@ -1,0 +1,54 @@
+<div class="container-fluid py-5">
+	<div class="container py-5">
+		<div class="text-center">
+			<h2>Create Exam</h2>
+		</div>
+		<div class="row justify-content-center">
+			<div class="col-lg-8">
+				<div class="contact-form rounded p-5">
+					<div id="success"></div>
+					<form (ngSubmit)="saveExam()" #examForm="ngForm">
+						<div class="control-group">
+							<mat-form-field class="form-control border-0 p-4">
+								<mat-select name="subject" placeholder="Subject"
+									[(value)]="exam.subject._id">
+									<mat-option *ngFor="let subject of subjectList" [value]="subject._id">
+										{{subject.name}}
+									</mat-option>
+								</mat-select>
+							</mat-form-field>
+							<p class="help-block text-danger"></p>
+						</div>
+						<div class="control-group">
+							<mat-form-field class="form-control border-0 p-4">
+								<mat-select name="semester" placeholder="Semester"
+									[(value)]="exam.semester._id">
+									<mat-option *ngFor="let semester of semesterList" [value]="semester._id">
+										{{semester.name}}
+									</mat-option>
+								</mat-select>
+							</mat-form-field>
+							<p class="help-block text-danger"></p>
+						</div>
+						<div class="control-group">
+							<mat-form-field class="form-control border-0 p-4">
+								<input matInput name="name" [(ngModel)]="exam.name" placeholder="Name" value="">
+							</mat-form-field>
+							<p class="help-block text-danger"></p>
+						</div>
+						<div class="control-group">
+							<mat-form-field class="form-control border-0 p-4">
+								<input matInput name="date" [(ngModel)]="exam.date" placeholder="Due Date"
+									type="date">
+							</mat-form-field>
+							<p class="help-block text-danger"></p>
+						</div>
+						<div class="text-center pt-3">
+							<button class="btn btn-primary rounded-pill py-2 px-5 " color="primary" ng-disabled="!updateEnabled">Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const AssignmentController = require('../controllers/assignment.controller');
+const ExamController = require('../controllers/exams.controller')
 const NoteController = require('../controllers/notes.controller');
 const UserController = require('../controllers/user.controller');
 const ForgotPasswordController = require('../controllers/forgotpassword.controller');
@@ -56,5 +57,9 @@ router.post("/semester/grade", requireAuth, authService.roleAuthorization(["user
 router.get("/semester/mySemesters", requireAuth, authService.roleAuthorization(["user"]), SemesterController.mySemesters);
 
 router.post('/upload/file', requireAuth, authService.roleAuthorization(["user"]), multerUpload.single('file'), UploadController.uploadFile);
+
+router.post("/exam/create", requireAuth, authService.roleAuthorization(["user"]), ExamController.create);
+router.get("/exam", requireAuth, authService.roleAuthorization(["user"]), ExamController.get);
+router.get("/exam/list", requireAuth, authService.roleAuthorization(["user"]), ExamController.list);
 
 module.exports = router;

@@ -1,0 +1,22 @@
+<div class="container-fluid py-5">
+  <div class="container py-5">
+    <div class="text-center">
+      <h2>Assignment View</h2>
+    </div>
+    <div class="row align-items-center">
+      <div class="text-left mb-4">
+        <h5 class="text-primary text-uppercase pt-4" style="letter-spacing: 4px;">Exam Name</h5>
+        <p class="h5 ">{{exam.name}}</p>
+        <h5 class="text-primary text-uppercase pt-4" style="letter-spacing: 4px;">Exam Date</h5>
+        <p class="h5">{{exam.date | date: 'MMMM d, y'}}</p>
+        <h5 class="text-primary text-uppercase pt-4" style="letter-spacing: 4px;">Subject Name</h5>
+        <p class="h5">{{exam.subject.name}}</p>
+        <h5 class="text-primary text-uppercase pt-4" style="letter-spacing: 4px;">Subject Name</h5>
+        <p class="h5">{{exam.semester.name}}</p>
+        <h5 class="text-primary text-uppercase pt-4" style="letter-spacing: 4px;">Status</h5>
+        <p class="h5 font-weight-bold" [ngClass]="{'text-success': assignment.status === 'SUBMITTED', 'text-warning' : assignment.status === 'PENDING', 'text-danger' : assignment.status === 'MISSED' }">{{exam.status}}</p>
+        <p class="help-block text-danger"></p>
+      </div>
+    </div>
+  </div>
+</div>

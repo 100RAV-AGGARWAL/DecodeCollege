@@ -1,6 +1,6 @@
 {
 	"dbconfig": {
-		"url": "mongodb://localhost:27017/decodecollege"
+		"url": "mongodb://127.0.0.1:27017/decodecollege"
 	},
 	"jwt": {
 		"expiration": 10000,
