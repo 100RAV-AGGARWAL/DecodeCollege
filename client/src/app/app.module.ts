@@ -20,6 +20,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ExamModule } from './exam/exam.module';
 // import { GradesComponent } from './grades/grades.component';
 import { CoursesModule } from './courses/courses.module';
+import { CalendarComponentModule } from './calendar/calendar.module';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { CoursesModule } from './courses/courses.module';
     UtilityModule,
     TimeoutModule,
     AssignmentModule,
+    CalendarComponentModule,
     ExamModule,
     RouterModule.forRoot(
 			appRoutes,

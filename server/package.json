@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "@google-cloud/local-auth": "^2.1.0",
     "await-to-js": "^3.0.0",
     "base64url": "^3.0.1",
     "bcrypt": "^5.0.1",
@@ -19,6 +20,7 @@
     "express": "~4.16.1",
     "formidable": "^2.0.1",
     "fs": "^0.0.1-security",
+    "googleapis": "^105.0.0",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "jsonwebtoken": "^8.5.1",

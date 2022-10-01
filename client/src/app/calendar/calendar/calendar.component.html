@@ -1,0 +1,30 @@
+<div class="container-fluid py-5">
+    <div class="container py-5">
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <div class="btn-group">
+                        <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+                            (viewDateChange)="closeOpenMonthViewDay()">
+                            Previous
+                        </div>
+                        <div class="btn btn-outline-secondary text-primary" mwlCalendarToday [(viewDate)]="viewDate">
+                            Today
+                        </div>
+                        <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+                            (viewDateChange)="closeOpenMonthViewDay()">
+                            Next
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+                </div>
+            </div>
+            <br />
+            <div [ngSwitch]="view">
+                <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events"
+                     (eventClicked)="handleEvent($event.event.title, $event.event)" (dayClicked)="dayClicked($event.day)">
+                </mwl-calendar-month-view>
+            </div>
+        </div>
+    </div>

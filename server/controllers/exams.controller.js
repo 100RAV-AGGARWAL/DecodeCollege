@@ -1,5 +1,5 @@
 const { to, ReE, ReS } = require('../services/util.service');
-const { Exams,Subject } = require('../models');
+const { Exams, Subject } = require('../models');
 const logger = require("../lib/logging");
 
 
@@ -27,7 +27,7 @@ const create = async function (req, res) {
 	}
 	let examsJson = exams.toObject();
 	examsJson.subjectId = [{ user: req.subject._id }];
-	examsJson.semesterId= [{ user: req.semester._id }];
+	examsJson.semesterId = [{ user: req.semester._id }];
 	return ReS(res, { message: 'Successfully created new Exams.', exams: examsJson }, 201);
 }
 
@@ -104,3 +104,33 @@ const list = async function (req, res) {
 }
 
 module.exports.list = list;
+
+const examListByMonth = async function (req, res) {
+	let examList;
+	let month = req.query.month;
+	let year = req.query.year;
+
+	[err, examList] = await to(
+		Exams.find({
+			userId: req.user.id, date: {
+				$gte: new Date(year, month, 1),
+				$lt: new Date(year, month + 1, 1)
+			}
+		})
+	);
+	if (err) return ReE(res, err.message);
+
+	if (examList.length == 0) {
+		return ReS(res, { exams: [] });
+	}
+
+	let examJson = examList.map(exam => {
+		return exam.toObject();
+	});
+
+	res.setHeader("Content-Type", "application/json");
+
+	return ReS(res, { exam: JSON.stringify(examJson), total: examJson.length });
+};
+
+module.exports.examListByMonth = examListByMonth;
