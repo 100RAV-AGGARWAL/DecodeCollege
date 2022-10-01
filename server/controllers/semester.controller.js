@@ -113,7 +113,7 @@ const findgrade = async function (req, res) {
 		logger.error("Semester Controller - findgrade : Semester not found", err);
 		return ReE(res, err, 422);
 	}
-	[err, user] = await to(getPublicInfo(semester.createdById));
+	// [err, user] = await to(getPublicInfo(semester.createdById));
 	if (err) {
 		logger.error("Semester Controller - findgrade : Semester user not found", err);
 		return ReE(res, err, 422);
