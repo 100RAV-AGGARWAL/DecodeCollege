@@ -91,6 +91,11 @@ export class GradesFormComponent implements OnInit {
       subjects: [{}],
       semester_no: this.sem.sem
     }
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
     data.subjects.pop();
     for (let idx = 0; idx < this.gradesarr.length; idx++) {
       let subjectId = this.gradesarr[idx].subject._id;
