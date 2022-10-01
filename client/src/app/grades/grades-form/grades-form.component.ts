@@ -51,29 +51,10 @@ export class GradesFormComponent implements OnInit {
         left: 0,
         behavior: 'smooth'
       });
-      // this.scroller.scrollToAnchor("target");
-      // this.router.navigate([], { fragment: "target" });
-      // this.scroll
-      // document.getElementById("target")?.scrollIntoView();
-      //  
-      // let f=document.getElementById("target")
-      // if (f) {
-        // f.scrollIntoView({
-        //   behavior: "smooth",
-        //   block: "start",
-        //   inline: "nearest"
-        // });
-      // }
+      
+      
     }
-    // this.scroll(target);
-    // scroll(target)
   }
-
-  // scroll(id) {
-  // el.scrollIntoView({ behavior: 'smooth' });
-  // let el = document.getElementById(id);
-  // el.scrollIntoView()
-  // }
   calculateGrade() {
     let total = 0;
     let totalSubjects = this.subjectList.length;

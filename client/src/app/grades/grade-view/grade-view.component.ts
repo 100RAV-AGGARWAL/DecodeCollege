@@ -19,7 +19,6 @@ export class GradeViewComponent implements OnInit {
     this.gradeservice.getSemester().subscribe((resp: any) => {
       try {
         this.semeseterList = JSON.parse(resp["semester"]);
-        console.log(this.semeseterList)
         for (let index = 0; index < this.semeseterList.length; index++) {
 
           // let sem = {

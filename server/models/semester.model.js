@@ -11,7 +11,7 @@ const Semester = mongoose.model('Semester', new mongoose.Schema({
 			credit: { type: Number, }
 		}
 	],
-	createdById: { type: mongoose.ObjectId, ref: 'User', allowNull: false },
+	// createdById: { type: mongoose.ObjectId, ref: 'User', allowNull: false },
 	grade: { type: Number }
 }, { timestamps: true }));
 module.exports = Semester;
