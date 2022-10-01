@@ -63,6 +63,7 @@
                                 <a [routerLink]="['/notes/public']" class="dropdown-item">Public Notes</a>
                             </div>
                         </div>
+                        <a [routerLink]="['/grades']" *ngIf="isLoggedIn()" class="nav-item nav-link">Grades</a>
                         <a [routerLink]="['/courses']" *ngIf="isLoggedIn()" class="nav-item nav-link">Courses</a>
                         <a [routerLink]="['/dashboard']" class="nav-item nav-link">Contact</a>
                     </div>
