@@ -104,6 +104,7 @@ const getPublicInfo = async function (userId) {
 		first: user.first,
 		last: user.last,
 		email: user.email,
+		phone: user.phone,
 		createdAt: user.createdAt
 	}
 

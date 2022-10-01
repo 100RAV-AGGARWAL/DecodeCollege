@@ -24,6 +24,11 @@
 				</div>
 				<div class="control-group">
 					<mat-form-field class="form-control border-0 p-4 validate-input">
+						<input type="email" matInput placeholder="Phone No." name="phone" [(ngModel)]="signupData.phone" required>
+					</mat-form-field>
+				</div>
+				<div class="control-group">
+					<mat-form-field class="form-control border-0 p-4 validate-input">
 						<input matInput type="password" placeholder="Password" name="password"
 							[(ngModel)]="signupData.password" required>
 					</mat-form-field>
