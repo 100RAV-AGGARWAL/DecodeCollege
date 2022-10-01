@@ -257,13 +257,48 @@ const mysemesters = async function (req, res) {
 	var limit = req.query.limit ? (req.query.limit < 20 && req.query.limit > 0) ? parseInt(req.query.limit) : 20 : 20;
 	var offset = req.query.offset ? req.query.offset > 0 ? parseInt(req.query.offset) : 0 : 0;
 
-	[err, semesterList] = await to(Semester.find({ createdById: req.user.id }).limit(limit).skip(offset).sort({ sem_no: 1 }));
+	[err, semesterList] = await to(Semester.find().limit(limit).skip(offset).sort({ sem_no: 1 }));
 	if (err) {
 		logger.error("Semester Controller - mysemesters : Semesters not found", err);
 		return ReE(res, err, 422);
 	}
+	// console.log(semesterList);
+	for (let index = 0; index < semesterList.length; index++) {
+		// console.log
+		if (semesterList[index].sem_marks.length > 0) {
+			for (let i = 0; i < semesterList[index].sem_marks.length; i++) {
+				let subject;
+				[err, subject] = await to(getSubjectInfo(semesterList[index].sem_marks[i].subjectId));
+				if (err) return ReE(res, err.message);
+				semesterList[index].sem_marks[i].subjectName = subject.name;
+				console.log(semesterList[index].sem_marks);
 
-	[err, semesterCount] = await to(Semester.find({ creeatedById: req.user.id }).count());
+			}
+		}
+	}
+
+	// const element = array[index];
+	// console.log("SEM "+ semesterList[index].sem_marks);
+	// console.log
+	// for (let index in semesterList) {
+	// let sem_marks=semesterList[index].sem_marks;
+	// for(let i in sem_marks){
+	// 	let subject;
+	// 	[err, subject] = await to(getSubjectInfo(sem_marks._id));
+	// 	if (err) return ReE(res, err.message);
+	// 	semesterList[index].sem_marks[i].subjectName={name:subject.name}
+	// 	// console.log()
+	// }
+	// console.log(semesterList[index]);
+	// semesterList[index].subject = {
+	// 	_id: subject._id,
+	// 	name: subject.name,
+	// 	subjectcode: subject.subjectcode,
+	// 	credits: subject.credits,
+	// 	semester: subject.semester,
+	// };
+	// }
+	[err, semesterCount] = await to(Semester.find().count());
 	if (err) {
 		logger.error("Semester Controller - mysemesters : Semesters count not found", err);
 		return ReE(res, err, 422);
