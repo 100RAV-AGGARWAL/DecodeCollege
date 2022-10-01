@@ -19,10 +19,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
 import { UserModule } from '../user/user.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { GradeViewComponent } from './grade-view/grade-view.component';
 
 @NgModule({
   declarations: [
-    GradesFormComponent
+    GradesFormComponent,
+    GradeViewComponent
   ],
   imports: [
     CommonModule,

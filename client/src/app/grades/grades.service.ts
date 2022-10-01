@@ -12,7 +12,7 @@ export class GradesService {
   constructor(private http: HttpClient, private router: Router, private userService: UserService) { }
   getSubject(sem) {
     return new Observable((observer) => {
-      console.log(sem);
+      // console.log(sem);
       this.http.post(environment.apiUrl + 'api/subject/listbysem', sem, {
         headers: {
           "Authorization": this.userService.getJWTToken()!

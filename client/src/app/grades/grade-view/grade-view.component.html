@@ -1,0 +1,10 @@
+<!-- <p>grade-view works!</p> -->
+<div>
+    <h3 *ngFor="let sem of semeseterList;let i=index">
+        Semester: {{sem.sem_no}}
+        <h5 *ngFor="let sub of sem.sem_marks">
+            {{sub.subjectName}}  -  {{sub.marks}}
+        </h5>
+        <h5>Grade: {{sem.grade}}</h5>
+    </h3>
+</div>
