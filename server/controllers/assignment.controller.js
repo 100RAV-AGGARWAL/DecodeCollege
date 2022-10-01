@@ -7,6 +7,10 @@ const logger = require("../lib/logging");
 const { sendEmail } = require("../lib/mails/sendemail");
 const { getTemplateHtml } = require("../lib/mails/emailTemplate");
 const UploadController = require('./upload.controller');
+const config = require('config');
+const accountSid = config.get("twilio").accountSid;
+const authToken = config.get('twilio').authToken;
+const client = require('twilio')(accountSid, authToken);
 
 const create = async function (req, res) {
 	res.setHeader("Content-Type", "application/json");
@@ -301,7 +305,9 @@ const assignmentListByDateRange = async () => {
 		info = assignment;
 		emailId = user.email;
 		firstname = user.first;
-
+		phone = user.phone;
+		assignmentname = assignment.name;
+		reminderwhatsappbot(phone, firstname, assignmentname);
 		dueAssignmentHTMLcontent(emailId, firstname, info);
 	}
 
@@ -334,3 +340,13 @@ const dueAssignmentHTMLcontent = function (emailId, firstname, assignment) {
 	sendEmail(emailList, "assignmentDeadline", "Assignment Due", htmlContent);
 }
 
+const reminderwhatsappbot = function (phone, firstname, assignment){
+	console.log('whatsapp bot called');
+	client.messages
+  .create({
+     from: 'whatsapp:+14155238886',
+	 body: `Hi ${firstname}, ! Please complete your assignment ${assignment} before the deadline.`,
+     to: `whatsapp:`+phone
+   })
+  .then(message => console.log(message.sid));
+}
