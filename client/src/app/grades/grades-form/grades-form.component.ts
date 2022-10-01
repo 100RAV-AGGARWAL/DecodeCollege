@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { empty } from 'rxjs';
 import { UserService } from 'src/app/user/user.service';
 import { environment } from 'src/environments/environment';
 import { SnackBarService } from '../../utility/snackbar/snackbar.component';
@@ -55,7 +56,6 @@ export class GradesFormComponent implements OnInit {
     const percentage = (total / (totalSubjects * 100)) * 100;
     this.CGPA = percentage / 9.5;
     this.Percentage = percentage;
-    
   }
   handleSubmitSave() {
     console.log("Saved")
@@ -96,7 +96,7 @@ export class GradesFormComponent implements OnInit {
         for (let idx = 0; idx < this.subjectList.length; idx++) {
           let grades = {
             subject: this.subjectList[idx],
-            marks: 0,
+            marks: empty
           }
           this.gradesarr.push(grades);
 
