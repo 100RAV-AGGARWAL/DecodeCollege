@@ -16,7 +16,7 @@
         </div>
 
         <div class="row">
-        <div class="col-lg-4 col-md-6 mb-4" *ngFor="let course of searchResults">
+            <div class="col-lg-4 col-md-6 mb-4" *ngFor="let course of searchResults">
                 <div class="rounded overflow-hidden mb-2">
                     <img class="img-fluid" [src]="course.pagemap?.cse_image?.[0]?.src ?? alt_img_link" alt="">
                     <div class="bg-secondary p-4">
@@ -27,6 +27,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="text-center">
+            <a *ngIf="this.start > 10" class="text-primary m-0 a-link-custom" (click)="loadMore()">Load More</a>
         </div>
     </div>
 </div>
