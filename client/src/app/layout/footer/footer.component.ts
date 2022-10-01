@@ -8,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 export class FooterComponent implements OnInit {
 
   constructor() { }
-
+  handletop(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+   
+  }
   ngOnInit(): void {
   }
 
