@@ -112,15 +112,17 @@ const getPublicInfo = async function (userId) {
 module.exports.getPublicInfo = getPublicInfo;
 
 const profile = async function (req, res) {
+	console.log('44444');
 	let user_id, err, user;
-	user_id = req.query._id;
+	user_id = req.user.id;
+	console.log(user_id);
 	[err, user] = await to(getPublicInfo(user_id));
 	if (err) {
 		logger.error("User Controller - profile : Unable to find the user", err);
 		return ReE(res, err.message);
 	}
 	res.setHeader('Content-Type', 'application/json');
-	return ReS(res, { user: user });
+	return ReS(res, { user: user.toObject() });
 
 }
 module.exports.profile = profile;
