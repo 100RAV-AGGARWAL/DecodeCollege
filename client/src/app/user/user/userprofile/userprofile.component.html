@@ -1,0 +1,45 @@
+<section class="section wb">
+	<div class="container">
+		<div>
+			<div class="row mt-5">
+				<div class="col-lg-9 border border-light m-2">
+					<div class="row bg-primary text-white p-2">{{user?.name}}'s Profile</div>
+					<div class="row border-bottom p-2">
+						<div class="col-lg-6">
+							<b>Member Since:</b>
+							{{user?.createdAt |
+							date:'medium'}}
+						</div>
+					</div>
+					<div class="mat-elevation-z8" *ngIf="user?.name">
+						<div class="container p-5">
+							<div class="row m-3">
+								<div class="col-12 text-center">
+									<h2>User Details</h2>
+								</div>
+							</div>
+							<div class="row m-3">
+								<div class="col-12">
+									<span class="font-weight-bold">{{user?.name }}</span>
+								</div>
+							</div>
+							<div class="row m-3">
+								<div class="col-5">
+									<mat-icon aria-hidden="false" class="custom-icon" aria-label="Email">email
+									</mat-icon>
+									{{user?.email}}
+								</div>
+								<div class="col-4" *ngIf="user?.phone">
+									<mat-icon aria-hidden="false" class="custom-icon" aria-label="Phone">phone
+									</mat-icon>
+									{{user?.phone}}
+								</div>
+								<div class="col-3">&nbsp;</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

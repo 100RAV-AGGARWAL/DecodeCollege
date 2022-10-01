@@ -6,6 +6,7 @@ import { UserLoginComponent } from "./user/userlogin/user-login.component";
 import { UserSignupComponent } from "./user/usersignup/user-signup.component";
 import { UserViewComponent } from "./user/userview/user-view.component";
 import { UserService } from "./user.service";
+import { UserProfileComponent } from "./user/userprofile/userprofile.component";
 import { UserForgotPasswordComponent } from "./user/userforgotpassword/user-forgotpassword.component";
 import { UserResetPasswordComponent } from "./user/userresetpassword/user-resetpassword.component";
 import { UserRoutingModule } from "./user-routing.module";
@@ -41,7 +42,8 @@ import { AuthGuard } from './auth-guard.service';
 		UserSignupComponent,
 		UserViewComponent,
 		UserForgotPasswordComponent,
-		UserResetPasswordComponent
+		UserResetPasswordComponent,
+		UserProfileComponent
 	],
 	providers: [
 		AuthGuard,
