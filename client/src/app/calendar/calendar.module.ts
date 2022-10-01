@@ -9,7 +9,7 @@ import { DateAdapter, CalendarModule } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarHeaderComponent } from './calendar-header/calendar-header.component';
-import { CalendarService } from './calendar.service';
+// import { CalendarService } from './calendar.service';
 
 @NgModule({
   declarations: [

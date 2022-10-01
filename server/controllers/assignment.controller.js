@@ -272,8 +272,8 @@ const assignmentListByMonth = async function (req, res) {
 	[err, assignmentList] = await to(
 		Assignment.find({
 			userId: req.user.id, deadline: {
-				$gte: new Date(Number(year), Number(month), 1),
-				$lt: new Date(Number(year), Number(month) + 1, 1)
+				$gte: new Date(year, month, '1'),
+				$lt: new Date(year, (Number(month) + 1).toString(), '1')
 			}
 		})
 	);

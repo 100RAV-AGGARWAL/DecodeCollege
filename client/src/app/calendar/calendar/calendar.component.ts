@@ -136,6 +136,7 @@ export class CalendarComponent {
 
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
+    this.fetchData();
   }
 
   // eventClicked({ event }: { event: CalendarEvent}): void {
