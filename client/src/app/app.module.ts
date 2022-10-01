@@ -17,6 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { appRoutes } from './app.route';
 import { ToastrModule } from 'ngx-toastr';
+import { ExamModule } from './exam/exam.module';
 // import { GradesComponent } from './grades/grades.component';
 
 @NgModule({
@@ -37,6 +38,7 @@ import { ToastrModule } from 'ngx-toastr';
     UtilityModule,
     TimeoutModule,
     AssignmentModule,
+    ExamModule,
     RouterModule.forRoot(
 			appRoutes,
 			{ enableTracing: true, relativeLinkResolution: 'legacy' } 

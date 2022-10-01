@@ -57,4 +57,4 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     DatePipe
   ]
 })
-export class AssignmentModule { }
+export class ExamModule { }
