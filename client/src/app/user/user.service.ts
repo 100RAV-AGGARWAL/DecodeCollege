@@ -115,5 +115,7 @@ export class UserService {
 		}
 		return false
 	}
-
+	getProfile(id) {
+		return this.http.get(environment.apiUrl + 'api/users/profile?_id=' + id);
+	}
 }
