@@ -134,6 +134,7 @@ const findgrade = async function (req, res) {
 	return ReS(res, { message: 'Successfully saved new grade.', semester: semesterJson, cgpa: CGPA }, 201);
 }
 module.exports.findgrade = findgrade;
+
 const findBySemNo = async function (sem_no) {
 	let err, semester;
 
