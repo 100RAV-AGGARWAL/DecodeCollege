@@ -91,9 +91,7 @@ export class NoteService {
         });
       });
     }
-    PublicNotesList(pagination) {
-      let limit = pagination.limit;
-		let offset = limit * pagination.pageIndex;
+    PublicNotesList(offset:any, limit:any) {
     return this.http.get(environment.apiUrl + 'api/note/public?limit=' + limit + "&offset=" + offset);
     }
 

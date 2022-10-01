@@ -13,35 +13,33 @@ import { NoteDeleteComponent } from '../note-delete/note-delete.component';
   styleUrls: ['./note-public.component.css']
 })
 export class NotePublicComponent implements OnInit {
-  notesList = [];
+  notesList:any = [];
+  offset:number=0;
+  limit:number=3;
   note={
     subName:"",
     subjectId:""
   }
   isListEmpty : Boolean = true;
   pageEvent: PageEvent = new PageEvent;
-  pagination = { limit: 5, total: 0, pageIndex: 0 }
   displayedCols = ['name', 'subject', 'status','view'];
 
   constructor(private userService: UserService,private dialog: MatDialog, private noteService: NoteService, private _snackBar: SnackBarService) { 
-    this.pagination.total = 0;
-    this.pagination.pageIndex = 0;
+   this.offset=0;
     this.fetchNotes();
 
   }
 
   ngOnInit(): void {
   }
-  loadNextPage($event): void {
-    this.pagination.limit = $event.pageSize;
-    this.pagination.pageIndex = $event.pageIndex;
+  loadNextPage(): void {
+    this.offset+=this.limit;
     this.fetchNotes();
   }
   fetchNotes() {
-    this.noteService.PublicNotesList(this.pagination).subscribe(resp => {
+    this.noteService.PublicNotesList(this.offset, this.limit).subscribe(resp => {
       try {
-        this.notesList = JSON.parse(resp["notes"]);
-        this.pagination.total = resp["count"];
+        this.notesList.push(...JSON.parse(resp["notes"]));
 
         if(this.notesList.length != 0) {
 					this.isListEmpty = false;
