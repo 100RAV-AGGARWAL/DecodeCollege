@@ -1,63 +1,43 @@
-<!-- <section class="section wb">
-	<div class="container">
-		<h1> Signup</h1>
-		<form class="form-signup" (ngSubmit)="signup()" #signupForm="ngForm">
-
-			<mat-form-field class="example-full-width">
-				<input matInput placeholder="First Name" name="first" [(ngModel)]="signupData.first">
-			</mat-form-field>
-			<mat-form-field class="example-full-width">
-				<input matInput placeholder="Last Name" name="last" [(ngModel)]="signupData.last">
-			</mat-form-field>
-			<mat-form-field class="example-full-width">
-				<input type="email" matInput placeholder="Email id" name="email" [(ngModel)]="signupData.email">
-			</mat-form-field>
-			<mat-form-field class="example-full-width">
-				<input matInput type="password" placeholder="Password" name="password"
-					[(ngModel)]="signupData.password">
-			</mat-form-field>
-			<mat-form-field class="example-full-width">
-				<input matInput type="password" placeholder="RetypePassword" name="retypepassword"
-					[(ngModel)]="signupData.retypedpassword">
-			</mat-form-field>
-			<small>By Clicking Signing up, you agree to our <a [routerLink]="['/terms']">Terms</a> and that you have
-				read our
-				<a [routerLink]="['/privacypolicy']">privacy policy</a> and <a
-					[routerLink]="['/disclaimer']">disclaimer</a>, including our <a
-					[routerLink]="['/cookie']">cookie</a>
-				use.<br /></small>
-			<button mat-raised-button color="primary">Signup</button>
-		</form>
-	</div>
-</section> -->
 <div class="limiter">
 	<div class="container-login100">
 		<div class="wrap-login100">
-			<form class="login100-form validate-form" (ngSubmit)="signup()" #loginForm="ngForm">
-				<span class="login100-form-title">
-					Member Signup
-				</span>
-				<mat-form-field class="wrap-input100 validate-input">
-					<input matInput placeholder="First Name" name="first" [(ngModel)]="signupData.first">
-				</mat-form-field>
-				<mat-form-field class="wrap-input100 validate-input">
-					<input matInput placeholder="Last Name" name="last" [(ngModel)]="signupData.last">
-				</mat-form-field>
-				<mat-form-field class="wrap-input100 validate-input">
-					<input type="email" matInput placeholder="Email id" name="email" [(ngModel)]="signupData.email">
-				</mat-form-field>
-				<mat-form-field class="wrap-input100 validate-input">
-					<input matInput type="password" placeholder="Password" name="password"
-						[(ngModel)]="signupData.password">
-				</mat-form-field>
-				<mat-form-field class="wrap-input100 validate-input">
-					<input matInput type="password" placeholder="RetypePassword" name="retypepassword"
-						[(ngModel)]="signupData.retypedpassword">
-				</mat-form-field>
+			<form class="login100-form validate-form" (ngSubmit)="signup()" #signupForm="ngForm">
+				<h2 class="text-center">
+					Signup
+				</h2>
 
-				
-				<div class="container-login100-form-btn">
-					<button mat-raised-button color="primary">Signup</button>
+				<div class="control-group">
+					<mat-form-field class="form-control border-0 p-4 validate-input">
+						<input matInput placeholder="First Name" name="first" [(ngModel)]="signupData.first" required>
+					</mat-form-field>
+				</div>
+
+				<div class="control-group">
+					<mat-form-field class="form-control border-0 p-4 validate-input">
+						<input matInput placeholder="Last Name" name="last" [(ngModel)]="signupData.last" required>
+					</mat-form-field>
+				</div>
+				<div class="control-group">
+					<mat-form-field class="form-control border-0 p-4 validate-input">
+						<input type="email" matInput placeholder="Email id" name="email" [(ngModel)]="signupData.email" required>
+					</mat-form-field>
+				</div>
+				<div class="control-group">
+					<mat-form-field class="form-control border-0 p-4 validate-input">
+						<input matInput type="password" placeholder="Password" name="password"
+							[(ngModel)]="signupData.password" required>
+					</mat-form-field>
+				</div>
+				<div class="control-group">
+					<mat-form-field class="form-control border-0 p-4 validate-input">
+						<input matInput type="password" placeholder="RetypePassword" name="retypepassword"
+							[(ngModel)]="signupData.retypedpassword" required>
+					</mat-form-field>
+				</div>
+
+				<div class="text-center pt-3">
+					<button class="btn btn-primary rounded-lg py-1 px-4" mat-raised-button
+						[disabled]="!signupForm.form.valid">Signup</button>
 				</div>
 			</form>
 		</div>

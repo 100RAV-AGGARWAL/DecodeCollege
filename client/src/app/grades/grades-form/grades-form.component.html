@@ -8,7 +8,8 @@
 			<div class="col-lg-8">
 				<div class="contact-form rounded p-5">
 					<div id="success"></div>
-					<form *ngIf="isSemester==false" class="example-form" (ngSubmit)="handleSemester()" #noteForm="ngForm">
+					<form *ngIf="isSemester==false" class="example-form" (ngSubmit)="handleSemester()"
+						#noteForm="ngForm">
 						<div class="control-group">
 							<mat-form-field class="form-control border-0 p-4">
 								<mat-select name="Semester" placeholder="Semester" [(value)]="sem.sem">
@@ -19,75 +20,48 @@
 							</mat-form-field>
 							<p class="help-block text-danger"></p>
 							<!-- <div class="text-center pt-3"> -->
-								<button class="btn btn-primary rounded-pill py-2 px-5" color="btn-primary"
-									type="submit">Get Subjects</button>
+							<button class="btn btn-primary rounded-pill py-2 px-5" color="btn-primary" type="submit">Get
+								Subjects</button>
 							<!-- </div> -->
 						</div>
 					</form>
-					<form *ngIf="isSemester==true" class="example-form" (ngSubmit)="handleSubmit()" #noteForm="ngForm">
-						<div class="control-group  text-center" *ngFor="let subject of subjectList;let i=index">
-							<label class="">{{subject.name}}</label>
-							<input  name="marks" [(ngModel)]="gradesarr[i].marks" placeholder="Marks"
-								type="Number" value="subject._id">
-							<!-- <mat-form-field class="form-control border-0 p-4"> -->
-							<!-- <mat-select name="subject" placeholder="Subject" [(value)]="note.subject._id"> -->
-							<!-- <label *ngFor="let subject of subjectList" [value]="subject._id"> -->
-							<!-- <label *ngFor="let subject of subjectList">
-									{{subject.name}}
-								</label> -->
-							<!-- </mat-select> -->
-							<!-- </mat-form-field> -->
-							<!-- <p class="help-block text-danger"></p> -->
-						</div>
-						<!-- <div class="control-group">
+					<form *ngIf="isSemester==true" class="example-form text-center" (ngSubmit)="handleSubmit()"
+						#noteForm="ngForm">
+						<h5 *ngIf="subjectList.length===0" class="text-danger m-0">No Subjects Found</h5>
+						<div class="control-group  " *ngFor="let subject of subjectList;let i=index">
+							<!-- <label class="">{{subject.name}}</label> -->
 							<mat-form-field class="form-control border-0 p-4">
-								<input matInput name="name" [(ngModel)]="note.name" placeholder="Name" value="">
+								<input matInput name="marks" placeholder={{subject.name}} type="number"
+									value="subject._id" [(ngModel)]="gradesarr[i].marks">
 							</mat-form-field>
 							<p class="help-block text-danger"></p>
 						</div>
-						<div class="control-group">
-							<mat-form-field class="form-control border-0 p-4">
-								<mat-select name="status" placeholder="Status" [(value)]="note.status">
-									<mat-option *ngFor="let status of statusList" [value]="status.name">
-										{{status.name}}
-									</mat-option>
-								</mat-select>
-							</mat-form-field>
-							<p class="help-block text-danger"></p>
-						</div>
-						<div class="control-group pt-5 pl-4">
-							<input class="form-control border-0" type="file" name="file" ng2FileSelect
-								[uploader]="uploader" (change)="uploader.uploadAll()">
-							<p class="help-block text-danger"></p>
-						</div>-->
 
-						<div class="text-center pt-3">
+						<div class="text-center pt-3" *ngIf="subjectList.length>0" >
 							<button class="btn btn-primary rounded-pill py-2 px-5 mg-9" color="primary">Submit</button>
 						</div>
-						<!-- <div class="text-centre pt-3">
-						</div> -->
 					</form>
 					<form class="example-form" *ngIf="isGradeVisible==true" (ngSubmit)="handleSubmitSave()"
-						#noteForm="ngForm">
-
-						<div class="text-center justify-content-center">
+						#noteForm="ngForm" >
+						<div class="text-center justify-content-center" >
 							<h4>Your CGPA : {{CGPA | number:'1.2-2'}}</h4>
 						</div>
 						<div class="text-center justify-content-center">
 							<h4>Your percentage : {{Percentage | number:'1.2-2'}}%</h4>
 						</div>
-						<div class="text-center pt-3">
-							<button class="btn btn-primary rounded-pill py-2 px-5" color="btn-primary"
+						<div class="text-center pt-3" >
+							<button class="btn btn-success rounded-pill py-2 px-5 my-10" color="btn-primary"
 								type="submit">Save Grade</button>
+							<!-- <div class="justify-content-center text-center"> -->
+								<button class="btn btn-warning rounded-pill py-2 px-5 " color="btn-primary"
+									(click)="reset()" *ngIf="isGradeVisible==true">Reset </button>
+							<!-- </div> -->
 						</div>
+
 					</form>
-					<div class="justify-content-center text-center">
-						<button class="btn btn-primary rounded-pill py-2 px-5" color="btn-primary" (click)="reset()"
-							*ngIf="isGradeVisible==true">Reset </button>
-					</div>
+
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<!-- <div>Grade form works</div> -->

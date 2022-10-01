@@ -6,12 +6,13 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { NoteDeleteComponent } from '../note-delete/note-delete.component';
 
+
 @Component({
-  selector: 'app-note-mynotes',
-  templateUrl: './note-mynotes.component.html',
-  styleUrls: ['./note-mynotes.component.css']
+  selector: 'app-note-public',
+  templateUrl: './note-public.component.html',
+  styleUrls: ['./note-public.component.css']
 })
-export class NoteMynotesComponent implements OnInit {
+export class NotePublicComponent implements OnInit {
   notesList = [];
   note={
     subName:"",
@@ -20,8 +21,9 @@ export class NoteMynotesComponent implements OnInit {
   isListEmpty : Boolean = true;
   pageEvent: PageEvent = new PageEvent;
   pagination = { limit: 5, total: 0, pageIndex: 0 }
-  displayedCols = ['name', 'subject', 'status', 'edit', 'view','delete'];
-  constructor(private userService: UserService,private dialog: MatDialog, private noteService: NoteService, private _snackBar: SnackBarService) {
+  displayedCols = ['name', 'subject', 'status','view'];
+
+  constructor(private userService: UserService,private dialog: MatDialog, private noteService: NoteService, private _snackBar: SnackBarService) { 
     this.pagination.total = 0;
     this.pagination.pageIndex = 0;
     this.fetchNotes();
@@ -36,7 +38,7 @@ export class NoteMynotesComponent implements OnInit {
     this.fetchNotes();
   }
   fetchNotes() {
-    this.noteService.NotesList(this.pagination).subscribe(resp => {
+    this.noteService.PublicNotesList(this.pagination).subscribe(resp => {
       try {
         this.notesList = JSON.parse(resp["notes"]);
         this.pagination.total = resp["count"];
@@ -62,30 +64,7 @@ export class NoteMynotesComponent implements OnInit {
    
 
   }
-  openDialog(noteId: any, fileId: any): void {
-		let body = { _id: noteId, fileId: fileId };
-		const dialogRef = this.dialog.open(NoteDeleteComponent, {});
-
-		dialogRef.afterClosed().subscribe(result => {
-			if(!result || result != 'delete') {
-				this._snackBar.openSnackBar('Keyword not matched. Note Deletion Failed', 'X')
-				return;
-			}
-			this.noteService.deleteNote(body).subscribe(resp => {
-				this._snackBar.openSnackBar('Note deleted successfully.', 'X');
-				window.location.reload();
-			}, err => {
-				this._snackBar.openSnackBar('Note Deletion Failed', 'X')
-				if (err.status == 401) {
-					this.userService.logoutUser();
-				}
-			});
-		});
-	}
   
   
-  
-
-
 
 }

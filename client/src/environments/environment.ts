@@ -5,7 +5,10 @@
 export const environment = {
   production: false,
   apiUrl: "http://localhost:3000/",
-	advertisment: false
+	advertisment: false,
+  customSearchAPIKey: "AIzaSyCBb0HR-KCeg7H0WPaZHcXXpUW1zDiX8zY",
+  programmableSearchEngineId: "b3a26e3274cd8420f",
+  customSearchUrl: "https://customsearch.googleapis.com/customsearch/v1"
 };
 
 /*

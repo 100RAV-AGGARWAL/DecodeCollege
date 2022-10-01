@@ -26,6 +26,8 @@ import { NoteMynotesComponent } from './user/note-mynotes/note-mynotes.component
 import { NoteViewComponent } from './user/note-view/note-view.component';
 import { NoteEditComponent } from './user/note-edit/note-edit.component';
 import { NoteDeleteComponent } from './user/note-delete/note-delete.component';
+import { NotePublicComponent } from './user/note-public/note-public.component';
+import { NotePublicViewComponent } from './user/note-public-view/note-public-view.component';
 
 
 @NgModule({
@@ -34,7 +36,9 @@ import { NoteDeleteComponent } from './user/note-delete/note-delete.component';
     NoteMynotesComponent,
     NoteViewComponent,
     NoteEditComponent,
-    NoteDeleteComponent
+    NoteDeleteComponent,
+    NotePublicComponent,
+    NotePublicViewComponent
   ],
   imports: [
     CommonModule,

@@ -2,36 +2,36 @@
 	<div class="container-login100">
 		<div class="wrap-login100">
 			<form class="login100-form validate-form" (ngSubmit)="login()" #loginForm="ngForm">
-				<span class="login100-form-title">
-					Member Login
-				</span>
+				<h2 class="text-center">
+					Login
+				</h2>
 
-				<!-- <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz"> -->
-					<mat-form-field class="wrap-input100 validate-input">
-						<input matInput placeholder="Email Id" [(ngModel)]="loginData.username" value="" name="username" required>
+				<div class="control-group">
+					<mat-form-field class="form-control border-0 p-4 validate-input">
+						<input matInput placeholder="Email Id" [(ngModel)]="loginData.username" value="" name="username"
+							required>
 					</mat-form-field>
-				<!-- </div> -->
-
-				<!-- <div class="wrap-input100 validate-input" data-validate = "Password is required"> -->
-					<mat-form-field class="wrap-input100 validate-input">
-						<input type="password" matInput placeholder="Password" [(ngModel)]="loginData. password" value="" name="password" required>
-					</mat-form-field>
-				<!-- </div> -->
-				
-				<div class="container-login100-form-btn">
-					<button mat-raised-button color="primary" [disabled]="!loginForm.form.valid">Login</button>
 				</div>
 
-				<div class="text-center p-t-12">
-					<span class="txt1">
-						Forgot
-					</span>
-					<a [routerLink]="['/user/forgot']"> 
-						Username / Password?
+				<div class="control-group">
+					<mat-form-field class="form-control border-0 p-4 validate-input">
+						<input type="password" matInput placeholder="Password" [(ngModel)]="loginData. password"
+							value="" name="password" required>
+					</mat-form-field>
+				</div>
+
+				<div class="text-center pt-3">
+					<button class="btn btn-primary rounded-lg py-1 px-4" mat-raised-button
+						[disabled]="!loginForm.form.valid">Login</button>
+				</div>
+
+				<div class="text-center pt-2">
+					<a class="txt1" [routerLink]="['/user/forgot']">
+						Forgot Password?
 					</a>
 				</div>
 
-				<div class="text-center p-t-136">
+				<div class="text-center pt-4">
 					<a [routerLink]="['/user/signup']">
 						Create your Account
 						<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>

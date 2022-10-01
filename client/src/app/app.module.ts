@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
+import { AppComponent}from './app.component';
 import { UserModule } from './user/user.module';
 import { LayoutModule } from './layout/layout.module';
 import { HomeModule } from './home/home.module';
@@ -19,13 +19,12 @@ import { appRoutes } from './app.route';
 import { ToastrModule } from 'ngx-toastr';
 import { ExamModule } from './exam/exam.module';
 // import { GradesComponent } from './grades/grades.component';
+import { CoursesModule } from './courses/courses.module';
+
 
 @NgModule({
   declarations: [
-
     AppComponent
-
-    // GradesComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +34,7 @@ import { ExamModule } from './exam/exam.module';
     UserModule,
     LayoutModule,
     HomeModule,
+    CoursesModule,
     UtilityModule,
     TimeoutModule,
     AssignmentModule,

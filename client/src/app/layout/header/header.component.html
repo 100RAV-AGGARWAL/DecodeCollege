@@ -55,13 +55,15 @@
                                 <a [routerLink]="['/assignment/myAssignments']" class="dropdown-item">My Assignments</a>
                             </div>
                         </div>
-                        <div class="nav-item dropdown" *ngIf="isLoggedIn()">
+                        <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Notes</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a [routerLink]="['/notes/post']" class="dropdown-item">New Note</a>
-                                <a [routerLink]="['/notes/mynotes']" class="dropdown-item">My Notes</a>
+                                <a  *ngIf="isLoggedIn()" [routerLink]="['/notes/post']" class="dropdown-item">New Note</a>
+                                <a  *ngIf="isLoggedIn()" [routerLink]="['/notes/mynotes']" class="dropdown-item">My Notes</a>
+                                <a [routerLink]="['/notes/public']" class="dropdown-item">Public Notes</a>
                             </div>
                         </div>
+                        <a [routerLink]="['/grades']" *ngIf="isLoggedIn()" class="nav-item nav-link">Grades</a>
                         <a [routerLink]="['/courses']" *ngIf="isLoggedIn()" class="nav-item nav-link">Courses</a>
                         <a [routerLink]="['/dashboard']" class="nav-item nav-link">Contact</a>
                     </div>

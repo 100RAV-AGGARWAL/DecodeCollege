@@ -1,0 +1,35 @@
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h2>Find Courses</h2>
+        </div>
+        <br>
+        <div class="row justify-content-center mb-5">
+            <div class="input-group">
+                <input matInput type="text" class="form-control border-primary" style="padding: 30px;"
+                    placeholder="Seach Courses" [(ngModel)]="searchText">
+                <div class="input-group-append">
+                    <button (click)="getSearchResults()" class="btn btn-primary px-4"><i
+                            class="fa fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4" *ngFor="let course of searchResults">
+                <div class="rounded overflow-hidden mb-2">
+                    <img class="img-fluid" [src]="course.pagemap?.cse_image?.[0]?.src ?? alt_img_link" alt="">
+                    <div class="bg-secondary p-4">
+                        <a class="h5" [href]="course.link" target="_blank">{{course.title}}</a>
+                        <div class="d-flex justify-content-between mb-3">
+                            <small class="m-0"><i class="fa fa-book text-primary mr-2"></i>{{course.snippet}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <a *ngIf="this.start > 10" class="text-primary m-0 a-link-custom" (click)="loadMore()">Load More</a>
+        </div>
+    </div>
+</div>

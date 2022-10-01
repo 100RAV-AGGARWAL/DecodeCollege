@@ -70,7 +70,8 @@ h1{
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 177px 130px 33px 95px;
+  padding-top: 95px;
+  padding-bottom: 95px;
 }
 
 
@@ -178,4 +179,36 @@ h1{
 .input100:focus + .focus-input100 + .symbol-input100 {
   color: #57b846;
   padding-left: 28px;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #FF6600;
+  border-color: #FF6600;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #d95700;
+  border-color: #cc5200;
+}
+
+.btn-primary:focus, .btn-primary.focus {
+  color: #fff;
+  background-color: #d95700;
+  border-color: #cc5200;
+  box-shadow: 0 0 0 0.2rem rgba(255, 125, 38, 0.5);
+}
+
+
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
+.show > .btn-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #cc5200;
+  border-color: #bf4d00;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
+.show > .btn-primary.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(255, 125, 38, 0.5);
 }
