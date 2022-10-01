@@ -13,3 +13,6 @@
 .custom-icon{
 	vertical-align: -6px;
 }
+.account-icon{
+    transform: scale(2);
+}
