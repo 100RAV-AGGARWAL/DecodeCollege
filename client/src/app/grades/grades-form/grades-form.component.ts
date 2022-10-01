@@ -81,8 +81,9 @@ export class GradesFormComponent implements OnInit {
     for (let idx = 0; idx < this.gradesarr.length; idx++) {
       let subjectId = this.gradesarr[idx].subject._id;
       let marks = this.gradesarr[idx].marks;
+      let subjectName="";
 
-      const curr = { subjectId: subjectId, marks: marks };
+      const curr = { subjectId: subjectId, marks: marks ,subjectName:subjectName};
       data.subjects.push(curr);
     }
     this.gradeservice.saveGrades(data).subscribe(resp => {
