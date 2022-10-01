@@ -122,7 +122,7 @@ const profile = async function (req, res) {
 		return ReE(res, err.message);
 	}
 	res.setHeader('Content-Type', 'application/json');
-	return ReS(res, { user: user.toObject() });
+	return ReS(res, { user: user });
 
 }
 module.exports.profile = profile;
