@@ -15,6 +15,10 @@ const create = async function (req, res) {
 		logger.error("Exam Controller - create : Not able to read subject details");
 		return ReE(res, err, 401);
 	}
+	if (!req.semester._id) {
+		logger.error("Exam Controller - create : Not able to read subject details");
+		return ReE(res, err, 401);
+	}
 
 	[err, exams] = await to(Exams.create(body));
 	if (err) {
@@ -22,7 +26,8 @@ const create = async function (req, res) {
 		return ReE(res, err, 422);
 	}
 	let examsJson = exams.toObject();
-	examsJson.subject = [{ user: req.subject._id }];
+	examsJson.subjectId = [{ user: req.subject._id }];
+	examsJson.semesterId= [{ user: req.semester._id }];
 	return ReS(res, { message: 'Successfully created new Exams.', exams: examsJson }, 201);
 }
 
@@ -46,9 +51,14 @@ const get = async function (req, res) {
 		logger.error("exams Controller - get : exams User not found ", err);
 		return ReE(res, err, 422);
 	}
+	[err, semester] = await to(getSemesterInfo(exams.semester._id));
+	if (err) {
+		logger.error("exams Controller - get : exams User not found ", err);
+		return ReE(res, err, 422);
+	}
 	let examsJson = exams.toObject()
-	examsJson.subject = subject;
-
+	examsJson.subjectId = subjectId;
+	examsJson.semesterId = semesterId;
 	res.setHeader('Content-Type', 'application/json');
 	return ReS(res, { exams: examsJson });
 }

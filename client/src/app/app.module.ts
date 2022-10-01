@@ -7,6 +7,7 @@ import { LayoutModule } from './layout/layout.module';
 import { HomeModule } from './home/home.module';
 import { UtilityModule } from './utility/utility.module';
 import { AssignmentModule } from './assignment/assignment.module';
+import { AdminPortalModule } from './admin-portal/admin-portal.module';
 import { NoteModule } from './note/note.module';
 import { TimeoutModule } from './timeout/timeout.module';
 import { GradesModule } from './grades/grades.module';
@@ -17,7 +18,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { appRoutes } from './app.route';
 import { ToastrModule } from 'ngx-toastr';
+import { ExamModule } from './exam/exam.module';
+// import { GradesComponent } from './grades/grades.component';
 import { CoursesModule } from './courses/courses.module';
+
 
 @NgModule({
   declarations: [
@@ -29,12 +33,14 @@ import { CoursesModule } from './courses/courses.module';
     NoteModule,
     GradesModule,
     UserModule,
+    AdminPortalModule,
     LayoutModule,
     HomeModule,
     CoursesModule,
     UtilityModule,
     TimeoutModule,
     AssignmentModule,
+    ExamModule,
     RouterModule.forRoot(
 			appRoutes,
 			{ enableTracing: true, relativeLinkResolution: 'legacy' } 

@@ -10,7 +10,7 @@ var userSchema = new mongoose.Schema({
 	first: { type: String, required: [true, 'First name is required'] },
 	last: { type: String, required: [true, 'Last name is required'] },
 	email: { type: String, allowNull: true, required: [true, 'Email is required'] },
-	phone: { type: String, allowNull: true },
+	phone: { type: String, allowNull: true, required: [true, 'Phone is required'] },
 	password: { type: String, allowNull: true, required: [true, 'Password is required'] },
 	role: { type: String, enum: ['superuser', 'admin', 'user'], default: "user" },
 	emailnotification: { type: String, enum: ['daily', 'weekly', 'never'], default: "daily" },

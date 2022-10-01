@@ -12,7 +12,7 @@ import { SnackBarService } from '../../../utility/snackbar/snackbar.component';
 })
 export class UserSignupComponent implements OnInit {
 
-	signupData = { username: '', password: '', first: "", last: "", email: "", retypedpassword: ""};
+	signupData = { username: '', password: '', first: "", last: "", email: "",phone:"", retypedpassword: ""};
 	message = '';
 	data: any;
 	constructor(private http: HttpClient, private router: Router, private userService: UserService, private _snackBar: SnackBarService) {
