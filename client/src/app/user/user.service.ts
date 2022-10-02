@@ -115,5 +115,11 @@ export class UserService {
 		}
 		return false
 	}
-
+	getProfile() {
+		return this.http.get(environment.apiUrl + 'api/users/profile',{
+			headers: {
+				"Authorization": this.getJWTToken()!
+			  }
+		});
+	}
 }

@@ -54,11 +54,11 @@ export class ExamService {
 		});
 	}
 
-	getMyExams(pagination, sort, order): Observable<ExamList>{
+	getMyExams(pagination){
 		let limit = pagination.limit;
 		let offset = limit * pagination.pageIndex;
 
-		return this.http.get<ExamList>(environment.apiUrl + 'api/exam/list?limit=' + limit + "&offset=" + offset + "&sort=" + sort + "&order=" + order, {
+		return this.http.get(environment.apiUrl + 'api/exam/list?limit=' + limit + "&offset=" + offset, {
 			headers: {
 				"Authorization": this.userService.getJWTToken()!
 			}

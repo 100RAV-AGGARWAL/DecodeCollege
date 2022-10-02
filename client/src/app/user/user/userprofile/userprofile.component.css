@@ -1,0 +1,18 @@
+
+/* .row{
+    margin-left: 0px;
+    margin-right: 0px;
+} */
+.articles{
+    display: block;
+    margin: 2%;
+}
+.pointer{
+    cursor: pointer;
+}
+.custom-icon{
+	vertical-align: -6px;
+}
+.account-icon{
+    transform: scale(2);
+}

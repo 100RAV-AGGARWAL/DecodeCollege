@@ -7,6 +7,7 @@ import { LayoutModule } from './layout/layout.module';
 import { HomeModule } from './home/home.module';
 import { UtilityModule } from './utility/utility.module';
 import { AssignmentModule } from './assignment/assignment.module';
+import { AdminPortalModule } from './admin-portal/admin-portal.module';
 import { NoteModule } from './note/note.module';
 import { TimeoutModule } from './timeout/timeout.module';
 import { GradesModule } from './grades/grades.module';
@@ -33,6 +34,7 @@ import { CalendarComponentModule } from './calendar/calendar.module';
     NoteModule,
     GradesModule,
     UserModule,
+    AdminPortalModule,
     LayoutModule,
     HomeModule,
     CoursesModule,

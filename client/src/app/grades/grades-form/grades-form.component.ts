@@ -47,7 +47,7 @@ export class GradesFormComponent implements OnInit {
     if (this.CGPA > 0) {
       this.isGradeVisible = true;
       window.scroll({
-        top: 1000,
+        top: 500,
         left: 0,
         behavior: 'smooth'
       });
@@ -81,8 +81,9 @@ export class GradesFormComponent implements OnInit {
     for (let idx = 0; idx < this.gradesarr.length; idx++) {
       let subjectId = this.gradesarr[idx].subject._id;
       let marks = this.gradesarr[idx].marks;
+      let subjectName="";
 
-      const curr = { subjectId: subjectId, marks: marks };
+      const curr = { subjectId: subjectId, marks: marks ,subjectName:subjectName};
       data.subjects.push(curr);
     }
     this.gradeservice.saveGrades(data).subscribe(resp => {
