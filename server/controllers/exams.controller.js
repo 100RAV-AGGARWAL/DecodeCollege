@@ -107,21 +107,24 @@ module.exports.list = list;
 
 const examListByMonth = async function (req, res) {
 	let examList;
-	let month = req.query.month;
-	let year = req.query.year;
+	let month = Number(req.query.month);
+	let year = Number(req.query.year);
+
+	let startDate = new Date(`${year}-${month}-01`);
+	let endDate = new Date(`${year}-${month + 1}-01`);
 
 	[err, examList] = await to(
 		Exams.find({
 			userId: req.user.id, date: {
-				$gte: new Date(year, month, 1),
-				$lt: new Date(year, month + 1, 1)
+				$gte: startDate,
+				$lt: endDate
 			}
 		})
 	);
 	if (err) return ReE(res, err.message);
 
 	if (examList.length == 0) {
-		return ReS(res, { exams: [] });
+		return ReS(res, { exams: "[]" });
 	}
 
 	let examJson = examList.map(exam => {

@@ -266,21 +266,24 @@ module.exports.myAssignments = myAssignments;
 
 const assignmentListByMonth = async function (req, res) {
 	let assignmentList;
-	let month = req.query.month;
-	let year = req.query.year;
+	let month = Number(req.query.month);
+	let year = Number(req.query.year);
+
+	let startDate = new Date(`${year}-${month}-01`);
+	let endDate = new Date(`${year}-${month + 1}-01`);
 
 	[err, assignmentList] = await to(
 		Assignment.find({
 			userId: req.user.id, deadline: {
-				$gte: new Date(year, month, '1'),
-				$lt: new Date(year, (Number(month) + 1).toString(), '1')
+				$gte: startDate,
+				$lt: endDate
 			}
 		})
 	);
 	if (err) return ReE(res, err.message);
 
 	if (assignmentList.length == 0) {
-		return ReS(res, { assignment: [] });
+		return ReS(res, { assignment: "[]" });
 	}
 
 	let assignmentJson = assignmentList.map(assignment => {

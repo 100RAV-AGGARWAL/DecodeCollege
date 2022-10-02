@@ -1,26 +1,16 @@
 import {
   Component,
   ChangeDetectionStrategy,
-  ViewChild,
-  TemplateRef,
-  OnInit,
 } from '@angular/core';
 import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
   isSameDay,
   isSameMonth,
-  addHours,
 } from 'date-fns';
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   CalendarEvent,
   CalendarEventAction,
-  CalendarEventTimesChangedEvent,
   CalendarView,
 } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
@@ -51,19 +41,11 @@ const colors: Record<string, EventColor> = {
 })
 export class CalendarComponent {
 
-  @ViewChild('modalContent', { static: true })
-  modalContent!: TemplateRef<any>;
-
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
 
   viewDate: Date = new Date();
-
-  modalData!: {
-    action: string;
-    event: CalendarEvent;
-  };
 
   refresh = new Subject<void>();
 
@@ -81,16 +63,6 @@ export class CalendarComponent {
     }
   ]
 
-  // examActions: CalendarEventAction[] = [
-  //   {
-  //     label: '<i class="fa fa-fw fa-pencil"></i>',
-  //     a11yLabel: 'View',
-  //     onClick: ({ event }: { event: CalendarEvent }): void => {
-  //       this.handleEvent('Exam View', event);
-  //     }
-  //   }
-  // ]
-
   constructor(private modal: NgbModal, private assignmentService: AssignmentService, private examService: ExamService, private router: Router) {
     this.fetchData();
   }
@@ -105,19 +77,19 @@ export class CalendarComponent {
       if (assignments.length > 0) {
         assignments.forEach((assignment: any) => {
           this.events.push({
-            start: new Date(assignment.date),
+            start: new Date(assignment.deadline),
             title: 'Assignment',
             color: colors['blue'],
             actions: this.actions,
             allDay: true,
-            id: assignment.id,
+            id: assignment._id,
           });
         });
       }
     });
 
     this.examService.getExamsByMonth(month, year).subscribe((data) => {
-      let exams = JSON.parse(data['exam']);
+      let exams = JSON.parse(data['exams']);
 
       if (exams.length > 0) {
         exams.forEach((exam: any) => {
@@ -127,7 +99,7 @@ export class CalendarComponent {
             color: colors['red'],
             actions: this.actions,
             allDay: true,
-            id: exam.id,
+            id: exam._id,
           });
         });
       }
@@ -138,10 +110,6 @@ export class CalendarComponent {
     this.activeDayIsOpen = false;
     this.fetchData();
   }
-
-  // eventClicked({ event }: { event: CalendarEvent}): void {
-  //   console.log('Event clicked', event);
-  // }
 
   handleEvent(action: string, event: CalendarEvent): void {
     if (action == 'Assignment') {
