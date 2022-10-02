@@ -10,6 +10,7 @@ const authService = require('../services/auth.service');
 const SubjectController = require('../controllers/subject.controller');
 const SemesterController = require('../controllers/semester.controller');
 const UploadController = require('../controllers/upload.controller');
+const CalendarController = require('../lib/calendar-api/index');
 const multerUpload = require('../lib/multer');
 const passport = require('passport');
 require('./../middleware/passport')(passport)
@@ -36,6 +37,7 @@ router.get("/assignment", requireAuth, authService.roleAuthorization(["user"]), 
 router.put('/assignment', requireAuth, authService.roleAuthorization(["user"]), AssignmentController.update); //update  
 router.delete('/assignment', requireAuth, authService.roleAuthorization(["user"]), AssignmentController.remove); //update  
 router.get("/assignment/myAssignments", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.myAssignments);
+router.get("/assignment/getListByMonth", requireAuth, authService.roleAuthorization(["user"]), AssignmentController.assignmentListByMonth);
 
 router.post("/note", requireAuth, authService.roleAuthorization(["user"]), NoteController.create);
 router.get("/note/mynotes", requireAuth, authService.roleAuthorization(["user"]), NoteController.list);
@@ -56,7 +58,6 @@ router.get("/semester", requireAuth, authService.roleAuthorization(["user"]), Se
 router.put("/semester", requireAuth, authService.roleAuthorization(["user"]), SemesterController.update);
 router.delete("/semester", requireAuth, authService.roleAuthorization(["user"]), SemesterController.remove);
 router.get("/semester/list", requireAuth, authService.roleAuthorization(["admin"]), SemesterController.list);
-// router.get("/semester/grade", requireAuth, authService.roleAuthorization(["user"]), SemesterController.findgrade);
 router.post("/semester/grade", requireAuth, authService.roleAuthorization(["user"]), SemesterController.findgrade);
 router.get("/semester/mySemesters", requireAuth, authService.roleAuthorization(["user"]), SemesterController.mySemesters);
 
@@ -65,5 +66,9 @@ router.post('/upload/file', requireAuth, authService.roleAuthorization(["user"])
 router.post("/exam/create", requireAuth, authService.roleAuthorization(["user"]), ExamController.create);
 router.get("/exam", requireAuth, authService.roleAuthorization(["user"]), ExamController.get);
 router.get("/exam/list", requireAuth, authService.roleAuthorization(["user"]), ExamController.list);
+router.get("/exam/getListByMonth", requireAuth, authService.roleAuthorization(["user"]), ExamController.examListByMonth);
+
+// router.get("/calendar/get", requireAuth, authService.roleAuthorization(["user"]), CalendarController.getCalendarEvents);
+
 
 module.exports = router;

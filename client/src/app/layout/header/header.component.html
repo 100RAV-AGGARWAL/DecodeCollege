@@ -55,8 +55,9 @@
                                 <a  *ngIf="isLoggedIn()" [routerLink]="['/exam/list']" class="dropdown-item">My Exam</a>
                             </div>
                         </div>
-                        <!-- <a [routerLink]="['/grades']" *ngIf="isLoggedIn()" class="nav-item nav-link">Grades</a> -->
                         <a [routerLink]="['/courses']" *ngIf="isLoggedIn()" class="nav-item nav-link">Courses</a>
+                        <a [routerLink]="['/calendar']" *ngIf="isLoggedIn()" class="nav-item nav-link">Calendar</a>
+                        <a [routerLink]="['/dashboard']" class="nav-item nav-link">Contact</a>
                         <a  class="nav-item nav-link" (click)="handleTop()">Contact</a>
                         
                     </div>

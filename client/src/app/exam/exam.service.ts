@@ -74,39 +74,11 @@ export class ExamService {
 		});
 	}
 
-	// updateAssignments(assignment: any) {
-	// 	return new Observable((observer) => {
-	// 		this.http.put(environment.apiUrl + 'api/assignment', assignment, {
-	// 			headers: {
-	// 				"Authorization": this.userService.getJWTToken()!
-	// 			}
-	// 		}).subscribe(resp => {
-	// 			this.router.navigate(['/assignment/myAssignments']);
-	// 			observer.next(resp);
-	// 		}, err => {
-	// 			if (err.status == 401) {
-	// 				this.userService.logoutUser();
-	// 			}
-	// 			observer.error(err);
-	// 		});
-	// 	});
-	// }
-
-	// deleteAssignment(body:any) {
-	// 	return new Observable((observer) => {
-	// 		this.http.delete(environment.apiUrl + 'api/assignment?assignmentId=' + body.assignmentId + '&fileId=' + body.fileId, {
-	// 			headers: {
-	// 				"Authorization": this.userService.getJWTToken()!
-	// 			}
-	// 		}).subscribe(resp => {
-	// 			this.router.navigate(['/assignment/myAssignments']);
-	// 			observer.next(resp);
-	// 		}, err => {
-	// 			if (err.status == 401) {
-	// 				this.userService.logoutUser();
-	// 			}
-	// 			observer.error(err);
-	// 		});
-	// 	});
-	// }
+	getExamsByMonth(month, year) {
+		return this.http.get(environment.apiUrl + 'api/exam/getListByMonth?month=' + month + '&year=' + year, {
+			headers: {
+				"Authorization": this.userService.getJWTToken()!
+			}
+		});
+	}
 }

@@ -263,6 +263,40 @@ const myAssignments = async function (req, res) {
 
 module.exports.myAssignments = myAssignments;
 
+
+const assignmentListByMonth = async function (req, res) {
+	let assignmentList;
+	let month = Number(req.query.month);
+	let year = Number(req.query.year);
+
+	let startDate = new Date(`${year}-${month}-01`);
+	let endDate = new Date(`${year}-${month + 1}-01`);
+
+	[err, assignmentList] = await to(
+		Assignment.find({
+			userId: req.user.id, deadline: {
+				$gte: startDate,
+				$lt: endDate
+			}
+		})
+	);
+	if (err) return ReE(res, err.message);
+
+	if (assignmentList.length == 0) {
+		return ReS(res, { assignment: "[]" });
+	}
+
+	let assignmentJson = assignmentList.map(assignment => {
+		return assignment.toObject();
+	});
+
+	res.setHeader("Content-Type", "application/json");
+
+	return ReS(res, { assignment: JSON.stringify(assignmentJson), total: assignmentJson.length });
+};
+
+module.exports.assignmentListByMonth = assignmentListByMonth;
+
 const assignmentListByDateRange = async () => {
 	let assignmentPendingList, err, assignmentMissedList;
 	let someDate = new Date();
@@ -340,13 +374,14 @@ const dueAssignmentHTMLcontent = function (emailId, firstname, assignment) {
 	sendEmail(emailList, "assignmentDeadline", "Assignment Due", htmlContent);
 }
 
-const reminderwhatsappbot = function (phone, firstname, assignment){
+const reminderwhatsappbot = function (phone, firstname, assignment) {
 	console.log('whatsapp bot called');
 	client.messages
-  .create({
-     from: 'whatsapp:+14155238886',
-	 body: `Hi ${firstname}, ! Please complete your assignment ${assignment} before the deadline.`,
-     to: `whatsapp:`+phone
-   })
-  .then(message => console.log(message.sid));
+		.create({
+			from: 'whatsapp:+14155238886',
+			body: `Hi ${firstname}, ! Please complete your assignment ${assignment} before the deadline.`,
+			to: `whatsapp:` + phone
+		})
+		.then(message => console.log(message.sid));
 }
+

@@ -12,6 +12,7 @@ const YAML = require("yamljs")
 const swaggerJsDoc = YAML.load('./swagger/swagger.yaml');
 const bodyParser = require('body-parser');
 const assignmentController = require('./controllers/assignment.controller');
+const { google } = require('googleapis');
 
 var indexRouter = require('./routes/index');
 var app = express();
@@ -38,7 +39,7 @@ app.use(function (req, res, next) {
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Cron Job to send Mail for Due Assignment
-cron.schedule(testCronJob, assignmentController.assignmentListByDateRange); //Fire After Every Minute
+// cron.schedule(testCronJob, assignmentController.assignmentListByDateRange); //Fire After Every Minute
 
 app.use('/api', indexRouter);
 

@@ -101,4 +101,12 @@ export class AssignmentService {
 			});
 		});
 	}
+
+	getAssignmentByMonth(month, year) {
+		return this.http.get(environment.apiUrl + 'api/assignment/getListByMonth?month=' + month + '&year=' + year, {
+			headers: {
+				"Authorization": this.userService.getJWTToken()!
+			}
+		});
+	}
 }
