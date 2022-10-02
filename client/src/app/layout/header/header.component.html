@@ -57,7 +57,7 @@
                         </div>
                         <!-- <a [routerLink]="['/grades']" *ngIf="isLoggedIn()" class="nav-item nav-link">Grades</a> -->
                         <a [routerLink]="['/courses']" *ngIf="isLoggedIn()" class="nav-item nav-link">Courses</a>
-                        <a [routerLink]="['/dashboard']" class="nav-item nav-link">Contact</a>
+                        <a  class="nav-item nav-link" (click)="handleTop()">Contact</a>
                         
                     </div>
                     <a *ngIf="!isLoggedIn()" [routerLink]="['/user/login']" class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block">Sign In</a>
