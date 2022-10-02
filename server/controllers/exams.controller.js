@@ -116,7 +116,7 @@ const examListByMonth = async function (req, res) {
 
 	[err, examList] = await to(
 		Exams.find({
-			userId: req.user.id, date: {
+			date: {
 				$gte: startDate,
 				$lt: endDate
 			}
@@ -125,7 +125,7 @@ const examListByMonth = async function (req, res) {
 	if (err) return ReE(res, err.message);
 
 	if (examList.length == 0) {
-		return ReS(res, { exams: "[]" });
+		return ReS(res, { exam: "[]" });
 	}
 
 	let examJson = examList.map(exam => {

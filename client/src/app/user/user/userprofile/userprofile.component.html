@@ -7,7 +7,7 @@
 					<div class="row border-bottom p-2">
 						<div class="col-lg-6">
 							<b>Member Since:</b>
-							{{user.createdAt}}
+							{{user.createdAt | date:'medium'}}
 						</div>
 					</div>
 					<div class="mat-elevation-z8" *ngIf="user.first">

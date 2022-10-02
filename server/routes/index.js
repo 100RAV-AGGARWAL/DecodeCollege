@@ -10,7 +10,6 @@ const authService = require('../services/auth.service');
 const SubjectController = require('../controllers/subject.controller');
 const SemesterController = require('../controllers/semester.controller');
 const UploadController = require('../controllers/upload.controller');
-const CalendarController = require('../lib/calendar-api/index');
 const multerUpload = require('../lib/multer');
 const passport = require('passport');
 require('./../middleware/passport')(passport)
@@ -67,8 +66,5 @@ router.post("/exam/create", requireAuth, authService.roleAuthorization(["user"])
 router.get("/exam", requireAuth, authService.roleAuthorization(["user"]), ExamController.get);
 router.get("/exam/list", requireAuth, authService.roleAuthorization(["user"]), ExamController.list);
 router.get("/exam/getListByMonth", requireAuth, authService.roleAuthorization(["user"]), ExamController.examListByMonth);
-
-// router.get("/calendar/get", requireAuth, authService.roleAuthorization(["user"]), CalendarController.getCalendarEvents);
-
 
 module.exports = router;

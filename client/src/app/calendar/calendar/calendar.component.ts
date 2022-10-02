@@ -89,7 +89,7 @@ export class CalendarComponent {
     });
 
     this.examService.getExamsByMonth(month, year).subscribe((data) => {
-      let exams = JSON.parse(data['exams']);
+      let exams = JSON.parse(data['exam']);
 
       if (exams.length > 0) {
         exams.forEach((exam: any) => {

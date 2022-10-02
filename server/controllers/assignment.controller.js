@@ -87,7 +87,7 @@ const get = async function (req, res) {
 
 	[err, user] = await to(getPublicInfo(assignmentJson.createdById));
 
-	if (req.user.id != user._id) {
+	if (req.user.id != user.id) {
 		logger.error("User not authorized to view");
 		return ReE(res, "User not authorized to view");
 	}
