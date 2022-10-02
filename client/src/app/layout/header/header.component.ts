@@ -16,7 +16,10 @@ export class HeaderComponent implements OnInit {
   logoutUser() {
     this.userService.logoutUser();
   }
+  handleTop(){
+    window.scrollTo({ top: 10000, behavior: 'smooth' });
 
+  }
   isLoggedIn() {
 		var isLogged = this.userService.isLoggedIn();
 		return isLogged;
