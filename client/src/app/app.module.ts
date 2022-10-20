@@ -22,7 +22,7 @@ import { ExamModule } from './exam/exam.module';
 // import { GradesComponent } from './grades/grades.component';
 import { CoursesModule } from './courses/courses.module';
 import { CalendarComponentModule } from './calendar/calendar.module';
-
+import { PlagiarismRemoverModule } from './plagiarism-remover/plagiarism-remover.module';
 
 @NgModule({
   declarations: [
@@ -43,6 +43,7 @@ import { CalendarComponentModule } from './calendar/calendar.module';
     AssignmentModule,
     CalendarComponentModule,
     ExamModule,
+    PlagiarismRemoverModule,
     RouterModule.forRoot(
 			appRoutes,
 			{ enableTracing: true, relativeLinkResolution: 'legacy' } 

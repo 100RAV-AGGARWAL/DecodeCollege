@@ -31,6 +31,7 @@
     "ng2-pdf-viewer": "^9.1.2",
     "ngx-extended-pdf-viewer": "^15.0.2",
     "ngx-toastr": "^15.0.0",
+    "plagiarism-checker": "^3.1.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.4.0",
     "zone.js": "~0.11.4"

@@ -1,0 +1,27 @@
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="text-center">
+            <h2>Plagiarism Remover</h2>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <span class="gen_text"> Percentage of words to change: </span>
+                <input matInput type="range" min="1" max="100" class="slider" id="percent_slider"
+                    [(ngModel)]="slider_val">
+                <span id="slider_value">{{slider_val}}%</span>
+                <br>
+
+                <textarea matInput id="ip_textarea" placeholder="Input text" rows="5" [(ngModel)]="inputStr"></textarea>
+
+                <div id="btns">
+                    <button id="change_text" (click)="changeText()"> Apply magic </button>
+                    <button id="clear_text" (click)="clearText()"> Clear </button>
+                    <button id="copy_op" (click)="copyOutput()"> Copy output </button>
+                </div>
+
+                <textarea id="op_textarea" placeholder="Anti-Plagiarised text will appear here" rows="5"
+                    disabled="disabled" [(ngModel)]="outputStr"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
