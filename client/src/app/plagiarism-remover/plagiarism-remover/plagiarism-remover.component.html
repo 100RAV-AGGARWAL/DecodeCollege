@@ -3,38 +3,38 @@
         <div class="text-center">
             <h2>Plagiarism Remover</h2>
         </div>
+        <p class="help-block text-danger"></p>
         <div class="row justify-content-center">
-
             <div class="col-lg-9">
                 <div class="row-cols-xl-2">
                     <span class="gen_text"> Percentage of words to change: </span>
-                    <input matInput type="range" min="1" max="100" class="slider" id="percent_slider"
+                    <input matInput type="range" min="1" max="100" class="custom-range" id="percent_slider"
                         [(ngModel)]="slider_val">
                     <span id="slider_value">{{slider_val}}%</span>
                 </div>
                 <div class="row-cols-xl-1">
                     <p class="help-block text-danger"></p>
-
                     <textarea matInput id="ip_textarea" placeholder="Enter/Paste the text to be changed" rows="5"
                         [(ngModel)]="inputStr"></textarea>
                     <p class="help-block text-danger"></p>
-
                     <div id="btns" class="align-items-center">
-                        <button id="change_text" (click)="changeText()" class="btn btn-primary rounded-pill py-2 px-3 ml-0 mr-2">
+                        <button id="change_text" (click)="changeText()"
+                            class="btn btn-primary rounded-pill py-2 px-3 ml-0 mr-2">
                             Remove
                             Plagiarism </button>
                         <button id="paraphrase_text" (click)="paraphrase()"
                             class="btn btn-primary rounded-pill py-2 px-3 m-2">
                             Apply Paraphrasing </button>
-                        <button id="clear_text" (click)="clearText()" class="btn btn-primary rounded-pill py-2 px-3 m-2">
+                        <button id="clear_text" (click)="clearText()"
+                            class="btn btn-primary rounded-pill py-2 px-3 m-2">
                             Clear
                         </button>
-                        <button id="copy_op" (click)="copyOutput()" class="btn btn-primary rounded-pill py-2 px-3 ml-2 mr-0"> Copy
+                        <button id="copy_op" (click)="copyOutput()"
+                            class="btn btn-primary rounded-pill py-2 px-3 ml-2 mr-0"> Copy
                             output
                         </button>
                     </div>
                     <p class="help-block text-danger"></p>
-
                     <textarea id="op_textarea" placeholder="Desired Output will appear here" rows="5"
                         disabled="disabled" [(ngModel)]="outputStr"></textarea>
                 </div>
