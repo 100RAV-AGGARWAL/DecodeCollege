@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import roundToNearestMinutesWithOptions from 'date-fns/esm/fp/roundToNearestMinutesWithOptions/index.js';
 import { SnackBarService } from 'src/app/utility/snackbar/snackbar.component';
+import { PlagiarismRemoverService } from '../plagiarism-remover.service';
 
 @Component({
   selector: 'app-plagiarism-remover',
@@ -38,7 +40,7 @@ export class PlagiarismRemoverComponent implements OnInit {
 
   enabled_chars = ['a', 'c', 'e', 'i', 'j', 'o', 'p', 'x', 'y']
 
-  constructor(private _snackBar: SnackBarService) {
+  constructor(private _snackBar: SnackBarService, private plagiarismRemoverService: PlagiarismRemoverService) {
     this.fill_to_be_changed(this.enabled_chars);
   }
 
@@ -121,6 +123,14 @@ export class PlagiarismRemoverComponent implements OnInit {
       return;
     }
     navigator.clipboard.writeText(this.outputStr);
+  }
+
+  paraphrase() {
+    this.plagiarismRemoverService.paraphrase(this.inputStr).subscribe((res: any) => {
+      this.outputStr = res.output;
+    }, (err) => {
+      this._snackBar.openSnackBar('Error while paraphrasing', 'X')
+    })
   }
 
 }
