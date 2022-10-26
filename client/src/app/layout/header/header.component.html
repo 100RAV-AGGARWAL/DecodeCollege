@@ -24,8 +24,7 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav py-0" >
-                        <a [routerLink]="['/dashboard']" class="nav-item nav-link active">Home</a>
-                       
+                        <a [routerLink]="['/dashboard']" class="nav-item nav-link active">Home</a>      
                         <div class="nav-item dropdown" *ngIf="isLoggedIn()">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Assignments</a>
                             <div class="dropdown-menu rounded-0 m-0">
@@ -58,9 +57,16 @@
                         <a [routerLink]="['/calendar']" *ngIf="isLoggedIn()" class="nav-item nav-link">Calendar</a>
                         <a [routerLink]="['/courses']" *ngIf="isLoggedIn()" class="nav-item nav-link">Courses</a>
                         <a  class="nav-item nav-link" (click)="handleTop()">Contact</a>       
+
+                        <div class="nav-item dropdown" *ngIf="isLoggedIn()">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <a [routerLink]="['/plagiarism-remover']" *ngIf="isLoggedIn()" class="dropdown-item">Plagiarism Remover</a>
+                            </div>
+                        </div>
                     </div>
-                    <a *ngIf="!isLoggedIn()" [routerLink]="['/user/login']" class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block">Sign In</a>
                     <a [routerLink]="['/user/profile']" *ngIf="isLoggedIn()" class="nav-item nav-link"><b>Profile</b></a>&nbsp;&nbsp;&nbsp;
+                    <a *ngIf="!isLoggedIn()" [routerLink]="['/user/login']" class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block">Sign In</a>
                     <button *ngIf="isLoggedIn()" class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" (click)="logoutUser()">Logout</button>
                 </div>
             </nav>

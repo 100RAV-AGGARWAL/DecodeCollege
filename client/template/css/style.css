@@ -3886,7 +3886,7 @@ input[type="button"].btn-block {
 }
 
 .custom-range::-webkit-slider-thumb:active {
-  background-color: #ffd1b3;
+  background-color: #ffb17d;
 }
 
 .custom-range::-webkit-slider-runnable-track {
@@ -3949,7 +3949,7 @@ input[type="button"].btn-block {
 }
 
 .custom-range::-ms-thumb:active {
-  background-color: #ffd1b3;
+  background-color: #ffb685;
 }
 
 .custom-range::-ms-track {
