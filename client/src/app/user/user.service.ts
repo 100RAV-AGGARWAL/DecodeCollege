@@ -102,6 +102,21 @@ export class UserService {
 		}
 		return false
 	}
+
+	isHelpdesk() {
+		if (this.isLoggedIn()) {
+			return localStorage.getItem("role") === "customer-support" || localStorage.getItem("role") === "academic-support";
+		}
+		return false
+	}
+
+	isUser() {
+		if (this.isLoggedIn()) {
+			return localStorage.getItem("role") === "user";
+		}
+		return false
+	}
+
 	isOwner(userId:any) {
 		if (this.isLoggedIn()) {
 			return localStorage.getItem("userId") === userId;

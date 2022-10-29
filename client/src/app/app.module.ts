@@ -23,6 +23,7 @@ import { ExamModule } from './exam/exam.module';
 import { CoursesModule } from './courses/courses.module';
 import { CalendarComponentModule } from './calendar/calendar.module';
 import { PlagiarismRemoverModule } from './plagiarism-remover/plagiarism-remover.module';
+import { HelpdeskModule } from './helpdesk/helpdesk.module';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { PlagiarismRemoverModule } from './plagiarism-remover/plagiarism-remover
     AssignmentModule,
     CalendarComponentModule,
     ExamModule,
+    HelpdeskModule,
     PlagiarismRemoverModule,
     RouterModule.forRoot(
 			appRoutes,

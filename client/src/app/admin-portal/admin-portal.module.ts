@@ -11,7 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
-    SubjectComponent
+    SubjectComponent,
   ],
   imports: [
     CommonModule,

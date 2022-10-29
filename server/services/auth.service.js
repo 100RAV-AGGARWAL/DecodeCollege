@@ -97,7 +97,7 @@ module.exports.authUser = authUser;
 
 module.exports.roleAuthorization = function (roles) {
 	return function (req, res, next) {
-		if (roles.indexOf(req.user.role) > -1 ||req.user.role==="teacher"|| (req.user.role !== "superuser" && req.user.role === "admin")) {
+		if (roles.indexOf(req.user.role) > -1 || req.user.role === "academic-support" || req.user.role === "customer-support" || (req.user.role !== "superuser" && req.user.role === "admin")) {
 			return next();
 		}
 
@@ -107,6 +107,16 @@ module.exports.roleAuthorization = function (roles) {
 
 }
 
+module.exports.authorizeHelpdesk = function () {
+	return function (req, res, next) {
+		if (req.user.role === "academic-support" || req.user.role === "customer-support") {
+			return next();
+		}
+
+		res.status(401).json({ error: 'You are not authorized to view this content' });
+		return next('Unauthorized');
+	}
+}
 
 const findByPk = async function (id) {
 	let err, user;

@@ -24,4 +24,12 @@ export class HeaderComponent implements OnInit {
 		var isLogged = this.userService.isLoggedIn();
 		return isLogged;
 	}
+  isHelpdesk() {
+    var isHelpdesk = this.userService.isHelpdesk();
+    return isHelpdesk;
+  }
+  isUser() {
+    var isUser = this.userService.isUser();
+    return isUser;
+  }
 }

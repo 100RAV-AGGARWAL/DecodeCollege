@@ -43,7 +43,7 @@ import { AuthGuard } from './auth-guard.service';
 		UserViewComponent,
 		UserForgotPasswordComponent,
 		UserResetPasswordComponent,
-		UserProfileComponent
+		UserProfileComponent,
 	],
 	providers: [
 		AuthGuard,
