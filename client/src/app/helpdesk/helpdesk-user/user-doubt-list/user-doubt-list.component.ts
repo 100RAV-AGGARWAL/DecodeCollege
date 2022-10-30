@@ -8,6 +8,7 @@ import { SnackBarService } from 'src/app/utility/snackbar/snackbar.component';
 import { HelpdeskService } from '../../helpdesk.service';
 
 interface UserDoubt {
+  _id: any;
   topic: any;
   description: any;
   status: any;
@@ -77,8 +78,8 @@ export class UserDoubtListComponent implements OnInit {
 	fetchDoubts() {
 		this.helpdeskService.getUserDoubtList(this.pagination, this.sort.active, this.sort.direction).subscribe(resp => {
 			try {
-				this.doubtList = JSON.parse(resp["doubt"]);
-				this.allDoubtList = JSON.parse(resp["doubt"]);
+				this.doubtList = JSON.parse(resp["doubt"]) as UserDoubt[];
+				this.allDoubtList = JSON.parse(resp["doubt"]) as UserDoubt[];
 				this.pagination.total = resp["total"];
 
 				if (this.doubtList.length != 0) {
@@ -114,5 +115,13 @@ export class UserDoubtListComponent implements OnInit {
 		  this.doubtList = this.allDoubtList.filter((doubt) => doubt.description.includes(filterValue));
 		}
 	 }
+
+	solveDoubt(doubtId: any) {
+		this.helpdeskService.solveDoubt(doubtId).subscribe(resp => {
+			this._snackBar.openSnackBar('Doubt solved successfully.', 'X');
+			this.fetchDoubts();
+		});
+	}
+
    
 }

@@ -121,3 +121,47 @@ const listUserDoubts = async function (req, res) {
 
 module.exports.listUserDoubts = listUserDoubts;
 
+const solveDoubt = async function (req, res) {
+	let err, doubts;
+	if (!req.query._id) {
+		logger.error("Doubt Controller - get : Doubt Id is empty");
+		return ReE(res, err, 422);
+	}
+
+	[err, doubts] = await to(Doubt.deleteOne({ _id: req.query._id }));
+	if (err) {
+		logger.error("Doubt Controller - get : Doubt not solved", err);
+		return ReE(res, err, 422);
+	}
+
+	return ReS(res, { message: 'Doubt Solved' }, 204);
+}
+
+module.exports.solveDoubt = solveDoubt;
+
+const acceptAcademicDoubt = async function (req, res) {
+	let err, doubts;
+	if (!req.body._id) {
+		logger.error("Doubt Controller - get : Doubt Id is empty");
+		return ReE(res, err, 422);
+	}
+
+	[err, doubts] = await to(findByPk(req.body._id, req.user.role));
+	if (err) {
+		logger.error("Doubt Controller - get : Doubt not found ", err);
+		return ReE(res, err, 422);
+	}
+
+	doubts.status = "accepted";
+	doubts.assignedTo = req.user.id;
+
+	[err, savedDoubts] = await to(doubts.save());
+	if (err) {
+		logger.error("Doubt Controller - get : Doubt not solved", err);
+		return ReE(res, err, 422);
+	}
+
+	return ReS(res, { message: 'Doubt Accepted' }, 204);
+}
+
+module.exports.acceptAcademicDoubt = acceptAcademicDoubt;

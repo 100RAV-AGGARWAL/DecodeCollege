@@ -24,6 +24,9 @@ import { CoursesModule } from './courses/courses.module';
 import { CalendarComponentModule } from './calendar/calendar.module';
 import { PlagiarismRemoverModule } from './plagiarism-remover/plagiarism-remover.module';
 import { HelpdeskModule } from './helpdesk/helpdesk.module';
+import { NbThemeModule } from '@nebular/theme';
+import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -51,9 +54,12 @@ import { HelpdeskModule } from './helpdesk/helpdesk.module';
 			{ enableTracing: true, relativeLinkResolution: 'legacy' } 
 		),
     ToastrModule.forRoot(),
+    NbThemeModule.forRoot(),
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    provideFirebaseApp(() => initializeApp()),
+    provideFirestore(() => getFirestore()),
   ],
   providers: [],
   bootstrap: [AppComponent]

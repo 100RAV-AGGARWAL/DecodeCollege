@@ -23,12 +23,15 @@ import { DoubtListComponent } from './academic-support/doubt-list/doubt-list.com
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { UserDoubtListComponent } from './helpdesk-user/user-doubt-list/user-doubt-list.component';
+import { HelpdeskChatPortalComponent } from './chat-portal/helpdesk-chat-portal/helpdesk-chat-portal.component';
+import { NbChatModule } from '@nebular/theme';
+
 @NgModule({
   declarations: [
-
     DoubtcreateComponent,
     DoubtListComponent,
-    UserDoubtListComponent
+    UserDoubtListComponent,
+    HelpdeskChatPortalComponent,
   ],
   imports: [
     CommonModule,
@@ -50,7 +53,8 @@ import { UserDoubtListComponent } from './helpdesk-user/user-doubt-list/user-dou
     UserModule,
     MatDialogModule,
     MatSortModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    NbChatModule
   ]
 })
 export class HelpdeskModule { }

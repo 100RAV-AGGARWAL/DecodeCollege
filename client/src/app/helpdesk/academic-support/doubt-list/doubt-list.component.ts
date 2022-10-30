@@ -8,17 +8,18 @@ import { SnackBarService } from 'src/app/utility/snackbar/snackbar.component';
 import { HelpdeskService } from '../../helpdesk.service';
 
 interface AcademicDoubt {
-  topic: any;
-  description: any;
-  status: any;
-  createdAt: any;
-  raisedBy: any;
+	_id: any;
+	topic: any;
+	description: any;
+	status: any;
+	createdAt: any;
+	raisedBy: any;
 }
 
 @Component({
-  selector: 'app-doubt-list',
-  templateUrl: './doubt-list.component.html',
-  styleUrls: ['./doubt-list.component.css']
+	selector: 'app-doubt-list',
+	templateUrl: './doubt-list.component.html',
+	styleUrls: ['./doubt-list.component.css']
 })
 export class DoubtListComponent implements OnInit {
 	doubtList: AcademicDoubt[] = [];
@@ -108,12 +109,25 @@ export class DoubtListComponent implements OnInit {
 
 	applyFilter(event: Event) {
 		const filterValue = (event.target as HTMLInputElement).value;
-		if(filterValue === '' ) {
-			this.doubtList=this.allDoubtList;
-		} 
-		else {
-		  this.doubtList = this.allDoubtList.filter((doubt) => doubt.description.includes(filterValue));
+		if (filterValue === '') {
+			this.doubtList = this.allDoubtList;
 		}
-	 }
-   
+		else {
+			this.doubtList = this.allDoubtList.filter((doubt) => doubt.description.includes(filterValue));
+		}
+	}
+
+	acceptDoubt(doubtId) {
+		this.helpdeskService.acceptAcademicDoubt(doubtId).subscribe(resp => {
+			this._snackBar.openSnackBar('Doubt accepted successfully.', 'X');
+			this.router.navigate(['/helpdesk/chat?sessionId=', doubtId]);
+			this.fetchDoubts();
+		}, err => {
+			if (err.status == 401) {
+				this.userService.logoutUser();
+			}
+			this._snackBar.openSnackBar('Doubt not accepted.', 'X');
+		});
+	}
+
 }

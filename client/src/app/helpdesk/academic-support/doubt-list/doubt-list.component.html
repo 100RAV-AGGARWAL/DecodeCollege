@@ -28,13 +28,12 @@
 				</ng-container>
 				<ng-container matColumnDef="accept">
 					<th mat-header-cell *matHeaderCellDef></th>
-					<td mat-cell *matCellDef="let element"> <a mat-raised-button color="warn" [routerLink]="">Accept</a>
+					<td mat-cell *matCellDef="let element"> <a mat-raised-button color="warn" (click)="acceptDoubt(element._id)">Accept</a>
 					</td>
 				</ng-container>
 				<tr mat-header-row *matHeaderRowDef="displayedCols"></tr>
 				<tr mat-row *matRowDef="let row; columns: displayedCols;">
 				</tr>
-
 			</table>
 			<mat-paginator [length]="pagination.total" [pageSize]="pagination.limit"
 				[pageSizeOptions]="[5, 10, 25, 100]" [pageIndex]="pagination.pageIndex" (page)="loadNextPage($event)"

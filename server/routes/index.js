@@ -70,7 +70,9 @@ router.get("/exam/getListByMonth", requireAuth, authService.roleAuthorization(["
 
 router.post("/doubt/create", requireAuth, authService.roleAuthorization(["user"]), DoubtController.create);
 router.get("/doubt/listUserDoubts", requireAuth, authService.roleAuthorization(["user"]), DoubtController.listUserDoubts);
+router.delete("/doubt/solve", requireAuth, authService.roleAuthorization(["user"]), DoubtController.solveDoubt);
 
 router.get("/doubt/listAcademicDoubts", requireAuth, authService.roleAuthorization(["academic-support"]), authService.authorizeHelpdesk(), DoubtController.listAcademicDoubts);
+router.post("/doubt/acceptAcademicDoubt", requireAuth, authService.roleAuthorization(["academic-support"]), authService.authorizeHelpdesk(), DoubtController.acceptAcademicDoubt);
 
 module.exports = router;
