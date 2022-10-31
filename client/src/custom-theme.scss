@@ -1,6 +1,11 @@
 
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
+// import Nebular Theme System and the default theme
+@forward '@nebular/theme/styles/theming';
+@use '@nebular/theme/styles/theming' as *;
+@use '@nebular/theme/styles/themes/default';
+@use '@nebular/theme/styles/globals' as *;
 @use '@angular/material' as mat;
 // Plus imports for other components in your app.
 
@@ -8,6 +13,9 @@
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
 @include mat.core();
+@include nb-install() {
+  @include nb-theme-global();
+};
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker

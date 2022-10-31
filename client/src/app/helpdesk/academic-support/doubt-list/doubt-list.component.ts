@@ -120,8 +120,8 @@ export class DoubtListComponent implements OnInit {
 	acceptDoubt(doubtId) {
 		this.helpdeskService.acceptAcademicDoubt(doubtId).subscribe(resp => {
 			this._snackBar.openSnackBar('Doubt accepted successfully.', 'X');
-			this.router.navigate(['/helpdesk/chat?sessionId=', doubtId]);
 			this.fetchDoubts();
+			this.router.navigate(['helpdesk/chat/:sessionId :sender :receiver', {sessionId: doubtId, sender: 'Academic-support', receiver: 'You'}]);
 		}, err => {
 			if (err.status == 401) {
 				this.userService.logoutUser();

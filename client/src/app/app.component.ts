@@ -1,4 +1,5 @@
-import { Component, HostListener, OnDestroy } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -6,7 +7,7 @@ import { Component, HostListener, OnDestroy } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent implements OnDestroy, OnInit {
   title = 'client';
   isTimeOut = false;
   timepassed: string = ''
@@ -22,6 +23,12 @@ export class AppComponent implements OnDestroy {
     localStorage.removeItem('time');
   }
 
+  ngOnInit(): void {
+    this.router.events.subscribe((event) => {
+      document.body.classList.remove('nb-theme-default');
+  });
+  }
+
   @HostListener("window:beforeunload", ["$event"]) unloadHandler(event: Event) {
     const D = new Date();
     let MIN = Math.round(D.getTime() / 1000);
@@ -31,7 +38,7 @@ export class AppComponent implements OnDestroy {
     localStorage.setItem('time', this.timepassed);
   }
 
-  constructor() {
+  constructor(private router: Router) {
     if (localStorage.getItem('reload')) {
       const d = new Date();
       let min = Math.round(d.getTime() / 1000);

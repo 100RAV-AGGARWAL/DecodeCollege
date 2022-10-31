@@ -8,7 +8,7 @@ import { HelpdeskChatPortalComponent } from './chat-portal/helpdesk-chat-portal/
 const routes: Routes = [
   { path: 'helpdesk/user/doubts/raise', component: DoubtcreateComponent },
   { path: 'helpdesk/user/doubts/list', component: UserDoubtListComponent },
-  { path: 'helpdesk/chat/:sessionId:sender:receiver', component: HelpdeskChatPortalComponent },
+  { path: 'helpdesk/chat/:sessionId :sender :receiver', component: HelpdeskChatPortalComponent },
   { path: 'helpdesk/academic-support/doubts/list', component: DoubtListComponent },
 ];
 

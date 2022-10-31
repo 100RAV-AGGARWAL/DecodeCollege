@@ -24,7 +24,11 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { UserDoubtListComponent } from './helpdesk-user/user-doubt-list/user-doubt-list.component';
 import { HelpdeskChatPortalComponent } from './chat-portal/helpdesk-chat-portal/helpdesk-chat-portal.component';
-import { NbChatModule } from '@nebular/theme';
+import {
+  NbButtonModule, NbChatModule, NbLayoutModule, NbSpinnerModule, NbThemeModule
+} from '@nebular/theme';
+import { AngularFirestoreModule} from '@angular/fire/compat/firestore';
+
 
 @NgModule({
   declarations: [
@@ -54,7 +58,12 @@ import { NbChatModule } from '@nebular/theme';
     MatDialogModule,
     MatSortModule,
     MatProgressSpinnerModule,
-    NbChatModule
+    NbChatModule,
+    NbButtonModule,
+    NbLayoutModule,
+    NbSpinnerModule,
+    NbThemeModule,
+    AngularFirestoreModule
   ]
 })
 export class HelpdeskModule { }

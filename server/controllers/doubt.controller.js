@@ -54,7 +54,7 @@ const get = async function (req, res) {
 module.exports.get = get;
 
 const findByPk = async function (id, role) {
-	if (req.user.role !== "helpdesk" && role !== "doubt-solver") {
+	if (role !== "academic-support" && role !== "customer-support") {
 		throw new Error("You are not authorized to perform this action");
 	}
 
@@ -78,7 +78,7 @@ const listAcademicDoubts = async function (req, res) {
 	var limit = req.query.limit ? (req.query.limit < 20 && req.query.limit > 0) ? parseInt(req.query.limit) : 20 : 20;
 	var offset = req.query.offset ? req.query.offset > 0 ? parseInt(req.query.offset) : 0 : 0;
 
-	[err, doubtsList] = await to(Doubt.find({ status: "unsolved", topic: "academic-support" }).sort('-1').limit(limit).skip(offset));
+	[err, doubtsList] = await to(Doubt.find({ status: { "$in": ["unsolved", "accepted"] }, topic: "academic-support" }).sort('-1').limit(limit).skip(offset));
 
 	if (err) {
 		logger.error("Doubt Controller - list : Doubt not found ", err);
@@ -141,12 +141,12 @@ module.exports.solveDoubt = solveDoubt;
 
 const acceptAcademicDoubt = async function (req, res) {
 	let err, doubts;
-	if (!req.body._id) {
+	if (!req.body.id) {
 		logger.error("Doubt Controller - get : Doubt Id is empty");
 		return ReE(res, err, 422);
 	}
 
-	[err, doubts] = await to(findByPk(req.body._id, req.user.role));
+	[err, doubts] = await to(findByPk(req.body.id, req.user.role));
 	if (err) {
 		logger.error("Doubt Controller - get : Doubt not found ", err);
 		return ReE(res, err, 422);

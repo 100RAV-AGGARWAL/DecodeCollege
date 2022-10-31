@@ -30,6 +30,7 @@ export class HelpdeskChatPortalComponent implements OnInit {
   }
 
   ngOnInit() {
+    document.body.classList.add('nb-theme-default');
     this.messages$ = this.helpdeskService.getChatMessages(this.sessionId, this.sender);
     this.adminLoading$ = this.helpdeskService.getChatStatus(this.sessionId, this.receiver);
   }
