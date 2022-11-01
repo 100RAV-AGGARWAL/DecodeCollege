@@ -7,9 +7,9 @@ import { ExamViewComponent } from './user/exam-view/exam-view.component';
 import { AuthGuard } from '../user/auth-guard.service';
 
 const examRoutes: Routes = [
-  {path: 'exam/post', component: ExamPostComponent},
-  {path: 'exam/list', component: ExamListComponent},
-  {path: 'exam/view/:id', component: ExamViewComponent},
+  {path: 'exam/post', component: ExamPostComponent, canActivate: [AuthGuard]},
+  {path: 'exam/list', component: ExamListComponent, canActivate: [AuthGuard]},
+  {path: 'exam/view/:id', component: ExamViewComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({

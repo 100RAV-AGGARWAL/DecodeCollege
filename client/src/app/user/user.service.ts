@@ -103,9 +103,16 @@ export class UserService {
 		return false
 	}
 
-	isHelpdesk() {
+	isAcademicSupport() {
 		if (this.isLoggedIn()) {
-			return localStorage.getItem("role") === "customer-support" || localStorage.getItem("role") === "academic-support";
+			return localStorage.getItem("role") === "academic-support";
+		}
+		return false
+	}
+
+	isCustomerSupport() {
+		if (this.isLoggedIn()) {
+			return localStorage.getItem("role") === "customer-support";
 		}
 		return false
 	}
