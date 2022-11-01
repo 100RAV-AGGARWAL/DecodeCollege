@@ -72,7 +72,8 @@ router.post("/doubt/create", requireAuth, authService.roleAuthorization(["user"]
 router.get("/doubt/listUserDoubts", requireAuth, authService.roleAuthorization(["user"]), DoubtController.listUserDoubts);
 router.delete("/doubt/solve", requireAuth, authService.roleAuthorization(["user"]), DoubtController.solveDoubt);
 
-router.get("/doubt/listAcademicDoubts", requireAuth, authService.roleAuthorization(["academic-support"]), authService.authorizeHelpdesk(), DoubtController.listAcademicDoubts);
-router.post("/doubt/acceptAcademicDoubt", requireAuth, authService.roleAuthorization(["academic-support"]), authService.authorizeHelpdesk(), DoubtController.acceptAcademicDoubt);
+router.get("/doubt/listAcademicDoubts", requireAuth, authService.roleAuthorization(["academic-support"]), DoubtController.listAcademicDoubts);
+router.get("/doubt/listCustomerDoubts", requireAuth, authService.roleAuthorization(["customer-support"]), DoubtController.listCustomerDoubts);
+router.post("/doubt/acceptDoubt", requireAuth, authService.roleAuthorization(["academic-support", "customer-support"]), DoubtController.acceptDoubt);
 
 module.exports = router;

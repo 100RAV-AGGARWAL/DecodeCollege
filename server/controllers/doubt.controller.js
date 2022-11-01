@@ -97,12 +97,36 @@ const listAcademicDoubts = async function (req, res) {
 
 module.exports.listAcademicDoubts = listAcademicDoubts;
 
+const listCustomerDoubts = async function (req, res) {
+	let doubtsList, doubtsCount;
+	var limit = req.query.limit ? (req.query.limit < 20 && req.query.limit > 0) ? parseInt(req.query.limit) : 20 : 20;
+	var offset = req.query.offset ? req.query.offset > 0 ? parseInt(req.query.offset) : 0 : 0;
+
+	[err, doubtsList] = await to(Doubt.find({ status: { "$in": ["unsolved", "accepted"] }, topic: "customer-support" }).sort('-1').limit(limit).skip(offset));
+
+	if (err) {
+		logger.error("Doubt Controller - list : Doubt not found ", err);
+		return ReE(res, err, 422);
+	}
+
+	[err, doubtsCount] = await to(Doubt.find().count());
+
+	if (err) {
+		logger.error("Doubt Controller - list : Doubt count not found ", err);
+		return ReE(res, err, 422);
+	}
+	res.setHeader('Content-Type', 'application/json');
+	return ReS(res, { doubt: JSON.stringify(doubtsList), total: doubtsCount });
+}
+
+module.exports.listCustomerDoubts = listCustomerDoubts;
+
 const listUserDoubts = async function (req, res) {
 	let doubtsList, doubtsCount;
 	var limit = req.query.limit ? (req.query.limit < 20 && req.query.limit > 0) ? parseInt(req.query.limit) : 20 : 20;
 	var offset = req.query.offset ? req.query.offset > 0 ? parseInt(req.query.offset) : 0 : 0;
 
-	[err, doubtsList] = await to(Doubt.find({ status: "unsolved", user: req.user.id }).sort().limit(limit).skip(offset));
+	[err, doubtsList] = await to(Doubt.find({ status: { "$in": ["unsolved", "accepted"] }, user: req.user.id }).sort().limit(limit).skip(offset));
 
 	if (err) {
 		logger.error("Doubt Controller - list : Doubt not found ", err);
@@ -139,7 +163,7 @@ const solveDoubt = async function (req, res) {
 
 module.exports.solveDoubt = solveDoubt;
 
-const acceptAcademicDoubt = async function (req, res) {
+const acceptDoubt = async function (req, res) {
 	let err, doubts;
 	if (!req.body.id) {
 		logger.error("Doubt Controller - get : Doubt Id is empty");
@@ -164,4 +188,4 @@ const acceptAcademicDoubt = async function (req, res) {
 	return ReS(res, { message: 'Doubt Accepted' }, 204);
 }
 
-module.exports.acceptAcademicDoubt = acceptAcademicDoubt;
+module.exports.acceptDoubt = acceptDoubt;

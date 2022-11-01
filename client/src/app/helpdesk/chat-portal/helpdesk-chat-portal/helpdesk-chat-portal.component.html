@@ -1,5 +1,14 @@
 <nb-layout>
+
     <nb-layout-column>
+        <div fixed>
+            <div class="text-center">
+                <h2>{{portalIdentity}} Chat Portal</h2>
+            </div>
+            <div class="left">
+                <button nbButton status="danger" (click)="closeChat()">Close Doubt</button>
+            </div>
+        </div>
         <div>
             <nb-chat [title]="title">
                 <nb-chat-message *ngFor="let msg of messages$ | async as msgs" type="text" [message]="msg.text"

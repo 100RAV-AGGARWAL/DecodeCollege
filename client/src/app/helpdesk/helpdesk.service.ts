@@ -7,28 +7,17 @@ import { Message } from '../models/message.model';
 import { UserService } from '../user/user.service';
 import { AngularFirestore, QueryFn } from '@angular/fire/compat/firestore';
 
-interface AcademicDoubt {
+interface Doubt {
+  id: any;
+  topic: any;
   description: any;
   status: any;
   createdAt: any;
   raisedBy: any;
 }
 
-interface AcademicDoubtList {
-  doubts: AcademicDoubt[];
-  total: number;
-}
-
-interface UserDoubt {
-  id: any;
-  topic: any;
-  description: any;
-  status: any;
-  createdAt: any;
-}
-
-interface UserDoubtList {
-  doubts: UserDoubt[];
+interface DoubtList {
+  doubts: Doubt[];
   total: number;
 }
 
@@ -51,11 +40,11 @@ export class HelpdeskService {
     });
   }
 
-  getAcademicDoubtList(pagination, sort, order): Observable<AcademicDoubtList> {
+  getAcademicDoubtList(pagination, sort, order): Observable<DoubtList> {
     let limit = pagination.limit;
     let offset = limit * pagination.pageIndex;
 
-    return this.http.get<AcademicDoubtList>(environment.apiUrl + 'api/doubt/listAcademicDoubts?limit=' + limit + "&offset=" + offset + "&sort=" + sort + "&order=" + order, {
+    return this.http.get<DoubtList>(environment.apiUrl + 'api/doubt/listAcademicDoubts?limit=' + limit + "&offset=" + offset + "&sort=" + sort + "&order=" + order, {
       headers: {
         "Authorization": this.userService.getJWTToken()!
       }
@@ -63,11 +52,23 @@ export class HelpdeskService {
 
   }
 
-  getUserDoubtList(pagination, sort, order): Observable<UserDoubtList> {
+  getCustomerDoubtList(pagination, sort, order): Observable<DoubtList> {
     let limit = pagination.limit;
     let offset = limit * pagination.pageIndex;
 
-    return this.http.get<UserDoubtList>(environment.apiUrl + 'api/doubt/listUserDoubts?limit=' + limit + "&offset=" + offset + "&sort=" + sort + "&order=" + order, {
+    return this.http.get<DoubtList>(environment.apiUrl + 'api/doubt/listCustomerDoubts?limit=' + limit + "&offset=" + offset + "&sort=" + sort + "&order=" + order, {
+      headers: {
+        "Authorization": this.userService.getJWTToken()!
+      }
+    });
+
+  }
+
+  getUserDoubtList(pagination, sort, order): Observable<DoubtList> {
+    let limit = pagination.limit;
+    let offset = limit * pagination.pageIndex;
+
+    return this.http.get<DoubtList>(environment.apiUrl + 'api/doubt/listUserDoubts?limit=' + limit + "&offset=" + offset + "&sort=" + sort + "&order=" + order, {
       headers: {
         "Authorization": this.userService.getJWTToken()!
       }
@@ -82,8 +83,8 @@ export class HelpdeskService {
     });
   }
 
-  acceptAcademicDoubt(doubtId: any) {
-    return this.http.post(environment.apiUrl + 'api/doubt/acceptAcademicDoubt', { id: doubtId }, {
+  acceptDoubt(doubtId: any) {
+    return this.http.post(environment.apiUrl + 'api/doubt/acceptDoubt', { id: doubtId }, {
       headers: {
         "Authorization": this.userService.getJWTToken()!
       }

@@ -8,26 +8,26 @@ import { SnackBarService } from 'src/app/utility/snackbar/snackbar.component';
 import { HelpdeskService } from '../../helpdesk.service';
 
 interface Doubt {
-	_id: any;
-	topic: any;
-	description: any;
-	status: any;
-	createdAt: any;
-	raisedBy: any;
-  }
+  _id: any;
+  topic: any;
+  description: any;
+  status: any;
+  createdAt: any;
+  raisedBy: any;
+}
 
 @Component({
-	selector: 'app-user-doubt-list',
-	templateUrl: './user-doubt-list.component.html',
-	styleUrls: ['./user-doubt-list.component.css']
+  selector: 'app-cs-doubt-list',
+  templateUrl: './cs-doubt-list.component.html',
+  styleUrls: ['./cs-doubt-list.component.css']
 })
-export class UserDoubtListComponent implements OnInit {
+export class CsDoubtListComponent implements OnInit {
 	doubtList: Doubt[] = [];
 	allDoubtList: Doubt[] = [];
 
 	pageEvent: PageEvent = new PageEvent;
 	pagination = { limit: 5, total: 0, pageIndex: 0 }
-	displayedCols = ['description', 'topic', 'status', 'createdAt', 'solve', 'view'];
+	displayedCols = ['description', 'status', 'createdAt', 'accept'];
 	isListEmpty: Boolean = false;
 
 	resultsLength = 0;
@@ -64,7 +64,7 @@ export class UserDoubtListComponent implements OnInit {
 					}
 
 					this.resultsLength = data.total;
-					return data.doubts;
+					return data.Doubts;
 				}),
 			)
 			.subscribe(data => (this.doubtList = data));
@@ -77,10 +77,10 @@ export class UserDoubtListComponent implements OnInit {
 	}
 
 	fetchDoubts() {
-		this.helpdeskService.getUserDoubtList(this.pagination, this.sort.active, this.sort.direction).subscribe(resp => {
+		this.helpdeskService.getCustomerDoubtList(this.pagination, this.sort.active, this.sort.direction).subscribe(resp => {
 			try {
-				this.doubtList = JSON.parse(resp["doubt"]) as Doubt[];
-				this.allDoubtList = JSON.parse(resp["doubt"]) as Doubt[];
+				this.doubtList = JSON.parse(resp["doubt"]);
+				this.allDoubtList = JSON.parse(resp["doubt"]);
 				this.pagination.total = resp["total"];
 
 				if (this.doubtList.length != 0) {
@@ -117,21 +117,22 @@ export class UserDoubtListComponent implements OnInit {
 		}
 	}
 
-	solveDoubt(doubtId: any) {
-		this.helpdeskService.solveDoubt(doubtId).subscribe(resp => {
-			this._snackBar.openSnackBar('Doubt solved successfully.', 'X');
-			this.helpdeskService.deleteChat(doubtId);
+	acceptDoubt(doubtId, title) {
+		this.helpdeskService.acceptDoubt(doubtId).subscribe(resp => {
+			this._snackBar.openSnackBar('Doubt accepted successfully.', 'X');
 			this.fetchDoubts();
+			this.viewDoubt(doubtId, title);
+		}, err => {
+			if (err.status == 401) {
+				this.userService.logoutUser();
+			}
+			this._snackBar.openSnackBar('Doubt not accepted.', 'X');
 		});
 	}
 
-	viewDoubt(doubt: any) {
-		if (doubt.topic === 'Academic-support') {
-			this.router.navigate(['helpdesk/chat/:sessionId&:sender&:receiver&:title', { sessionId: doubt._id, sender: 'User', receiver: 'Academic-support', title: doubt.description }]);
-		} else {
-			this.router.navigate(['helpdesk/chat/:sessionId&:sender&:receiver&:title', { sessionId: doubt._id, sender: 'User', receiver: 'Customer-support', title: doubt.description }]);
-		}
+	viewDoubt(doubtId, title) {
+		this.router.navigate(['helpdesk/chat/:sessionId&:sender&:receiver&:title', {sessionId: doubtId, sender: 'Customer-support', receiver: 'User', title: title}]);
 	}
 
-
 }
+

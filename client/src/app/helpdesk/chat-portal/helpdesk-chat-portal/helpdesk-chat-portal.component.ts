@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Message } from 'src/app/models/message.model';
+import { SnackBarService } from 'src/app/utility/snackbar/snackbar.component';
 import { HelpdeskService } from '../../helpdesk.service';
 
 @Component({
@@ -20,12 +21,20 @@ export class HelpdeskChatPortalComponent implements OnInit {
   loading = false;
   private sub: any;
 
-  constructor(private helpdeskService: HelpdeskService, private route: ActivatedRoute, private router: Router) {
+  portalIdentity: any;
+
+  constructor(private helpdeskService: HelpdeskService, private route: ActivatedRoute, private router: Router, private _snackBar: SnackBarService) {
     this.sub = this.route.params.subscribe(params => {
       this.sessionId = params['sessionId'];
-      this.title = "Academic-Support";
+      this.title = params['title'];
       this.sender = params['sender'];
       this.receiver = params['receiver'];
+
+      if(this.sender == 'Academic-support' || this.receiver == 'Academic-support')
+        this.portalIdentity = 'Academic-support';
+      else
+        this.portalIdentity = 'Customer-support';
+
     });
   }
 
@@ -55,6 +64,17 @@ export class HelpdeskChatPortalComponent implements OnInit {
     }
 
     this.loading = event.key !== 'Enter';
+  }
+
+  closeChat() {
+    this.helpdeskService.solveDoubt(this.sessionId).subscribe((res: any) => {
+      this.helpdeskService.deleteChat(this.sessionId);
+
+      if(this.sender === '')
+      this.router.navigate(['/helpdesk/user/doubts/list']);
+    }, (err: any) => {
+			this._snackBar.openSnackBar('Error closing Doubt', 'X');
+    });
   }
 
   

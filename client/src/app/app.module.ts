@@ -64,8 +64,6 @@ import { environment } from '../environments/environment';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    // provideFirebaseApp(() => initializeApp()),
-    // provideFirestore(() => getFirestore()),
     NbLayoutModule,
     NbEvaIconsModule,
     NbButtonModule,
@@ -74,7 +72,7 @@ import { environment } from '../environments/environment';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule, // for firestore
   ],
-  providers: [NbOverlayContainerAdapter, NbOverlayContainer],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

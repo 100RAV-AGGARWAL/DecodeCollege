@@ -7,23 +7,22 @@ import { UserService } from 'src/app/user/user.service';
 import { SnackBarService } from 'src/app/utility/snackbar/snackbar.component';
 import { HelpdeskService } from '../../helpdesk.service';
 
-interface AcademicDoubt {
+interface Doubt {
 	_id: any;
 	topic: any;
 	description: any;
 	status: any;
 	createdAt: any;
 	raisedBy: any;
-}
-
+  }
 @Component({
 	selector: 'app-doubt-list',
 	templateUrl: './doubt-list.component.html',
 	styleUrls: ['./doubt-list.component.css']
 })
 export class DoubtListComponent implements OnInit {
-	doubtList: AcademicDoubt[] = [];
-	allDoubtList: AcademicDoubt[] = [];
+	doubtList: Doubt[] = [];
+	allDoubtList: Doubt[] = [];
 
 	pageEvent: PageEvent = new PageEvent;
 	pagination = { limit: 5, total: 0, pageIndex: 0 }
@@ -117,17 +116,21 @@ export class DoubtListComponent implements OnInit {
 		}
 	}
 
-	acceptDoubt(doubtId) {
-		this.helpdeskService.acceptAcademicDoubt(doubtId).subscribe(resp => {
+	acceptDoubt(doubtId, title) {
+		this.helpdeskService.acceptDoubt(doubtId).subscribe(resp => {
 			this._snackBar.openSnackBar('Doubt accepted successfully.', 'X');
 			this.fetchDoubts();
-			this.router.navigate(['helpdesk/chat/:sessionId :sender :receiver', {sessionId: doubtId, sender: 'Academic-support', receiver: 'You'}]);
+			this.viewDoubt(doubtId, title);
 		}, err => {
 			if (err.status == 401) {
 				this.userService.logoutUser();
 			}
 			this._snackBar.openSnackBar('Doubt not accepted.', 'X');
 		});
+	}
+
+	viewDoubt(doubtId, title) {
+		this.router.navigate(['helpdesk/chat/:sessionId&:sender&:receiver&:title', {sessionId: doubtId, sender: 'Academic-support', receiver: 'User', title: title}]);
 	}
 
 }

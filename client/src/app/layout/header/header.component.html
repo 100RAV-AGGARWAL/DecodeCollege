@@ -64,7 +64,8 @@
                         <div class="nav-item dropdown" *ngIf="isLoggedIn() && !isUser()">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Admin</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a [routerLink]="['/helpdesk/academic-support/doubts/list']" *ngIf="isLoggedIn() && isHelpdesk()" class="dropdown-item">Doubt List</a>
+                                <a [routerLink]="['/helpdesk/academic-support/doubts/list']" *ngIf="isLoggedIn() && isHelpdesk()" class="dropdown-item">Academic Doubt List</a>
+                                <a [routerLink]="['/helpdesk/customer-support/doubts/list']" *ngIf="isLoggedIn() && isHelpdesk()" class="dropdown-item">Customer Doubt List</a>
                             </div>
                         </div>
 
@@ -73,7 +74,7 @@
                             <div class="dropdown-menu rounded-0 m-0">
                                 <a [routerLink]="['/plagiarism-remover']" *ngIf="isLoggedIn()" class="dropdown-item">Plagiarism Remover</a>
                                 <a [routerLink]="['/helpdesk/user/doubts/raise']" *ngIf="isLoggedIn()" class="dropdown-item">Ask Doubt</a>
-                                <a [routerLink]="['/helpdesk/user/doubts/list']" *ngIf="isLoggedIn()" class="dropdown-item">Academic Doubt List</a>
+                                <a [routerLink]="['/helpdesk/user/doubts/list']" *ngIf="isLoggedIn()" class="dropdown-item">Doubt List</a>
                                 <a class="dropdown-item" (click)="handleTop()">Contact</a>
                             </div>
                         </div>

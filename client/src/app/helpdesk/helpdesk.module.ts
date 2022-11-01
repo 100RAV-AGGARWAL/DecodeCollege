@@ -28,6 +28,7 @@ import {
   NbButtonModule, NbChatModule, NbLayoutModule, NbSpinnerModule, NbThemeModule
 } from '@nebular/theme';
 import { AngularFirestoreModule} from '@angular/fire/compat/firestore';
+import { CsDoubtListComponent } from './customer-support/cs-doubt-list/cs-doubt-list.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { AngularFirestoreModule} from '@angular/fire/compat/firestore';
     DoubtListComponent,
     UserDoubtListComponent,
     HelpdeskChatPortalComponent,
+    CsDoubtListComponent,
   ],
   imports: [
     CommonModule,
