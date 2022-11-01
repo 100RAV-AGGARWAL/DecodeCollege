@@ -23,8 +23,8 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                    <div class="navbar-nav py-0" >
-                        <a [routerLink]="['/dashboard']" class="nav-item nav-link active">Home</a>      
+                    <div class="navbar-nav py-0">
+                        <a [routerLink]="['/dashboard']" class="nav-item nav-link active">Home</a>
                         <div class="nav-item dropdown" *ngIf="isLoggedIn()">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Assignments</a>
                             <div class="dropdown-menu rounded-0 m-0">
@@ -32,42 +32,59 @@
                                 <a [routerLink]="['/assignment/myAssignments']" class="dropdown-item">My Assignments</a>
                             </div>
                         </div>
-                        <div class="nav-item dropdown" >
+                        <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Notes</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a  *ngIf="isLoggedIn()" [routerLink]="['/notes/post']" class="dropdown-item">New Note</a>
-                                <a  *ngIf="isLoggedIn()" [routerLink]="['/notes/mynotes']" class="dropdown-item">My Notes</a>
+                                <a *ngIf="isLoggedIn()" [routerLink]="['/notes/post']" class="dropdown-item">New
+                                    Note</a>
+                                <a *ngIf="isLoggedIn()" [routerLink]="['/notes/mynotes']" class="dropdown-item">My
+                                    Notes</a>
                                 <a [routerLink]="['/notes/public']" class="dropdown-item">Public Notes</a>
                             </div>
                         </div>
                         <div class="nav-item dropdown" *ngIf="isLoggedIn()">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Grades</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a  *ngIf="isLoggedIn()" [routerLink]="['/grades/calculate']" class="dropdown-item">Calculate Grade</a>
-                                <a  *ngIf="isLoggedIn()" [routerLink]="['/grades/view']" class="dropdown-item">My Grades</a>
+                                <a *ngIf="isLoggedIn()" [routerLink]="['/grades/calculate']"
+                                    class="dropdown-item">Calculate Grade</a>
+                                <a *ngIf="isLoggedIn()" [routerLink]="['/grades/view']" class="dropdown-item">My
+                                    Grades</a>
                             </div>
                         </div>
                         <div class="nav-item dropdown" *ngIf="isLoggedIn()">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Exams</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a  *ngIf="isLoggedIn()" [routerLink]="['/exam/post']" class="dropdown-item">New Exam</a>
-                                <a  *ngIf="isLoggedIn()" [routerLink]="['/exam/list']" class="dropdown-item">My Exam</a>
+                                <a *ngIf="isLoggedIn()" [routerLink]="['/exam/post']" class="dropdown-item">New Exam</a>
+                                <a *ngIf="isLoggedIn()" [routerLink]="['/exam/list']" class="dropdown-item">My Exam</a>
                             </div>
                         </div>
                         <a [routerLink]="['/calendar']" *ngIf="isLoggedIn()" class="nav-item nav-link">Calendar</a>
                         <a [routerLink]="['/courses']" *ngIf="isLoggedIn()" class="nav-item nav-link">Courses</a>
-                        <a  class="nav-item nav-link" (click)="handleTop()">Contact</a>       
+
+                        <div class="nav-item dropdown" *ngIf="isLoggedIn() && !isUser()">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Admin</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <a [routerLink]="['/helpdesk/academic-support/doubts/list']" *ngIf="isLoggedIn() && isHelpdesk('academic')" class="dropdown-item">Academic Doubt List</a>
+                                <a [routerLink]="['/helpdesk/customer-support/doubts/list']" *ngIf="isLoggedIn() && isHelpdesk('customer')" class="dropdown-item">Customer Doubt List</a>
+                            </div>
+                        </div>
 
                         <div class="nav-item dropdown" *ngIf="isLoggedIn()">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More</a>
                             <div class="dropdown-menu rounded-0 m-0">
                                 <a [routerLink]="['/plagiarism-remover']" *ngIf="isLoggedIn()" class="dropdown-item">Plagiarism Remover</a>
+                                <a [routerLink]="['/helpdesk/user/doubts/raise']" *ngIf="isLoggedIn() && isUser()" class="dropdown-item">Ask Doubt</a>
+                                <a [routerLink]="['/helpdesk/user/doubts/list']" *ngIf="isLoggedIn() && isUser()" class="dropdown-item">Doubt List</a>
+                                <a class="dropdown-item" (click)="handleTop()">Contact</a>
                             </div>
                         </div>
                     </div>
-                    <a [routerLink]="['/user/profile']" *ngIf="isLoggedIn()" class="nav-item nav-link"><b>Profile</b></a>&nbsp;&nbsp;&nbsp;
-                    <a *ngIf="!isLoggedIn()" [routerLink]="['/user/login']" class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block">Sign In</a>
-                    <button *ngIf="isLoggedIn()" class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" (click)="logoutUser()">Logout</button>
+                    <a [routerLink]="['/user/profile']" *ngIf="isLoggedIn()"
+                        class="nav-item nav-link"><b>Profile</b></a>&nbsp;&nbsp;&nbsp;
+                    <a *ngIf="!isLoggedIn()" [routerLink]="['/user/login']"
+                        class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block">Sign In</a>
+                    <button *ngIf="isLoggedIn()" class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block"
+                        (click)="logoutUser()">Logout</button>
                 </div>
             </nav>
         </div>

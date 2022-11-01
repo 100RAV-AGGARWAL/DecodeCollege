@@ -102,6 +102,28 @@ export class UserService {
 		}
 		return false
 	}
+
+	isAcademicSupport() {
+		if (this.isLoggedIn()) {
+			return localStorage.getItem("role") === "academic-support";
+		}
+		return false
+	}
+
+	isCustomerSupport() {
+		if (this.isLoggedIn()) {
+			return localStorage.getItem("role") === "customer-support";
+		}
+		return false
+	}
+
+	isUser() {
+		if (this.isLoggedIn()) {
+			return localStorage.getItem("role") === "user";
+		}
+		return false
+	}
+
 	isOwner(userId:any) {
 		if (this.isLoggedIn()) {
 			return localStorage.getItem("userId") === userId;

@@ -11,9 +11,9 @@ import { AuthGuard } from '../user/auth-guard.service';
 const assignentRoutes: Routes = [
   {path: 'assignment/post', component: AssignmentPostComponent, canActivate: [AuthGuard]},
   {path: 'assignment/delete', component: AssignmentDeleteComponent, canActivate: [AuthGuard]},
-  {path: 'assignment/myAssignments', component: AssignmentMyassignmentsComponent},
+  {path: 'assignment/myAssignments', component: AssignmentMyassignmentsComponent, canActivate: [AuthGuard]},
   {path: 'assignment/edit/:id', component: AssignmentEditComponent, canActivate: [AuthGuard]},
-  {path: 'assignment/view/:id', component: AssignmentViewComponent},
+  {path: 'assignment/view/:id', component: AssignmentViewComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({

@@ -1,0 +1,49 @@
+<div class="container-fluid py-5">
+	<div class="container py-5">
+		<div class="text-center">
+			<h2>Customer Doubts</h2>
+		</div>
+		<br>
+		<div *ngIf="!isListEmpty" class="mat-elevation-z2">
+			<div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
+				<mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+				<div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+					GitHub's API rate limit has been reached. It will be reset in one minute.
+				</div>
+			</div>
+			<p class="text-center">Doubt Filter: <input type="text" (keyup)="applyFilter($event)"></p>
+			<table class="table-responsive-custom" mat-table [dataSource]="doubtList" matSort matSortActive="createdAt"
+				matSortDisableClear matSortDirection="asc">
+				<ng-container matColumnDef="description">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Doubt Description </th>
+					<td mat-cell *matCellDef="let element"> {{element.description}} </td>
+				</ng-container>
+				<ng-container matColumnDef="status">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Status </th>
+					<td mat-cell *matCellDef="let element"> {{element.status.toUpperCase()}} </td>
+				</ng-container>
+				<ng-container matColumnDef="createdAt">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Raised On </th>
+					<td mat-cell *matCellDef="let element"> {{element.createdAt | date:'medium'}} </td>
+				</ng-container>
+				<ng-container matColumnDef="accept">
+					<th mat-header-cell *matHeaderCellDef></th>
+					<td *matCellDef="let element"> 
+						<a *ngIf="element.status === 'unsolved'" mat-raised-button color="warn" (click)="acceptDoubt(element._id, element.description)">Accept</a>
+						<a *ngIf="element.status === 'accepted'" mat-raised-button color="warn" (click)="viewDoubt(element._id, element.description)">View</a>
+					</td>
+				</ng-container>
+				<tr mat-header-row *matHeaderRowDef="displayedCols"></tr>
+				<tr mat-row *matRowDef="let row; columns: displayedCols;">
+				</tr>
+			</table>
+			<mat-paginator [length]="pagination.total" [pageSize]="pagination.limit"
+				[pageSizeOptions]="[5, 10, 25, 100]" [pageIndex]="pagination.pageIndex" (page)="loadNextPage($event)"
+				showFirstLastButtons aria-label="Select page">
+			</mat-paginator>
+		</div>
+		<div *ngIf="isListEmpty" class="text-center pt-3">
+			<h5 class="text-success m-0">No doubts to be solved</h5>
+		</div>
+	</div>
+</div>

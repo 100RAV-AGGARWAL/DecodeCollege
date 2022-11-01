@@ -17,12 +17,22 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { appRoutes } from './app.route';
-import { ToastrModule } from 'ngx-toastr';
+import { OverlayContainer, ToastrModule } from 'ngx-toastr';
 import { ExamModule } from './exam/exam.module';
 // import { GradesComponent } from './grades/grades.component';
 import { CoursesModule } from './courses/courses.module';
 import { CalendarComponentModule } from './calendar/calendar.module';
 import { PlagiarismRemoverModule } from './plagiarism-remover/plagiarism-remover.module';
+import { HelpdeskModule } from './helpdesk/helpdesk.module';
+// import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
+// import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
+import {
+  NbButtonModule, NbChatModule, NbLayoutModule, NbOverlayContainer, NbOverlayContainerAdapter, NbSpinnerModule, NbThemeModule
+} from '@nebular/theme';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -43,15 +53,24 @@ import { PlagiarismRemoverModule } from './plagiarism-remover/plagiarism-remover
     AssignmentModule,
     CalendarComponentModule,
     ExamModule,
+    HelpdeskModule,
     PlagiarismRemoverModule,
     RouterModule.forRoot(
 			appRoutes,
 			{ enableTracing: true, relativeLinkResolution: 'legacy' } 
 		),
     ToastrModule.forRoot(),
+    NbThemeModule.forRoot(),
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    NbLayoutModule,
+    NbEvaIconsModule,
+    NbButtonModule,
+    NbChatModule,
+    NbSpinnerModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule, // for firestore
   ],
   providers: [],
   bootstrap: [AppComponent]

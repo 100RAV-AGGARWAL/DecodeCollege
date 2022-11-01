@@ -12,10 +12,10 @@ import { UserResetPasswordComponent } from "./user/userresetpassword/user-resetp
 const userRoutes: Routes = [
 	{ path: 'user/login', component: UserLoginComponent },
 	{ path: 'user/signup', component: UserSignupComponent },
-	{ path: 'user/view', component: UserViewComponent },
+	{ path: 'user/view', component: UserViewComponent, canActivate: [AuthGuard] },
 	{ path: "user/forgot", component: UserForgotPasswordComponent },
 	{ path: "user/reset/:token", component: UserResetPasswordComponent },
-	{ path: "user/profile", component: UserProfileComponent,canActivate: [AuthGuard] },
+	{ path: "user/profile", component: UserProfileComponent, canActivate: [AuthGuard] },
 ]
 
 @NgModule({

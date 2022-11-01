@@ -1,0 +1,35 @@
+<div class="container-fluid py-5">
+	<div class="container py-5">
+		<div class="text-center">
+			<h2>Help Desk</h2>
+		</div>
+		<div class="row justify-content-center">
+			<div class="col-lg-8">
+				<div class="contact-form rounded p-5">
+					<div id="success"></div>
+					<form (ngSubmit)="createDoubt()" #doubtForm="ngForm">
+						<div class="control-group">
+							<mat-form-field class="form-control border-0 p-4">
+								<mat-select name="topic" placeholder="Topic" [(value)]="doubt.topic">
+									<mat-option *ngFor="let topic of topicList" [value]="topic">
+										{{topic}}
+									</mat-option>
+								</mat-select>
+							</mat-form-field>
+							<p class="help-block text-danger"></p>
+						</div>
+						<div class="control-group">
+							<mat-form-field class="form-control border-0 p-4">
+								<input matInput name="description" [(ngModel)]="doubt.description" placeholder="Doubt" value="" required>
+							</mat-form-field>
+							<p class="help-block text-danger"></p>
+						</div>
+						<div class="text-center pt-3">
+							<button class="btn btn-primary rounded-pill py-2 px-5 " color="primary">Raise Doubt</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
