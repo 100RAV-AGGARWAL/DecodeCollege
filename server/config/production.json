@@ -1,12 +1,15 @@
 {
-	"dbconfig": {
-		"url": "mongodb://127.0.0.1:27017/decodecollege"
+	"dbConfig": {
+		"dbName": "decodecollege",
+		"username": "user",
+		"password": "virtualbeingsuser",
+		"host": "cluster0.vnawq6j.mongodb.net"
 	},
 	"jwt": {
 		"expiration": 10000,
 		"secretKey": "sonipava"
 	},
-	"environment": "dev",
+	"environment": "production",
 	"email": {
 		"job_enabled": true,
 		"service": "gmail",

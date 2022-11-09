@@ -1,17 +1,12 @@
-<div>
+<div *ngIf="!isTimeOut">
     <app-header></app-header>
-    <nb-layout>
-      <nb-layout-column>
+        <nb-layout>
+            <nb-layout-column>
               <router-outlet></router-outlet>
-      </nb-layout-column>
-  </nb-layout>
+            </nb-layout-column>
+        </nb-layout>
     <app-footer></app-footer>
 </div>
-<!-- <div *ngIf="!isTimeOut">
-  <app-header></app-header>
-  <router-outlet></router-outlet>
-  <app-footer></app-footer>
+<div *ngIf="isTimeOut">
+    <app-close-tab></app-close-tab>
 </div>
-<div *ngIf="isTimeOut" >
-  <app-close-tab></app-close-tab>
-  </div> -->
