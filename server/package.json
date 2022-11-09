@@ -21,6 +21,7 @@
     "formidable": "^2.0.1",
     "fs": "^0.0.1-security",
     "googleapis": "^105.0.0",
+    "heroku": "^7.66.0",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "jsonwebtoken": "^8.5.1",
