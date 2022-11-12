@@ -13,8 +13,8 @@
 						<div class="control-group">
 							<mat-form-field class="form-control border-0 p-4">
 								<mat-select name="Semester" placeholder="Semester" [(value)]="sem.sem">
-									<mat-option *ngFor="let semester of semeseterList" [value]="semester.sem_no">
-										{{semester.sem_no}}
+									<mat-option *ngFor="let semester of semeseterList" [value]="semester">
+										{{semester}}
 									</mat-option>
 								</mat-select>
 							</mat-form-field>
