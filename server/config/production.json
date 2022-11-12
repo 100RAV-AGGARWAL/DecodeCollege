@@ -1,9 +1,10 @@
 {
-	"dbConfig": {
+	"dbconfig": {
 		"dbName": "decodecollege",
 		"username": "user",
 		"password": "virtualbeingsuser",
-		"host": "cluster0.vnawq6j.mongodb.net"
+		"host": "cluster0.vnawq6j.mongodb.net",
+		"url": "mongodb+srv://user:virtualbeingsuser@cluster0.vnawq6j.mongodb.net/decodecollege"
 	},
 	"jwt": {
 		"expiration": 10000,
@@ -13,21 +14,21 @@
 	"email": {
 		"job_enabled": true,
 		"service": "gmail",
-		"username": "sourav.developer.testing@gmail.com",
-		"password": "pehttyekoqhtovkj",
+		"username": "virtualbeingvb@gmail.com",
+		"password": "accybwpiivvvvjwq",
 		"emailIds": {
 			"notification": {
-				"username": "sourav.developer.testing@gmail.com",
-				"password": "pehttyekoqhtovkj"
+				"username": "virtualbeingvb@gmail.com",
+				"password": "accybwpiivvvvjwq"
 			}
 		},
-		"contactus": "sourav.developer.testing@gmail.com"
+		"contactus": "virtualbeingvb@gmail.com"
 	},
 	"logging": {
 		"level": "error",
 		"fileLocation": "./logs/"
 	},
-	"serverDomain": "http://localhost:3000",
+	"serverDomain": "https://decode-college.herokuapp.com/",
 	"forgotPasswordTime": 3600000,
 	"swagger_options": {
 		"definition": {
@@ -39,7 +40,7 @@
 			},
 			"servers": [
 				{
-					"url": "http://localhost:3000"
+					"url": "https://decode-college.herokuapp.com/"
 				}
 			]
 		},
