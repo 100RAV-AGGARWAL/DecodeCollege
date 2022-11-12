@@ -34,4 +34,8 @@ export class HeaderComponent implements OnInit {
     var isUser = this.userService.isUser();
     return isUser;
   }
+  isAdmin() {
+    var isAdmin = this.userService.isAdmin();
+    return isAdmin;
+  }
 }

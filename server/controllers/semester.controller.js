@@ -15,9 +15,6 @@ const create = async function (req, res) {
 		return ReE(res, new Error("Semester Number is not provided"), 422);
 	}
 
-
-
-
 	if (!req.user.id) {
 		logger.error("Semester Controller - create : User not logged in");
 		return ReE(res, new Error("User is not logged in"), 401);
@@ -43,8 +40,6 @@ const create = async function (req, res) {
 	}
 
 	let semesterJson = semester.toObject();
-
-
 
 	return ReS(res, { message: 'Successfully created new semester.', semester: semesterJson }, 201);
 }
@@ -81,16 +76,6 @@ const get = async function (req, res) {
 
 		semester.sem_marks[i].subjectName = subject.name;
 	}
-
-
-
-
-
-
-
-
-
-
 
 	let semesterJson = semester.toObject()
 	semesterJson.user = user

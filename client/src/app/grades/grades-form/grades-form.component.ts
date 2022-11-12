@@ -28,8 +28,7 @@ export class GradesFormComponent implements OnInit {
     this.gradeservice.getSemester().subscribe((resp: any) => {
       try {
         this.semeseterList = JSON.parse(resp["semester"]);
-        console.log(this.semeseterList)
-
+        console.log(this.semeseterList);
       }
       catch (err) {
         this._snackBar.openSnackBar('Unable to load categories.', 'X')

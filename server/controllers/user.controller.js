@@ -112,7 +112,6 @@ const getPublicInfo = async function (userId) {
 module.exports.getPublicInfo = getPublicInfo;
 
 const profile = async function (req, res) {
-	console.log('44444');
 	let user_id, err, user;
 	user_id = req.user.id;
 	console.log(user_id);
