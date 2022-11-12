@@ -5,7 +5,9 @@
 @forward '@nebular/theme/styles/theming';
 @use '@nebular/theme/styles/theming' as *;
 @use '@nebular/theme/styles/themes/default';
-@use '@nebular/theme/styles/globals' as *;
+// @use '@nebular/theme/styles/globals' as *;
+@use '../node_modules/@nebular/theme/styles/global/components' as *;
+@use '../node_modules/@nebular/theme/styles/global/tables/smart-table.theme' as *;
 @use '@angular/material' as mat;
 // Plus imports for other components in your app.
 
@@ -14,7 +16,9 @@
 // Be sure that you only ever include this mixin once!
 @include mat.core();
 @include nb-install() {
-  @include nb-theme-global();
+  @include nb-theme-components();
+  @include nb-tables-smart-table-theme();
+  // @include nb-theme-global();
 };
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss

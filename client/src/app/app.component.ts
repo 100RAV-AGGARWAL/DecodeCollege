@@ -14,8 +14,8 @@ export class AppComponent implements OnDestroy, OnInit {
   num: number = 0
   count: number = 0
   count2: number = 0
-  limit: number = 300000; //3600000 1hour
-  upperLimit: number = 330000;//4200000 1hour 10min
+  limit: number = 3600000; //3600000 1hour
+  upperLimit: number = 4200000;//4200000 1hour 10min
   timeLeft: number = this.limit
   timeLeft2: number = this.upperLimit - this.limit;
 

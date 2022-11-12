@@ -16,7 +16,7 @@ const { google } = require('googleapis');
 
 var indexRouter = require('./routes/index');
 var app = express();
-var testCronJob = config.get('cronjob').testing;
+var testCronJob = config.get('cronjob').assignmentDue;
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerJsDoc));
 

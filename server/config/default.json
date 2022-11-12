@@ -10,15 +10,15 @@
 	"email": {
 		"job_enabled": true,
 		"service": "gmail",
-		"username": "sourav.developer.testing@gmail.com",
-		"password": "pehttyekoqhtovkj",
+		"username": "virtualbeingvb@gmail.com",
+		"password": "accybwpiivvvvjwq",
 		"emailIds": {
 			"notification": {
-				"username": "sourav.developer.testing@gmail.com",
-				"password": "pehttyekoqhtovkj"
+				"username": "virtualbeingvb@gmail.com",
+				"password": "accybwpiivvvvjwq"
 			}
 		},
-		"contactus": "sourav.developer.testing@gmail.com"
+		"contactus": "virtualbeingvb@gmail.com"
 	},
 	"logging": {
 		"level": "error",

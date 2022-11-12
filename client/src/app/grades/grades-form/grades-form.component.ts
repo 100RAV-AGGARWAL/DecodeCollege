@@ -17,28 +17,14 @@ export class GradesFormComponent implements OnInit {
   Percentage = 0;
   gradesarr: any[] = [];
   subjectList: any[] = [];
-  semeseterList: any[] = [];
+  semeseterList: any[] = [1,2,3,4,5,6,7,8];
   isGradeVisible = false;
   isSemester = false;
 
   sem = {
     sem: 1
   }
-  constructor(private _snackBar: SnackBarService, private gradeservice: GradesService, private toastr: ToastrService, private userService: UserService, private router: Router,) {
-    this.gradeservice.getSemester().subscribe((resp: any) => {
-      try {
-        this.semeseterList = JSON.parse(resp["semester"]);
-        console.log(this.semeseterList)
-
-      }
-      catch (err) {
-        this._snackBar.openSnackBar('Unable to load categories.', 'X')
-      }
-    }, err => {
-      this._snackBar.openSnackBar('Unable to load categories.', 'X')
-    });
-
-  }
+  constructor(private _snackBar: SnackBarService, private gradeservice: GradesService, private toastr: ToastrService, private userService: UserService, private router: Router) {  }
 
   ngOnInit(): void {
   }
