@@ -1,0 +1,62 @@
+{
+	"dbconfig": {
+		"dbName": "decodecollege",
+		"username": "user",
+		"password": "virtualbeingsuser",
+		"host": "cluster0.vnawq6j.mongodb.net",
+		"url": "mongodb+srv://user:virtualbeingsuser@cluster0.vnawq6j.mongodb.net/decodecollege"
+	},
+	"jwt": {
+		"expiration": 10000,
+		"secretKey": "sonipava"
+	},
+	"environment": "production",
+	"email": {
+		"job_enabled": true,
+		"service": "gmail",
+		"username": "virtualbeingvb@gmail.com",
+		"password": "accybwpiivvvvjwq",
+		"emailIds": {
+			"notification": {
+				"username": "virtualbeingvb@gmail.com",
+				"password": "accybwpiivvvvjwq"
+			}
+		},
+		"contactus": "virtualbeingvb@gmail.com"
+	},
+	"logging": {
+		"level": "error",
+		"fileLocation": "./logs/"
+	},
+	"serverDomain": "https://decode-college.herokuapp.com/",
+	"forgotPasswordTime": 3600000,
+	"swagger_options": {
+		"definition": {
+			"openapi": "3.0.3",
+			"info": {
+				"title": "Decode College APIs",
+				"version": "1.0.0",
+				"description": "A simple Express APIs"
+			},
+			"servers": [
+				{
+					"url": "https://decode-college.herokuapp.com/"
+				}
+			]
+		},
+		"apis": [
+			"./routes/*.js"
+		]
+	},
+	"fileConfig": {
+		"fileUploadPath": "./upload/files"
+	},
+	"cronjob": {
+		"testing": "* * * * *",
+		"assignmentDue": "0 1 * * *"
+	},
+	"twilio": {
+		"accountSid": "AC3e8c8f9433977bf50fc869c774607399",
+		"authToken": "8e380fca63a9f64e6669f9610b6e3cf8"
+	}
+}
