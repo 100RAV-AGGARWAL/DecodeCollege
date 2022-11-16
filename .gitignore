@@ -39,4 +39,4 @@ testem.log
 .DS_Store
 Thumbs.db
 
-/lib/multer/decodecollege-googleauth.json
+decodecollege-googleauth.json
