@@ -38,3 +38,5 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+/lib/multer/decodecollege-googleauth.json

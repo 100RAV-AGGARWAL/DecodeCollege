@@ -20,8 +20,10 @@ export class AssignmentViewComponent implements OnInit{
     this.sub = this.route.params.subscribe(params => {
       this.assignmentService.getAssignment(params['id']).subscribe(resp => {
         this.assignment = resp["assignment"];
-        this.fileNameInFolder = this.assignment.filePath.replace(/^.*[\\\/]/, '');
-        this.filePath = `assets/${this.fileNameInFolder}`;
+        // this.fileNameInFolder = this.assignment.filePath.replace(/^.*[\\\/]/, '');
+        // this.filePath = `assets/${this.fileNameInFolder}`;
+        // this.filePath = `https://www.googleapis.com/drive/v3/files/${this.assignment.driveFileId}`;
+        this.readFile(this.assignment.file);
       });
     });
   }
@@ -32,5 +34,19 @@ export class AssignmentViewComponent implements OnInit{
   public onPagesLoaded(event: PagesLoadedEvent): void {
     const h = window.innerHeight - 64;
     this.height = `${h}px`;
+  }
+
+  readFile(file: any) {
+    let reader = new FileReader();
+
+    reader.onload = (event: any) => {
+      this.filePath = event.target.result;
+    };
+
+    reader.onerror = (event: any) => {
+      console.log("File could not be read: " + event.target.error.code);
+    };
+
+    reader.readAsDataURL(file.data);
   }
 }

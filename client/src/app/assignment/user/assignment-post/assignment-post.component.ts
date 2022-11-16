@@ -20,7 +20,7 @@ export class AssignmentPostComponent implements OnInit {
     deadline: "",
     subject: { _id: "" },
     fileId: "",
-    filePath: ""
+    driveFileId: ""
   }
   file;
   subjectList: any[] = [];
@@ -63,7 +63,7 @@ export class AssignmentPostComponent implements OnInit {
       let rsp = JSON.parse(resp);
       this.file = rsp["file"];
       this.assignment.fileId = this.file._id;
-      this.assignment.filePath = this.file.filePath;
+      this.assignment.driveFileId = this.file.driveFileId;
       this.updateEnabled = true;
     };
   }

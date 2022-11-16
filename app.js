@@ -12,7 +12,6 @@ const YAML = require("yamljs")
 const swaggerJsDoc = YAML.load('./swagger/swagger.yaml');
 const bodyParser = require('body-parser');
 const assignmentController = require('./controllers/assignment.controller');
-const { google } = require('googleapis');
 
 var indexRouter = require('./routes/index');
 var app = express();

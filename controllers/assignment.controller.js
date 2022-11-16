@@ -8,9 +8,22 @@ const { sendEmail } = require("../lib/mails/sendemail");
 const { getTemplateHtml } = require("../lib/mails/emailTemplate");
 const UploadController = require('./upload.controller');
 const config = require('config');
+const { google } = require('googleapis');
+const GoogleDriveStorage = require('multer-google-drive');
+const path = require('path');
+
+
 const accountSid = config.get("twilio").accountSid;
 const authToken = config.get('twilio').authToken;
 const client = require('twilio')(accountSid, authToken);
+const KEYFILEPATH = path.join(__dirname, '..', 'decodecollege-googleauth.json');
+const SCOPES = ['https://www.googleapis.com/auth/drive'];
+const auth = new google.auth.GoogleAuth({
+	keyFile: KEYFILEPATH,
+	scopes: SCOPES,
+});
+const drive = google.drive({ version: 'v3', auth: auth });
+
 
 const create = async function (req, res) {
 	res.setHeader("Content-Type", "application/json");
@@ -97,9 +110,37 @@ const get = async function (req, res) {
 	assignmentJson.user = user;
 	assignmentJson.subject = subject;
 
+	[err, files] = await to(getFile(assignmentJson.fileId));
+	if (err) {
+		return ReE(res, err);
+	}
+	assignmentJson.file = files;
+
 	return ReS(res, { assignment: assignmentJson });
 };
 module.exports.get = get;
+
+const getFile = async function (fileId) {
+	if (!fileId) {
+		return ReE(res, "File Id is required");
+	}
+
+	let err, fileIns, file;
+	[err, fileIns] = await to(File.findById(fileId));
+	if (err) {
+		return ReE(res, err);
+	}
+
+	[err, file] = await to(drive.files.get({
+		fileId: fileIns.driveFileId,
+		alt: 'media',
+	}));
+	if (err) {
+		return ReE(res, err);
+	}
+
+	return file;
+}
 
 const findByPk = async function (id) {
 	let assignment_id, err, assignment;

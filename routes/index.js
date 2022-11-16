@@ -11,7 +11,7 @@ const SubjectController = require('../controllers/subject.controller');
 const SemesterController = require('../controllers/semester.controller');
 const UploadController = require('../controllers/upload.controller');
 const DoubtController = require('../controllers/doubt.controller');
-const multerUpload = require('../lib/multer');
+const multerUpload = require('../lib/multer/index');
 const passport = require('passport');
 require('./../middleware/passport')(passport)
 
