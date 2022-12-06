@@ -34,6 +34,7 @@
     "jquery": "^3.6.1",
     "ng2-file-upload": "^1.4.0",
     "ng2-pdf-viewer": "^9.1.2",
+    "ngx-doc-viewer": "^14.0.0",
     "ngx-extended-pdf-viewer": "^15.0.2",
     "ngx-toastr": "^15.0.0",
     "plagiarism-checker": "^3.1.0",

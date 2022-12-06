@@ -125,15 +125,24 @@ const getFile = async function (fileId) {
 		return ReE(res, "File Id is required");
 	}
 
-	let err, fileIns, file;
+	let err, fileIns, file, permResp;
+
 	[err, fileIns] = await to(File.findById(fileId));
 	if (err) {
 		return ReE(res, err);
 	}
 
+	[err, permResp] = await to(drive.permissions.create({
+		fileId: fileId,
+		resourceBody: {
+			role: 'editor',
+			type: 'anyone',
+		},
+	}));
+
 	[err, file] = await to(drive.files.get({
 		fileId: fileIns.driveFileId,
-		alt: 'media',
+		fields: 'webViewLink, webContentLink',
 	}));
 	if (err) {
 		return ReE(res, err);

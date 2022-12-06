@@ -17,7 +17,8 @@
       </div>
     </div>
     <div class="mat-elevation-z4">
-      <ngx-extended-pdf-viewer class="pdf-viewer" [height]="height" [src]="filePath" (pagesLoaded)="onPagesLoaded($event)"> </ngx-extended-pdf-viewer>
+      <ngx-extended-pdf-viewer class="pdf-viewer" [height]="height" [src]="filePath" (pagesLoaded)="onPagesLoaded($event)" [useBrowserLocale]="true"></ngx-extended-pdf-viewer>
+      <!-- <ngx-doc-viewer class="pdf-viewer" [url]="filePath" viewer="url" [style]="height" ></ngx-doc-viewer> -->
     </div>
   </div>
 </div>

@@ -1,0 +1,12 @@
+{
+    "/*": {
+        "target": "https://drive.google.com",
+        "secure": false,
+        "logLevel": "debug"
+    },
+    "https://drive.google.com/file/*": {
+        "target": "https://drive.google.com",
+        "secure": false,
+        "logLevel": "debug"
+    },
+}

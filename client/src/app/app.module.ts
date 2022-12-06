@@ -33,6 +33,7 @@ import {
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from '../environments/environment';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { environment } from '../environments/environment';
     NbSpinnerModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule, // for firestore
+    NgxDocViewerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

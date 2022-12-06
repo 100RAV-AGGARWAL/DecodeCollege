@@ -85,6 +85,10 @@
 						},
 						"development": {
 							"browserTarget": "client:build:development"
+						},
+						"options": {
+							"browserTarget": "project-name:build",
+							"proxyConfig": "src/proxy.conf.json"
 						}
 					},
 					"defaultConfiguration": "development"

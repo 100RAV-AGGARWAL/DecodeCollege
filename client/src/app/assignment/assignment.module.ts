@@ -29,6 +29,8 @@ import  {  PdfViewerModule  }  from  'ng2-pdf-viewer';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
+
 @NgModule({
   declarations: [
     AssignmentPostComponent,
@@ -60,7 +62,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     PdfViewerModule,
     NgxExtendedPdfViewerModule,
     MatSortModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    NgxDocViewerModule
   ],
   providers: [
     AssignmentService,
