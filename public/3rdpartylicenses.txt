@@ -419,6 +419,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
+docviewhelper
+MIT
+
 eva-icons
 MIT
 
@@ -476,6 +479,9 @@ THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH RE
 ng2-file-upload
 
 ng2-pdf-viewer
+MIT
+
+ngx-doc-viewer
 MIT
 
 ngx-extended-pdf-viewer
