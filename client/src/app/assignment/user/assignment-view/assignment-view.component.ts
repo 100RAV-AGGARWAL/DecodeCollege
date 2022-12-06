@@ -34,7 +34,7 @@ export class AssignmentViewComponent implements OnInit{
 
   public onPagesLoaded(event: PagesLoadedEvent): void {
     const h = window.innerHeight - 64;
-    this.height = `height:${h}px;`;
+    this.height = `${h}px`;
   }
 
   // readFile(file: any) {
