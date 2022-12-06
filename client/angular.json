@@ -27,11 +27,6 @@
 							"src/assets",
 							{
 								"glob": "**/*",
-								"input": "../uploads/files",
-								"output": "/assets/"
-							},
-							{
-								"glob": "**/*",
 								"input": "node_modules/ngx-extended-pdf-viewer/assets/",
 								"output": "/assets/"
 							},
@@ -90,6 +85,10 @@
 						},
 						"development": {
 							"browserTarget": "client:build:development"
+						},
+						"options": {
+							"browserTarget": "project-name:build",
+							"proxyConfig": "src/proxy.conf.json"
 						}
 					},
 					"defaultConfiguration": "development"

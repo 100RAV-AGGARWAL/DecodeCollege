@@ -77,10 +77,15 @@ const uploadOnMulter = async function (req, res, itemType) {
 
 	let file;
 	[err, file] = await to(File.create({
-		name: req.file.filename,
-		filePath: req.file.path,
+		name: req.file.fileName,
+		driveFileId: req.file.fileId,
 		itemType: itemType
 	}));
+	// [err, file] = await to(File.create({
+	// 	name: req.file.filename,
+	// 	filePath: req.file.path,
+	// 	itemType: itemType
+	// }));
 	if (err) {
 		logger.error("Upload Controller - upload : Could not create file ", err);
 		return ReE(res, err, 422);
@@ -88,3 +93,4 @@ const uploadOnMulter = async function (req, res, itemType) {
 
 	return ReS(res, { message: "Successfully uploaded new" + itemType, file: file.toObject() }, 200);
 }
+
