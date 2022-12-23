@@ -28,7 +28,7 @@
 		"level": "error",
 		"fileLocation": "./logs/"
 	},
-	"serverDomain": "https://decode-college.herokuapp.com/",
+	"serverDomain": "https://decodecollege.up.railway.app/",
 	"forgotPasswordTime": 3600000,
 	"swagger_options": {
 		"definition": {
@@ -40,7 +40,7 @@
 			},
 			"servers": [
 				{
-					"url": "https://decode-college.herokuapp.com/"
+					"url": "https://decodecollege.up.railway.app/"
 				}
 			]
 		},
